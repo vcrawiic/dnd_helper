@@ -1,0 +1,2 @@
+# dnd_helper
+DnDHelper is a Flutter mobile app containing reference information for the tabletop game Dungeons &amp; Dragons 5th Edition. The project is designed as an educational tool and demonstrates networking, modern application architecture, and various approaches to state management.

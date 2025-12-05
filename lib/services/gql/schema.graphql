@@ -1,0 +1,3266 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+type Query {
+  """Gets all ability scores, optionally filtered by name and sorted."""
+  abilityScores(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Filter by ability score full name (case-insensitive, partial match)"""
+    full_name: String
+
+    """Specify sorting order for ability scores."""
+    order: AbilityScoreOrder
+  ): [AbilityScore!]!
+
+  """Gets a single ability score by index."""
+  abilityScore(index: String!): AbilityScore
+
+  """Gets all alignments, optionally filtered by name and sorted."""
+  alignments(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for alignments."""
+    order: AlignmentOrder
+  ): [Alignment!]!
+
+  """Gets a single alignment by index."""
+  alignment(index: String!): Alignment
+
+  """Gets all backgrounds, optionally filtered by name and sorted by name."""
+  backgrounds(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for backgrounds."""
+    order: BackgroundOrder
+  ): [Background!]!
+
+  """Gets a single background by index."""
+  background(index: String!): Background
+
+  """Gets all classes, optionally filtering by name or hit die and sorted."""
+  classes(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """
+    Filter by hit die size. Allows exact match, list of values, or a range.
+    """
+    hit_die: NumberFilterInput
+
+    """Specify sorting order for classes. Allows nested sorting."""
+    order: ClassOrder
+  ): [Class!]!
+
+  """Gets a single class by its index."""
+  class(index: String!): Class
+
+  """Gets all conditions, optionally filtered by name and sorted by name."""
+  conditions(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for conditions."""
+    order: ConditionOrder
+  ): [Condition!]!
+
+  """Gets a single condition by index."""
+  condition(index: String!): Condition
+
+  """Gets all damage types, optionally filtered by name and sorted by name."""
+  damageTypes(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for damage types."""
+    order: DamageTypeOrder
+  ): [DamageType!]!
+
+  """Gets a single damage type by index."""
+  damageType(index: String!): DamageType
+
+  """Gets all equipment, optionally filtered and sorted."""
+  equipments(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """
+    Filter by one or more equipment category indices (e.g., ["weapon", "armor"])
+    """
+    equipment_category: [String!]
+
+    """Specify sorting order for equipment."""
+    order: EquipmentOrder
+  ): [AnyEquipment!]!
+
+  """Gets a single piece of equipment by its index."""
+  equipment(index: String!): AnyEquipment
+
+  """
+  Gets all equipment categories, optionally filtered by name and sorted by name.
+  """
+  equipmentCategories(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for equipment categories."""
+    order: EquipmentCategoryOrder
+  ): [EquipmentCategory!]!
+
+  """Gets a single equipment category by index."""
+  equipmentCategory(index: String!): EquipmentCategory
+
+  """Gets all feats, optionally filtered by name and sorted by name."""
+  feats(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for feats."""
+    order: FeatOrder
+  ): [Feat!]!
+
+  """Gets a single feat by index."""
+  feat(index: String!): Feat
+
+  """Gets all features, optionally filtered and sorted."""
+  features(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Filter by level. Allows exact match, list, or range."""
+    level: NumberFilterInput
+
+    """Filter by one or more associated class indices"""
+    class: [String!]
+
+    """Filter by one or more associated subclass indices"""
+    subclass: [String!]
+
+    """Specify sorting order for features."""
+    order: FeatureOrder
+  ): [Feature!]!
+
+  """Gets a single feature by its index."""
+  feature(index: String!): Feature
+
+  """Gets a single language by its index."""
+  language(index: String!): Language
+
+  """Gets all languages, optionally filtered and sorted."""
+  languages(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """
+    Filter by language type (e.g., Standard, Exotic) - case-insensitive exact match after normalization
+    """
+    type: String
+
+    """Filter by one or more language scripts (e.g., ["Common", "Elvish"])"""
+    script: [String!]
+
+    """Specify sorting order for languages."""
+    order: LanguageOrder
+  ): [Language!]!
+
+  """
+  Gets a single level by its combined index (e.g., wizard-3-evocation or fighter-5).
+  """
+  level(index: String!): Level
+
+  """Gets all levels, optionally filtered and sorted."""
+  levels(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by one or more class indices"""
+    class: [String!]
+
+    """Filter by one or more subclass indices"""
+    subclass: [String!]
+
+    """Filter by level. Allows exact match, list, or range."""
+    level: NumberFilterInput
+
+    """
+    Filter by the exact number of ability score bonuses granted at this level.
+    """
+    ability_score_bonuses: Int
+
+    """Filter by the exact proficiency bonus at this level."""
+    prof_bonus: Int
+
+    """
+    Specify sorting order for levels. Allows nested sorting. Defaults to LEVEL ascending.
+    """
+    order: LevelOrder
+  ): [Level!]!
+
+  """Gets all magic items, optionally filtered and sorted."""
+  magicItems(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """
+    Filter by one or more equipment category indices (e.g., ["armor", "weapon"])
+    """
+    equipment_category: [String!]
+
+    """Filter by one or more rarity names (e.g., ["Rare", "Legendary"])"""
+    rarity: [String!]
+
+    """Specify sorting order for magic items."""
+    order: MagicItemOrder
+  ): [MagicItem!]!
+
+  """Gets a single magic item by index."""
+  magicItem(index: String!): MagicItem
+
+  """
+  Gets all magic schools, optionally filtered by name and sorted by name.
+  """
+  magicSchools(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for magic schools."""
+    order: MagicSchoolOrder
+  ): [MagicSchool!]!
+
+  """Gets a single magic school by index."""
+  magicSchool(index: String!): MagicSchool
+
+  """Gets all monsters, optionally filtered and sorted."""
+  monsters(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Filter by monster type (case-insensitive, exact match, e.g., "beast")"""
+    type: String
+
+    """
+    Filter by monster subtype (case-insensitive, exact match, e.g., "goblinoid")
+    """
+    subtype: String
+
+    """Filter by challenge rating"""
+    challenge_rating: NumberFilterInput
+
+    """Filter by monster size (exact match, e.g., "Medium")"""
+    size: String
+
+    """Filter by monster XP"""
+    xp: NumberFilterInput
+
+    """Filter by strength score"""
+    strength: NumberFilterInput
+
+    """Filter by dexterity score"""
+    dexterity: NumberFilterInput
+
+    """Filter by constitution score"""
+    constitution: NumberFilterInput
+
+    """Filter by intelligence score"""
+    intelligence: NumberFilterInput
+
+    """Filter by wisdom score"""
+    wisdom: NumberFilterInput
+
+    """Filter by charisma score"""
+    charisma: NumberFilterInput
+
+    """Filter by damage vulnerability indices"""
+    damage_vulnerabilities: [String!]
+
+    """Filter by damage resistance indices"""
+    damage_resistances: [String!]
+
+    """Filter by damage immunity indices"""
+    damage_immunities: [String!]
+
+    """Filter by condition immunity indices"""
+    condition_immunities: [String!]
+
+    """Specify sorting order for monsters."""
+    order: MonsterOrder
+  ): [Monster!]!
+
+  """Gets a single monster by its index."""
+  monster(index: String!): Monster
+
+  """Query all Proficiencies, optionally filtered and sorted."""
+  proficiencies(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Filter by class index (e.g., ["barbarian", "bard"])"""
+    class: [String!]
+
+    """Filter by race index (e.g., ["dragonborn", "dwarf"])"""
+    race: [String!]
+
+    """Filter by proficiency type (exact match, e.g., ["ARMOR", "WEAPONS"])"""
+    type: [String!]
+
+    """Specify sorting order for proficiencies. Allows nested sorting."""
+    order: ProficiencyOrder
+  ): [Proficiency!]!
+
+  """Gets a single proficiency by index."""
+  proficiency(index: String!): Proficiency
+
+  """Gets all races, optionally filtered by name and sorted."""
+  races(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Filter by one or more ability score indices that provide a bonus"""
+    ability_bonus: [String!]
+
+    """Filter by one or more race sizes (e.g., ["Medium", "Small"])"""
+    size: [String!]
+
+    """Filter by one or more language indices spoken by the race"""
+    language: [String!]
+
+    """Filter by race speed. Allows exact match, list, or range."""
+    speed: NumberFilterInput
+
+    """Specify sorting order for races. Allows nested sorting."""
+    order: RaceOrder
+  ): [Race!]!
+
+  """Gets a single race by its index."""
+  race(index: String!): Race
+
+  """Gets all rules, optionally filtered by name and sorted by name."""
+  rules(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for rules. Allows nested sorting."""
+    order: RuleOrder
+  ): [Rule!]!
+
+  """Gets a single rule by index."""
+  rule(index: String!): Rule
+
+  """
+  Gets all rule sections, optionally filtered by name and sorted by name.
+  """
+  ruleSections(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for rule sections. Allows nested sorting."""
+    order: RuleSectionOrder
+  ): [RuleSection!]!
+
+  """Gets a single rule section by index."""
+  ruleSection(index: String!): RuleSection
+
+  """Gets all skills, optionally filtered by name and sorted by name."""
+  skills(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Filter by ability score index (e.g., ["str", "dex"])"""
+    ability_score: [String!]
+
+    """Specify sorting order for skills."""
+    order: SkillOrder
+  ): [Skill!]!
+
+  """Gets a single skill by index."""
+  skill(index: String!): Skill
+
+  """Gets all spells, optionally filtered and sorted."""
+  spells(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Filter by spell level (e.g., [0, 9])"""
+    level: [Int!]
+
+    """Filter by magic school index (e.g., ["evocation"])"""
+    school: [String!]
+
+    """Filter by class index that can cast the spell (e.g., ["wizard"])"""
+    class: [String!]
+
+    """Filter by subclass index that can cast the spell (e.g., ["lore"])"""
+    subclass: [String!]
+
+    """Filter by concentration requirement"""
+    concentration: Boolean
+
+    """Filter by ritual requirement"""
+    ritual: Boolean
+
+    """Filter by attack type (e.g., ["ranged", "melee"])"""
+    attack_type: [String!]
+
+    """Filter by casting time (e.g., ["1 action"])"""
+    casting_time: [String!]
+
+    """Filter by area of effect properties"""
+    area_of_effect: AreaOfEffectFilterInput
+
+    """Filter by damage type index (e.g., ["fire"])"""
+    damage_type: [String!]
+
+    """Filter by saving throw DC type index (e.g., ["dex"])"""
+    dc_type: [String!]
+
+    """Filter by spell range (e.g., ["Self", "Touch"])"""
+    range: [String!]
+
+    """Specify sorting order for spells."""
+    order: SpellOrder
+  ): [Spell!]!
+
+  """Gets a single spell by its index."""
+  spell(index: String!): Spell
+
+  """Gets all subclasses, optionally filtered by name and sorted."""
+  subclasses(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for subclasses."""
+    order: SubclassOrder
+  ): [Subclass!]!
+
+  """Gets a single subclass by its index."""
+  subclass(index: String!): Subclass
+
+  """Gets all subraces, optionally filtered by name and sorted by name."""
+  subraces(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for subraces."""
+    order: SubraceOrder
+  ): [Subrace!]!
+
+  """Gets a single subrace by index."""
+  subrace(index: String!): Subrace
+
+  """Gets all traits, optionally filtered by name and sorted by name."""
+  traits(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for traits."""
+    order: TraitOrder
+  ): [Trait!]!
+
+  """Gets a single trait by index."""
+  trait(index: String!): Trait
+
+  """
+  Gets all weapon properties, optionally filtered by name and sorted by name.
+  """
+  weaponProperties(
+    """Number of results to skip for pagination. Default: 0."""
+    skip: Int
+
+    """
+    Maximum number of results to return for pagination. Default: 50, Max: 100.
+    """
+    limit: Int
+
+    """Filter by name (case-insensitive, partial match)."""
+    name: String
+
+    """Specify sorting order for weapon properties."""
+    order: WeaponPropertyOrder
+  ): [WeaponProperty!]!
+
+  """Gets a single weapon property by index."""
+  weaponProperty(index: String!): WeaponProperty
+}
+
+"""
+An ability score representing a fundamental character attribute (e.g., Strength, Dexterity).
+"""
+type AbilityScore {
+  """A description of the ability score and its applications."""
+  desc: [String!]!
+
+  """The full name of the ability score (e.g., Strength)."""
+  full_name: String!
+
+  """The unique identifier for this ability score (e.g., str)."""
+  index: String!
+
+  """The abbreviated name of the ability score (e.g., STR)."""
+  name: String!
+
+  """Skills associated with this ability score."""
+  skills: [Skill!]!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+"""
+A skill representing proficiency in a specific task (e.g., Athletics, Stealth).
+"""
+type Skill {
+  """The ability score associated with this skill."""
+  ability_score: AbilityScore!
+
+  """A description of the skill."""
+  desc: [String!]!
+
+  """The unique identifier for this skill (e.g., athletics)."""
+  index: String!
+
+  """The name of the skill (e.g., Athletics)."""
+  name: String!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+input AbilityScoreOrder {
+  by: AbilityScoreOrderField!
+  direction: OrderByDirection!
+  then_by: AbilityScoreOrder
+}
+
+"""Fields to sort Ability Scores by"""
+enum AbilityScoreOrderField {
+  NAME
+  FULL_NAME
+}
+
+"""Specifies the direction for ordering results."""
+enum OrderByDirection {
+  ASC
+  DESC
+}
+
+"""Represents a creature's moral and ethical outlook."""
+type Alignment {
+  """A brief description of the alignment."""
+  desc: String!
+
+  """A shortened representation of the alignment (e.g., LG, CE)."""
+  abbreviation: String!
+
+  """The unique identifier for this alignment (e.g., lawful-good)."""
+  index: String!
+
+  """The name of the alignment (e.g., Lawful Good, Chaotic Evil)."""
+  name: String!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+input AlignmentOrder {
+  by: AlignmentOrderField!
+  direction: OrderByDirection!
+  then_by: AlignmentOrder
+}
+
+"""Fields to sort Alignments by"""
+enum AlignmentOrderField {
+  NAME
+}
+
+"""
+Represents a character background providing flavor, proficiencies, and features.
+"""
+type Background {
+  """The unique identifier for this background (e.g., acolyte)."""
+  index: String!
+
+  """The name of the background (e.g., Acolyte)."""
+  name: String!
+
+  """Proficiencies granted by this background at start."""
+  starting_proficiencies: [Proficiency!]!
+
+  """Equipment received when choosing this background."""
+  starting_equipment: [EquipmentRef!]!
+
+  """The feature associated with this background."""
+  feature: BackgroundFeature!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+
+  """Resolves the flaws choice for the background."""
+  flaws: StringChoice
+
+  """Resolves the bonds choice for the background."""
+  bonds: StringChoice
+
+  """Resolves the personality traits choice for the background."""
+  personality_traits: StringChoice
+
+  """Resolves the ideals choice for the background."""
+  ideals: IdealChoice
+
+  """Resolves the language choices for the background."""
+  language_options: LanguageChoice
+
+  """Resolves starting equipment choices for the background."""
+  starting_equipment_options: [StartingEquipmentChoice!]
+}
+
+"""Represents a skill, tool, weapon, armor, or saving throw proficiency."""
+type Proficiency {
+  """Classes that grant this proficiency."""
+  classes: [Class!]
+
+  """Unique identifier for this proficiency."""
+  index: String!
+
+  """Name of the proficiency."""
+  name: String!
+
+  """Races that grant this proficiency."""
+  races: [Race!]
+
+  """Category of proficiency (e.g., Armor, Weapons, Saving Throws, Skills)."""
+  type: String!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  reference: ProficiencyReference
+}
+
+"""Represents a character class (e.g., Barbarian, Wizard)"""
+type Class {
+  """All levels for this class, detailing features and abilities gained."""
+  class_levels: [Level!]!
+
+  """Multi-classing requirements and features for this class."""
+  multi_classing: MultiClassing
+
+  """Hit die size for the class (e.g., 6, 8, 10, 12)"""
+  hit_die: Int!
+
+  """Unique identifier for the class"""
+  index: String!
+
+  """Name of the class"""
+  name: String!
+
+  """Base proficiencies granted by this class."""
+  proficiencies: [Proficiency!]
+
+  """Saving throw proficiencies granted by this class."""
+  saving_throws: [AbilityScore!]
+
+  """Spellcasting details for the class."""
+  spellcasting: Spellcasting
+
+  """Spells available to this class."""
+  spells: [Spell!]!
+
+  """Starting equipment for the class."""
+  starting_equipment: [ClassEquipment!]
+
+  """Available subclasses for this class."""
+  subclasses: [Subclass!]
+
+  """Timestamp of the last update"""
+  updated_at: String!
+  proficiency_choices: [ProficiencyChoice!]!
+
+  """Resolves starting equipment choices for the class."""
+  starting_equipment_options: [StartingEquipmentChoice!]
+}
+
+"""Represents the features and abilities gained at a specific class level"""
+type Level {
+  """Number of ability score bonuses gained at this level"""
+  ability_score_bonuses: Int
+
+  """The class this level belongs to."""
+  class: Class
+
+  """Class-specific details for this level."""
+  class_specific: ClassSpecific
+
+  """Features gained at this level."""
+  features: [Feature!]
+
+  """Unique identifier for this level (e.g., barbarian-1, rogue-20)"""
+  index: String!
+
+  """The class level (1-20)"""
+  level: Int!
+
+  """Proficiency bonus gained at this level"""
+  prof_bonus: Int
+
+  """Spellcasting progression details for this level."""
+  spellcasting: LevelSpellcasting
+
+  """The subclass this level relates to, if applicable."""
+  subclass: Subclass
+
+  """Subclass-specific details for this level."""
+  subclass_specific: SubclassSpecific
+
+  """Timestamp of the last update"""
+  updated_at: String!
+}
+
+"""Class-specific features and values gained at a level"""
+type ClassSpecific {
+  """Number of Action Surges available."""
+  action_surges: Int
+
+  """Maximum spell level recoverable via Arcane Recovery."""
+  arcane_recovery_levels: Int
+
+  """Range of Paladin auras in feet."""
+  aura_range: Int
+
+  """Die size for Bardic Inspiration (e.g., 6 for d6)."""
+  bardic_inspiration_die: Int
+
+  """Number of extra damage dice for Barbarian's Brutal Critical."""
+  brutal_critical_dice: Int
+
+  """Number of uses for Channel Divinity."""
+  channel_divinity_charges: Int
+
+  """Sorcerer spell slot creation options."""
+  creating_spell_slots: [ClassSpecificCreatingSpellSlot!]
+
+  """
+  Maximum Challenge Rating of undead that can be destroyed by Channel Divinity.
+  """
+  destroy_undead_cr: Float
+
+  """Number of extra attacks granted."""
+  extra_attacks: Int
+
+  """Number of favored enemies known by Ranger."""
+  favored_enemies: Int
+
+  """Number of favored terrains known by Ranger."""
+  favored_terrain: Int
+
+  """Number of uses for Fighter's Indomitable feature."""
+  indomitable_uses: Int
+
+  """Number of Warlock invocations known."""
+  invocations_known: Int
+
+  """Number of Monk ki points."""
+  ki_points: Int
+
+  """
+  Maximum level of spells gained via Bard's Magical Secrets (up to level 5).
+  """
+  magical_secrets_max_5: Int
+
+  """
+  Maximum level of spells gained via Bard's Magical Secrets (up to level 7).
+  """
+  magical_secrets_max_7: Int
+
+  """
+  Maximum level of spells gained via Bard's Magical Secrets (up to level 9).
+  """
+  magical_secrets_max_9: Int
+
+  """Monk martial arts damage progression."""
+  martial_arts: ClassSpecificMartialArt
+
+  """Number of Sorcerer metamagic options known."""
+  metamagic_known: Int
+
+  """Indicates if Warlock gained level 6 Mystic Arcanum (1 = yes)."""
+  mystic_arcanum_level_6: Int
+
+  """Indicates if Warlock gained level 7 Mystic Arcanum (1 = yes)."""
+  mystic_arcanum_level_7: Int
+
+  """Indicates if Warlock gained level 8 Mystic Arcanum (1 = yes)."""
+  mystic_arcanum_level_8: Int
+
+  """Indicates if Warlock gained level 9 Mystic Arcanum (1 = yes)."""
+  mystic_arcanum_level_9: Int
+
+  """Number of Barbarian rages per long rest."""
+  rage_count: Int
+
+  """Damage bonus added to Barbarian rage attacks."""
+  rage_damage_bonus: Int
+
+  """Rogue sneak attack damage progression."""
+  sneak_attack: ClassSpecificSneakAttack
+
+  """Die size for Bard's Song of Rest (e.g., 6 for d6)."""
+  song_of_rest_die: Int
+
+  """Number of Sorcerer sorcery points."""
+  sorcery_points: Int
+
+  """Bonus speed for Monk's Unarmored Movement in feet."""
+  unarmored_movement: Int
+
+  """Indicates if Druid's Wild Shape allows flying."""
+  wild_shape_fly: Boolean
+
+  """Maximum Challenge Rating for Druid's Wild Shape form."""
+  wild_shape_max_cr: Float
+
+  """Indicates if Druid's Wild Shape allows swimming."""
+  wild_shape_swim: Boolean
+}
+
+"""Spell slot creation details for Sorcerer levels"""
+type ClassSpecificCreatingSpellSlot {
+  """Cost in sorcery points."""
+  sorcery_point_cost: Int!
+
+  """Level of the spell slot created."""
+  spell_slot_level: Int!
+}
+
+"""Martial arts details for Monk levels"""
+type ClassSpecificMartialArt {
+  """Number of dice for martial arts damage."""
+  dice_count: Int!
+
+  """Value of the dice used (e.g., 4 for d4)."""
+  dice_value: Int!
+}
+
+"""Sneak attack details for Rogue levels"""
+type ClassSpecificSneakAttack {
+  """Number of dice for sneak attack damage."""
+  dice_count: Int!
+
+  """Value of the dice used (e.g., 6 for d6)."""
+  dice_value: Int!
+}
+
+"""Represents a class or subclass feature."""
+type Feature {
+  """The class that gains this feature."""
+  class: Class
+
+  """Description of the feature."""
+  desc: [String!]!
+
+  """A parent feature, if applicable."""
+  parent: Feature
+
+  """Unique identifier for this feature."""
+  index: String!
+
+  """Level at which the feature is gained."""
+  level: Int!
+
+  """Name of the feature."""
+  name: String!
+
+  """Reference information (e.g., book and page number)."""
+  reference: String
+
+  """The subclass that gains this feature, if applicable."""
+  subclass: Subclass
+
+  """Specific details for this feature, if applicable."""
+  feature_specific: FeatureSpecific
+
+  """Timestamp of the last update."""
+  updated_at: String!
+
+  """
+  Resolves the prerequisites array, fetching referenced Features or Spells.
+  """
+  prerequisites: [FeaturePrerequisiteUnion!]
+}
+
+"""
+Represents a subclass (e.g., Path of the Berserker, School of Evocation)
+"""
+type Subclass {
+  """The parent class for this subclass."""
+  class: Class
+
+  """Description of the subclass"""
+  desc: [String!]!
+
+  """Unique identifier for the subclass"""
+  index: String!
+
+  """Name of the subclass"""
+  name: String!
+
+  """Spells specific to this subclass."""
+  spells: [SubclassSpell!]
+
+  """Flavor text describing the subclass"""
+  subclass_flavor: String!
+
+  """Features and abilities gained by level for this subclass."""
+  subclass_levels: [Level!]
+
+  """Timestamp of the last update"""
+  updated_at: String!
+}
+
+"""Spell gained by a subclass"""
+type SubclassSpell {
+  """The spell gained."""
+  spell: Spell!
+
+  """Resolves the prerequisites to actual Level or Feature objects."""
+  prerequisites: [SubclassSpellPrerequisite!]
+}
+
+"""Represents a spell in D&D"""
+type Spell {
+  """Area of effect details, if applicable."""
+  area_of_effect: AreaOfEffect
+
+  """Type of attack associated with the spell (e.g., Melee, Ranged)"""
+  attack_type: String
+
+  """Time required to cast the spell"""
+  casting_time: String!
+
+  """Classes that can cast this spell."""
+  classes: [Class!]
+
+  """Components required for the spell (V, S, M)"""
+  components: [String!]!
+
+  """Indicates if the spell requires concentration"""
+  concentration: Boolean!
+
+  """Damage details, if applicable."""
+  damage: SpellDamage
+
+  """Saving throw details, if applicable."""
+  dc: SpellDC
+
+  """Description of the spell's effects"""
+  desc: [String!]!
+
+  """Duration of the spell"""
+  duration: String!
+
+  """Description of effects when cast at higher levels"""
+  higher_level: [String!]
+
+  """Unique identifier for this spell"""
+  index: String!
+
+  """Level of the spell (0 for cantrips)"""
+  level: Int!
+
+  """Material components required, if any"""
+  material: String
+
+  """Name of the spell"""
+  name: String!
+
+  """Range of the spell"""
+  range: String!
+
+  """Indicates if the spell can be cast as a ritual"""
+  ritual: Boolean!
+
+  """The school of magic this spell belongs to."""
+  school: MagicSchool
+
+  """Subclasses that can cast this spell."""
+  subclasses: [Subclass!]
+
+  """Timestamp of the last update"""
+  updated_at: String!
+
+  """Healing amount based on spell slot level, transformed from raw data."""
+  heal_at_slot_level: [LevelValue!]
+}
+
+"""Defines an area of effect for spells or abilities."""
+type AreaOfEffect {
+  """The size of the area of effect (e.g., radius in feet)."""
+  size: Int!
+
+  """The shape of the area of effect."""
+  type: String!
+}
+
+"""Details about spell damage"""
+type SpellDamage {
+  """Type of damage dealt."""
+  damage_type: DamageType
+  damage_at_slot_level: [LevelValue!]!
+
+  """Damage scaling based on character level, transformed from raw data."""
+  damage_at_character_level: [LevelValue!]
+}
+
+"""Represents a type of damage (e.g., Acid, Bludgeoning, Fire)."""
+type DamageType {
+  """The unique identifier for this damage type (e.g., acid)."""
+  index: String!
+
+  """The name of the damage type (e.g., Acid)."""
+  name: String!
+
+  """A description of the damage type."""
+  desc: [String!]!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+"""A key-value pair representing a value at a specific level."""
+type LevelValue {
+  """The level."""
+  level: Int!
+
+  """The value associated with the level."""
+  value: String!
+}
+
+"""Details about a spell's saving throw"""
+type SpellDC {
+  """The ability score used for the saving throw."""
+  dc_type: AbilityScore!
+
+  """The result of a successful save (e.g., 'half', 'none')."""
+  dc_success: String!
+
+  """Additional description for the saving throw."""
+  desc: String
+}
+
+"""
+A school of magic, representing a particular tradition like Evocation or Illusion.
+"""
+type MagicSchool {
+  """A brief description of the school of magic."""
+  desc: String!
+
+  """The unique identifier for this school (e.g., evocation)."""
+  index: String!
+
+  """The name of the school (e.g., Evocation)."""
+  name: String!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+union SubclassSpellPrerequisite = Level | Feature
+
+"""Specific details related to a feature"""
+type FeatureSpecific {
+  """Invocations related to this feature."""
+  invocations: [Feature!]
+}
+
+union FeaturePrerequisiteUnion = LevelPrerequisite | FeaturePrerequisite | SpellPrerequisite
+
+"""Prerequisite based on character level"""
+type LevelPrerequisite {
+  """Type indicator for this prerequisite."""
+  type: String!
+
+  """The character level required."""
+  level: Int!
+}
+
+"""Prerequisite based on having another feature"""
+type FeaturePrerequisite {
+  """Type indicator for this prerequisite."""
+  type: String!
+
+  """The specific feature required."""
+  feature: Feature!
+}
+
+"""Prerequisite based on knowing a specific spell"""
+type SpellPrerequisite {
+  """Type indicator for this prerequisite."""
+  type: String!
+
+  """The specific spell required."""
+  spell: Spell!
+}
+
+"""Spellcasting details for a class at a specific level"""
+type LevelSpellcasting {
+  """Number of cantrips known."""
+  cantrips_known: Int
+
+  """Number of level 1 spell slots."""
+  spell_slots_level_1: Int!
+
+  """Number of level 2 spell slots."""
+  spell_slots_level_2: Int!
+
+  """Number of level 3 spell slots."""
+  spell_slots_level_3: Int!
+
+  """Number of level 4 spell slots."""
+  spell_slots_level_4: Int!
+
+  """Number of level 5 spell slots."""
+  spell_slots_level_5: Int!
+
+  """Number of level 6 spell slots."""
+  spell_slots_level_6: Int
+
+  """Number of level 7 spell slots."""
+  spell_slots_level_7: Int
+
+  """Number of level 8 spell slots."""
+  spell_slots_level_8: Int
+
+  """Number of level 9 spell slots."""
+  spell_slots_level_9: Int
+
+  """Total number of spells known (for certain classes like Sorcerer)."""
+  spells_known: Int
+}
+
+"""Subclass-specific features and values gained at a level"""
+type SubclassSpecific {
+  """Maximum level of spells gained via Bard's Additional Magical Secrets."""
+  additional_magical_secrets_max_lvl: Int
+
+  """Range of subclass-specific auras (e.g., Paladin) in feet."""
+  aura_range: Int
+}
+
+"""Multi-classing requirements and features for a class"""
+type MultiClassing {
+  """Ability score prerequisites for multi-classing."""
+  prerequisites: [MultiClassingPrereq!]
+
+  """Proficiencies gained when multi-classing into this class."""
+  proficiencies: [Proficiency!]
+  proficiency_choices: [ProficiencyChoice!]!
+  prerequisite_options: PrerequisiteChoice!
+}
+
+"""Prerequisite for multi-classing"""
+type MultiClassingPrereq {
+  """The ability score required."""
+  ability_score: AbilityScore
+
+  """The minimum score required."""
+  minimum_score: Int!
+}
+
+"""
+Represents a choice from a list of Proficiencies or nested ProficiencyChoices.
+"""
+type ProficiencyChoice {
+  """The number of Proficiencies to choose from this list."""
+  choose: Int!
+
+  """The type of choice (e.g., proficiencies)."""
+  type: String!
+
+  """The set of Proficiency options available."""
+  from: ProficiencyChoiceOptionSet!
+
+  """Description of the choice."""
+  desc: String
+}
+
+"""Represents a set of Proficiency options for a choice."""
+type ProficiencyChoiceOptionSet {
+  """The type of the option set (e.g., resource_list, options_array)."""
+  option_set_type: String!
+
+  """The list of Proficiency options available."""
+  options: [ProficiencyChoiceOption!]!
+}
+
+"""
+Represents a reference to a Proficiency or nested ProficiencyChoice within a choice option set.
+"""
+type ProficiencyChoiceOption {
+  """The type of this option (e.g., "reference", "choice")."""
+  option_type: String!
+
+  """The resolved Proficiency object or nested ProficiencyChoice."""
+  item: ProficiencyChoiceItem!
+}
+
+union ProficiencyChoiceItem = Proficiency | ProficiencyChoice
+
+"""A choice of prerequisites for multi-classing"""
+type PrerequisiteChoice {
+  """Number of prerequisites to choose."""
+  choose: Int!
+
+  """Type of prerequisites to choose from."""
+  type: String!
+
+  """The options to choose from."""
+  from: PrerequisiteChoiceOptionSet!
+
+  """Description of the prerequisite choice."""
+  desc: String
+}
+
+"""A set of prerequisite options to choose from"""
+type PrerequisiteChoiceOptionSet {
+  """The type of option set."""
+  option_set_type: String!
+
+  """The available options."""
+  options: [PrerequisiteChoiceOption!]!
+}
+
+"""A single prerequisite option"""
+type PrerequisiteChoiceOption {
+  """The type of option."""
+  option_type: String!
+
+  """The ability score required."""
+  ability_score: AbilityScore!
+
+  """The minimum score required."""
+  minimum_score: Int!
+}
+
+"""Spellcasting details for a class"""
+type Spellcasting {
+  """Spellcasting details for the class."""
+  info: [SpellcastingInfo!]!
+
+  """Level of the spellcasting ability."""
+  level: Int!
+
+  """Ability score used for spellcasting."""
+  spellcasting_ability: AbilityScore!
+}
+
+"""Information about a class's spellcasting ability"""
+type SpellcastingInfo {
+  """Description of the spellcasting ability."""
+  desc: [String!]!
+
+  """Name of the spellcasting ability."""
+  name: String!
+}
+
+"""Starting equipment item for a class"""
+type ClassEquipment {
+  """Quantity of the equipment item."""
+  quantity: Int!
+  equipment: AnyEquipment
+}
+
+union AnyEquipment = Armor | Weapon | Tool | Gear | Pack | Ammunition | Vehicle
+
+"""Represents Armor equipment"""
+type Armor implements IEquipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Description of the equipment."""
+  desc: [String!]
+
+  """The category this equipment belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """Category if the equipment is gear."""
+  gear_category: EquipmentCategory
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  properties: [WeaponProperty!]
+
+  """Category of armor (e.g., Light, Medium, Heavy)."""
+  armor_category: String!
+
+  """Armor export Class details for this armor."""
+  armor_class: ArmorClass!
+
+  """Minimum Strength score required to use this armor effectively."""
+  str_minimum: Int
+
+  """Whether wearing the armor imposes disadvantage on Stealth checks."""
+  stealth_disadvantage: Boolean
+}
+
+"""Common fields shared by all types of equipment and magic items."""
+interface IEquipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Description of the equipment."""
+  desc: [String!]
+}
+
+"""Cost of an item in coinage."""
+type Cost {
+  """The quantity of coins."""
+  quantity: Int!
+
+  """The unit of coinage (e.g., gp, sp, cp)."""
+  unit: String!
+}
+
+"""
+A category for grouping equipment (e.g., Weapon, Armor, Adventuring Gear).
+"""
+type EquipmentCategory {
+  """The unique identifier for this category (e.g., weapon)."""
+  index: String!
+
+  """The name of the category (e.g., Weapon)."""
+  name: String!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  equipment: [EquipmentOrMagicItem!]!
+}
+
+union EquipmentOrMagicItem = Armor | Weapon | Tool | Gear | Pack | Ammunition | Vehicle | MagicItem
+
+"""Represents Weapon equipment"""
+type Weapon implements IEquipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Description of the equipment."""
+  desc: [String!]
+
+  """The category this equipment belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """Category if the equipment is gear."""
+  gear_category: EquipmentCategory
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Timestamp of the last update."""
+  updated_at: String!
+
+  """Properties of the weapon."""
+  properties: [WeaponProperty!]
+
+  """Category of weapon (e.g., Simple, Martial)."""
+  weapon_category: String!
+
+  """Range classification of weapon (e.g., Melee, Ranged)."""
+  weapon_range: String!
+
+  """Range category for weapons (e.g., Melee, Ranged)."""
+  category_range: String!
+
+  """Primary damage dealt by the weapon."""
+  damage: Damage
+
+  """Damage dealt when using the weapon with two hands."""
+  two_handed_damage: Damage
+
+  """Weapon range details."""
+  range: Range
+
+  """Range when the weapon is thrown."""
+  throw_range: ThrowRange
+}
+
+"""
+A property that can be applied to a weapon, modifying its use or characteristics.
+"""
+type WeaponProperty {
+  """A description of the weapon property."""
+  desc: [String!]!
+
+  """The unique identifier for this property (e.g., versatile)."""
+  index: String!
+
+  """The name of the property (e.g., Versatile)."""
+  name: String!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+"""Represents damage dealt by an ability, spell, or weapon."""
+type Damage {
+  """The type of damage."""
+  damage_type: DamageType
+
+  """The damage dice roll (e.g., 3d6)."""
+  damage_dice: String!
+}
+
+"""Range of a weapon (normal and long)."""
+type Range {
+  """The long range of the weapon."""
+  long: Int
+
+  """The normal range of the weapon."""
+  normal: Int!
+}
+
+"""Range for a thrown weapon."""
+type ThrowRange {
+  """The long range when thrown."""
+  long: Int!
+
+  """The normal range when thrown."""
+  normal: Int!
+}
+
+"""Represents Tool equipment"""
+type Tool implements IEquipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Description of the equipment."""
+  desc: [String!]
+
+  """The category this equipment belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """Category if the equipment is gear."""
+  gear_category: EquipmentCategory
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  properties: [WeaponProperty!]
+
+  """Category of tool (e.g., Artisan's Tools, Gaming Set)."""
+  tool_category: String!
+}
+
+"""Represents Gear equipment (general purpose)"""
+type Gear implements IEquipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Description of the equipment."""
+  desc: [String!]
+
+  """The category this equipment belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """Category if the equipment is gear."""
+  gear_category: EquipmentCategory
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  properties: [WeaponProperty!]
+}
+
+"""Represents Gear that contains other items (e.g., Explorer's Pack)"""
+type Pack implements IEquipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Description of the equipment."""
+  desc: [String!]
+
+  """The category this equipment belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """Category if the equipment is gear."""
+  gear_category: EquipmentCategory
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  properties: [WeaponProperty!]
+
+  """Items contained within the pack."""
+  contents: [Content!]
+}
+
+"""An item and its quantity within a container or bundle."""
+type Content {
+  """The quantity of the item."""
+  quantity: Int!
+
+  """Resolves the APIReference to the actual Equipment."""
+  item: AnyEquipment
+}
+
+"""Represents Ammunition equipment"""
+type Ammunition implements IEquipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Description of the equipment."""
+  desc: [String!]
+
+  """The category this equipment belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """Category if the equipment is gear."""
+  gear_category: EquipmentCategory
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  properties: [WeaponProperty!]
+
+  """Quantity of ammunition in the bundle."""
+  quantity: Int!
+}
+
+"""Represents Vehicle equipment"""
+type Vehicle implements IEquipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Description of the equipment."""
+  desc: [String!]
+
+  """The category this equipment belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """Category if the equipment is gear."""
+  gear_category: EquipmentCategory
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  properties: [WeaponProperty!]
+
+  """Category of vehicle (e.g., Ship, Land)."""
+  vehicle_category: String!
+
+  """Movement speed of the vehicle."""
+  speed: Speed
+
+  """Carrying capacity of the vehicle."""
+  capacity: String
+}
+
+"""Speed of a mount or vehicle."""
+type Speed {
+  """The speed quantity."""
+  quantity: Float!
+
+  """The unit of speed (e.g., ft./round)."""
+  unit: String!
+}
+
+"""An item imbued with magical properties."""
+type MagicItem {
+  """A description of the magic item, including its effects and usage."""
+  desc: [String!]!
+
+  """The category of equipment this magic item belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """URL of an image for the magic item, if available."""
+  image: String
+
+  """The unique identifier for this magic item (e.g., adamantite-armor)."""
+  index: String!
+
+  """The name of the magic item (e.g., Adamantite Armor)."""
+  name: String!
+
+  """The rarity of the magic item."""
+  rarity: Rarity!
+
+  """Other magic items that are variants of this item."""
+  variants: [MagicItem!]
+
+  """Indicates if this magic item is a variant of another item."""
+  variant: Boolean!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+"""Rarity level of a magic item."""
+type Rarity {
+  """The name of the rarity level (e.g., Common, Uncommon, Rare)."""
+  name: String!
+}
+
+"""Details about armor class."""
+type ArmorClass {
+  """Base armor class value."""
+  base: Int!
+
+  """Indicates if Dexterity bonus applies."""
+  dex_bonus: Boolean!
+
+  """Maximum Dexterity bonus allowed."""
+  max_bonus: Int
+}
+
+"""Represents a choice for starting equipment."""
+type StartingEquipmentChoice {
+  """The number of items or options to choose."""
+  choose: Int!
+
+  """A description of the choice presented to the user."""
+  desc: String
+
+  """The type of choice, e.g., 'equipment'."""
+  type: String!
+
+  """The set of options or category to choose from."""
+  from: StartingEquipmentFromUnion!
+}
+
+union StartingEquipmentFromUnion = EquipmentCategorySet | EquipmentOptionSet
+
+"""
+A set of equipment choices derived directly from an equipment category.
+"""
+type EquipmentCategorySet {
+  """Indicates the type of option set, e.g., 'equipment_category'."""
+  option_set_type: String!
+
+  """The equipment category to choose from."""
+  equipment_category: EquipmentCategory!
+}
+
+"""A set of explicitly listed equipment options."""
+type EquipmentOptionSet {
+  """Indicates the type of option set, e.g., 'options_array'."""
+  option_set_type: String!
+
+  """A list of specific equipment options."""
+  options: [EquipmentOptionUnion!]!
+}
+
+union EquipmentOptionUnion = CountedReferenceOption | EquipmentCategoryChoiceOption | MultipleItemsOption
+
+"""Represents a specific piece of equipment with a quantity."""
+type CountedReferenceOption {
+  """The type of this option, e.g., 'counted_reference'."""
+  option_type: String!
+
+  """The quantity of the equipment."""
+  count: Int!
+
+  """The referenced equipment item."""
+  of: Equipment!
+
+  """Prerequisites for choosing this option."""
+  prerequisites: [ProficiencyPrerequisite!]
+}
+
+"""Base Equipment class for common fields, potentially used in Unions."""
+type Equipment {
+  """The unique identifier for this equipment."""
+  index: String!
+
+  """The name of the equipment."""
+  name: String!
+
+  """Description of the equipment."""
+  desc: [String!]
+
+  """The category this equipment belongs to."""
+  equipment_category: EquipmentCategory!
+
+  """Category if the equipment is gear."""
+  gear_category: EquipmentCategory
+
+  """Cost of the equipment in coinage."""
+  cost: Cost!
+
+  """Weight of the equipment in pounds."""
+  weight: Float
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  properties: [WeaponProperty!]
+}
+
+"""
+A prerequisite for an equipment option, typically requiring a specific proficiency.
+"""
+type ProficiencyPrerequisite {
+  """The type of prerequisite, e.g., 'proficiency'."""
+  type: String!
+
+  """The specific proficiency required."""
+  proficiency: Proficiency!
+}
+
+"""An option that represents a choice from a single equipment category."""
+type EquipmentCategoryChoiceOption {
+  """
+  The type of this option, e.g., 'choice' or 'equipment_category_choice'.
+  """
+  option_type: String!
+
+  """The details of the choice from an equipment category."""
+  choice: EquipmentCategoryChoice!
+}
+
+"""Details of a choice limited to an equipment category."""
+type EquipmentCategoryChoice {
+  """Number of items to choose from the category."""
+  choose: Int!
+
+  """An optional description for this choice."""
+  desc: String
+
+  """Type of choice, e.g., 'equipment'."""
+  type: String!
+
+  """The equipment category to choose from."""
+  from: EquipmentCategorySet!
+}
+
+"""
+Represents a bundle of multiple equipment items or equipment category choices.
+"""
+type MultipleItemsOption {
+  """The type of this option, e.g., 'multiple'."""
+  option_type: String!
+
+  """The list of items or category choices included in this bundle."""
+  items: [MultipleItemUnion!]!
+}
+
+union MultipleItemUnion = CountedReferenceOption | EquipmentCategoryChoiceOption
+
+"""Represents a playable race in D&D"""
+type Race {
+  """The index of the race."""
+  index: String!
+
+  """Ability score bonuses granted by this race."""
+  ability_bonuses: [RaceAbilityBonus!]!
+
+  """Typical age range and lifespan for the race"""
+  age: String!
+
+  """Typical alignment tendencies for the race"""
+  alignment: String!
+
+  """Description of languages typically spoken by the race"""
+  language_desc: String!
+
+  """Languages typically spoken by this race."""
+  languages: [Language!]
+
+  """The name of the race."""
+  name: String!
+
+  """Size category (e.g., Medium, Small)"""
+  size: String!
+
+  """Description of the race's size"""
+  size_description: String!
+
+  """Base walking speed in feet"""
+  speed: Int!
+
+  """Subraces available for this race."""
+  subraces: [Subrace!]
+
+  """Traits common to this race."""
+  traits: [Trait!]
+
+  """Timestamp of the last update"""
+  updated_at: String!
+  language_options: LanguageChoice
+  ability_bonus_options: AbilityScoreBonusChoice
+}
+
+"""Ability score bonus provided by a race"""
+type RaceAbilityBonus {
+  """The ability score that receives the bonus."""
+  ability_score: AbilityScore
+
+  """The bonus value for the ability score"""
+  bonus: Int!
+}
+
+"""Represents a language spoken in the D&D world."""
+type Language {
+  """A brief description of the language."""
+  desc: String
+
+  """The unique identifier for this language (e.g., common)."""
+  index: String!
+
+  """The name of the language (e.g., Common)."""
+  name: String!
+
+  """The script used to write the language (e.g., Common, Elvish)."""
+  script: String
+
+  """The type of language (e.g., Standard, Exotic)."""
+  type: String!
+
+  """Typical speakers of the language."""
+  typical_speakers: [String!]!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+"""A subrace representing a specific heritage within a larger race."""
+type Subrace {
+  """Ability score bonuses granted by this subrace."""
+  ability_bonuses: [SubraceAbilityBonus!]!
+
+  """A description of the subrace."""
+  desc: String!
+
+  """The unique identifier for this subrace (e.g., high-elf)."""
+  index: String!
+
+  """The name of the subrace (e.g., High Elf)."""
+  name: String!
+
+  """The parent race for this subrace."""
+  race: Race
+
+  """Racial traits associated with this subrace."""
+  racial_traits: [Trait!]
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+"""Bonus to an ability score provided by a subrace."""
+type SubraceAbilityBonus {
+  """The ability score receiving the bonus."""
+  ability_score: AbilityScore
+
+  """The bonus value to the ability score."""
+  bonus: Int!
+}
+
+"""A racial or subracial trait providing specific benefits or abilities."""
+type Trait {
+  """A description of the trait."""
+  desc: [String!]!
+
+  """The unique identifier for this trait (e.g., darkvision)."""
+  index: String!
+
+  """The name of the trait (e.g., Darkvision)."""
+  name: String!
+
+  """Proficiencies granted by this trait."""
+  proficiencies: [Proficiency!]
+
+  """Races that possess this trait."""
+  races: [Race!]
+
+  """Subraces that possess this trait."""
+  subraces: [Subrace!]
+
+  """A parent trait, if this is a sub-trait."""
+  parent: Trait
+
+  """Specific details for this trait, if applicable."""
+  trait_specific: TraitSpecific
+
+  """Timestamp of the last update."""
+  updated_at: String!
+  language_options: LanguageChoice
+  proficiency_choices: ProficiencyChoice
+}
+
+"""Details specific to certain traits."""
+type TraitSpecific {
+  """Breath weapon action details, if applicable."""
+  breath_weapon: Action
+  damage_type: DamageType
+  subtrait_options: TraitChoice
+  spell_options: SpellChoice
+}
+
+"""Represents an action associated with a trait (like a breath weapon)."""
+type Action {
+  """The name of the action."""
+  name: String!
+
+  """Description of the action."""
+  desc: String!
+
+  """Usage limitations for the action."""
+  usage: Usage
+
+  """
+  The Difficulty Class (DC) associated with the action (value may not be applicable).
+  """
+  dc: TraitActionDC
+
+  """Damage dealt by the action."""
+  damage: [ActionDamage!]
+
+  """The area of effect for the action."""
+  area_of_effect: AreaOfEffect
+}
+
+"""Usage limit details for an action"""
+type Usage {
+  """Type of usage limit (e.g., 'per day')."""
+  type: String!
+
+  """Number of times the action can be used."""
+  times: Int!
+}
+
+"""DC details for a trait action (lacks dc_value)."""
+type TraitActionDC {
+  """The ability score associated with this DC."""
+  dc_type: AbilityScore!
+
+  """The result of a successful save against this DC."""
+  success_type: String!
+}
+
+"""Damage details for an action"""
+type ActionDamage {
+  """The type of damage dealt."""
+  damage_type: DamageType
+
+  """
+  Damage scaling based on character level, transformed from the raw data object.
+  """
+  damage_at_character_level: [LevelValue!]
+}
+
+"""Represents a choice from a list of Traits."""
+type TraitChoice {
+  """The number of Traits to choose from this list."""
+  choose: Int!
+
+  """The type of choice (e.g., subtraits)."""
+  type: String!
+
+  """The set of Trait options available."""
+  from: TraitChoiceOptionSet!
+}
+
+"""Represents a set of Trait options for a choice."""
+type TraitChoiceOptionSet {
+  """The type of the option set (e.g., resource_list, options_array)."""
+  option_set_type: String!
+
+  """The list of Trait options available."""
+  options: [TraitChoiceOption!]!
+}
+
+"""Represents a reference to a Trait within a choice option set."""
+type TraitChoiceOption {
+  """The type of this option (e.g., "reference")."""
+  option_type: String!
+
+  """The resolved Trait object."""
+  item: Trait!
+}
+
+"""Represents a choice from a list of Spells."""
+type SpellChoice {
+  """The number of Spells to choose from this list."""
+  choose: Int!
+
+  """The type of choice (e.g., spells)."""
+  type: String!
+
+  """The set of Spell options available."""
+  from: SpellChoiceOptionSet!
+}
+
+"""Represents a set of Spell options for a choice."""
+type SpellChoiceOptionSet {
+  """The type of the option set (e.g., resource_list, options_array)."""
+  option_set_type: String!
+
+  """The list of Spell options available."""
+  options: [SpellChoiceOption!]!
+}
+
+"""Represents a reference to a Spell within a choice option set."""
+type SpellChoiceOption {
+  """The type of this option (e.g., "reference")."""
+  option_type: String!
+
+  """The resolved Spell object."""
+  item: Spell!
+}
+
+"""Represents a choice from a list of languages."""
+type LanguageChoice {
+  """The number of languages to choose from this list."""
+  choose: Int!
+
+  """The type of choice (e.g., languages)."""
+  type: String!
+
+  """The set of language options available."""
+  from: LanguageChoiceOptionSet!
+}
+
+"""Represents a set of language options for a choice."""
+type LanguageChoiceOptionSet {
+  """The type of the option set (e.g., resource_list, options_array)."""
+  option_set_type: String!
+
+  """The list of language options available."""
+  options: [LanguageChoiceOption!]!
+}
+
+"""Represents a reference to a language within a choice option set."""
+type LanguageChoiceOption {
+  """The type of this option (e.g., "reference")."""
+  option_type: String!
+
+  """The resolved Language object."""
+  item: Language!
+}
+
+"""A choice of ability score bonuses for a race"""
+type AbilityScoreBonusChoice {
+  """Number of ability score bonuses to choose."""
+  choose: Int!
+
+  """Type of ability score bonuses to choose from."""
+  type: String!
+
+  """The options to choose from."""
+  from: AbilityScoreBonusChoiceOptionSet!
+
+  """Description of the ability score bonus choice."""
+  desc: String
+}
+
+"""A set of ability score bonus options to choose from"""
+type AbilityScoreBonusChoiceOptionSet {
+  """The type of option set."""
+  option_set_type: String!
+
+  """The available options."""
+  options: [AbilityScoreBonusChoiceOption!]!
+}
+
+"""A single ability score bonus option"""
+type AbilityScoreBonusChoiceOption {
+  """The type of option."""
+  option_type: String!
+
+  """The ability score to increase."""
+  ability_score: AbilityScore!
+
+  """The amount to increase the ability score by."""
+  bonus: Int!
+}
+
+union ProficiencyReference = Equipment | EquipmentCategory | AbilityScore | Skill
+
+"""Reference to a piece of equipment with a quantity."""
+type EquipmentRef {
+  """The specific equipment referenced."""
+  equipment: Equipment!
+
+  """The quantity of the referenced equipment."""
+  quantity: Int!
+}
+
+"""A special feature granted by the background."""
+type BackgroundFeature {
+  """The name of the background feature."""
+  name: String!
+
+  """The description of the background feature."""
+  desc: [String!]!
+}
+
+"""Represents a choice from a list of string options."""
+type StringChoice {
+  """The number of options to choose from this list."""
+  choose: Int!
+
+  """The type or category of the choice."""
+  type: String!
+
+  """The set of string options available."""
+  from: StringChoiceOptionSet!
+}
+
+"""Represents a set of string options."""
+type StringChoiceOptionSet {
+  """The type of the string option set."""
+  option_set_type: String!
+
+  """The list of string options available."""
+  options: [StringChoiceOption!]!
+}
+
+"""
+Represents a single string option within a choice (e.g., a flaw, a bond).
+"""
+type StringChoiceOption {
+  """The text content of the string option."""
+  string: String!
+
+  """The type of the string option."""
+  option_type: String!
+}
+
+"""Represents the choice structure for background ideals."""
+type IdealChoice {
+  """The number of ideals to choose from this list."""
+  choose: Int!
+
+  """The type of choice (e.g., ideals)."""
+  type: String!
+
+  """The set of ideal options available."""
+  from: IdealOptionSet!
+}
+
+"""Represents a set of ideal options for a background."""
+type IdealOptionSet {
+  """The type of the ideal option set (e.g., options_array)."""
+  option_set_type: String!
+
+  """The list of ideal options available."""
+  options: [IdealOption!]!
+}
+
+"""Represents a single ideal option for a background."""
+type IdealOption {
+  """The type of the ideal option (e.g., ideal)."""
+  option_type: String!
+
+  """The description of the ideal."""
+  desc: String!
+
+  """Alignments associated with this ideal."""
+  alignments: [Alignment!]!
+}
+
+input BackgroundOrder {
+  by: BackgroundOrderField!
+  direction: OrderByDirection!
+  then_by: BackgroundOrder
+}
+
+"""Fields to sort Backgrounds by"""
+enum BackgroundOrderField {
+  NAME
+}
+
+"""
+Input for filtering by an integer, an array of integers, or a range of integers.
+"""
+input NumberFilterInput {
+  """Matches an exact integer value."""
+  eq: Int
+
+  """Matches any integer value in the provided list."""
+  in: [Int!]
+
+  """Matches no integer value in the provided list."""
+  nin: [Int!]
+
+  """Matches integer values within a specified range."""
+  range: NumberRangeFilterInput
+}
+
+"""
+Input for filtering integer fields, allowing exact match, a list of matches, or a range.
+"""
+input NumberRangeFilterInput {
+  """Matches values less than."""
+  lt: Int
+
+  """Matches values less than or equal to."""
+  lte: Int
+
+  """Matches values greater than."""
+  gt: Int
+
+  """Matches values greater than or equal to."""
+  gte: Int
+}
+
+input ClassOrder {
+  by: ClassOrderField!
+  direction: OrderByDirection!
+  then_by: ClassOrder
+}
+
+"""Fields to sort Classes by"""
+enum ClassOrderField {
+  NAME
+  HIT_DIE
+}
+
+"""A state that can affect a creature, such as Blinded or Prone."""
+type Condition {
+  """The unique identifier for this condition (e.g., blinded)."""
+  index: String!
+
+  """The name of the condition (e.g., Blinded)."""
+  name: String!
+
+  """A description of the effects of the condition."""
+  desc: [String!]!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+input ConditionOrder {
+  by: ConditionOrderField!
+  direction: OrderByDirection!
+  then_by: ConditionOrder
+}
+
+"""Fields to sort Conditions by"""
+enum ConditionOrderField {
+  NAME
+}
+
+input DamageTypeOrder {
+  by: DamageTypeOrderField!
+  direction: OrderByDirection!
+  then_by: DamageTypeOrder
+}
+
+"""Fields to sort Damage Types by"""
+enum DamageTypeOrderField {
+  NAME
+}
+
+input EquipmentOrder {
+  by: EquipmentOrderField!
+  direction: OrderByDirection!
+  then_by: EquipmentOrder
+}
+
+"""Fields to sort Equipment by"""
+enum EquipmentOrderField {
+  NAME
+  WEIGHT
+  COST_QUANTITY
+}
+
+input EquipmentCategoryOrder {
+  by: EquipmentCategoryOrderField!
+  direction: OrderByDirection!
+  then_by: EquipmentCategoryOrder
+}
+
+"""Fields to sort Equipment Categories by"""
+enum EquipmentCategoryOrderField {
+  NAME
+}
+
+"""
+A feat representing a special talent or expertise giving unique capabilities.
+"""
+type Feat {
+  """The unique identifier for this feat (e.g., grappler)."""
+  index: String!
+
+  """The name of the feat (e.g., Grappler)."""
+  name: String!
+
+  """Prerequisites that must be met to take the feat."""
+  prerequisites: [Prerequisite!]!
+
+  """A description of the benefits conferred by the feat."""
+  desc: [String!]!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+"""A prerequisite for taking a feat, usually a minimum ability score."""
+type Prerequisite {
+  """The ability score required for this prerequisite."""
+  ability_score: AbilityScore
+
+  """The minimum score required in the referenced ability score."""
+  minimum_score: Int!
+}
+
+input FeatOrder {
+  by: FeatOrderField!
+  direction: OrderByDirection!
+  then_by: FeatOrder
+}
+
+"""Fields to sort Feats by"""
+enum FeatOrderField {
+  NAME
+}
+
+input FeatureOrder {
+  by: FeatureOrderField!
+  direction: OrderByDirection!
+  then_by: FeatureOrder
+}
+
+"""Fields to sort Features by"""
+enum FeatureOrderField {
+  NAME
+  LEVEL
+  CLASS
+  SUBCLASS
+}
+
+input LanguageOrder {
+  by: LanguageOrderField!
+  direction: OrderByDirection!
+  then_by: LanguageOrder
+}
+
+"""Fields to sort Languages by"""
+enum LanguageOrderField {
+  NAME
+  TYPE
+  SCRIPT
+}
+
+input LevelOrder {
+  by: LevelOrderField!
+  direction: OrderByDirection!
+  then_by: LevelOrder
+}
+
+"""Fields to sort Levels by"""
+enum LevelOrderField {
+  LEVEL
+  CLASS
+  SUBCLASS
+}
+
+input MagicItemOrder {
+  by: MagicItemOrderField!
+  direction: OrderByDirection!
+  then_by: MagicItemOrder
+}
+
+"""Fields to sort Magic Items by"""
+enum MagicItemOrderField {
+  NAME
+  EQUIPMENT_CATEGORY
+  RARITY
+}
+
+input MagicSchoolOrder {
+  by: MagicSchoolOrderField!
+  direction: OrderByDirection!
+  then_by: MagicSchoolOrder
+}
+
+"""Fields to sort Magic Schools by"""
+enum MagicSchoolOrderField {
+  NAME
+}
+
+"""A D&D monster."""
+type Monster {
+  """The actions for the monster."""
+  actions: [MonsterAction!]
+  alignment: String!
+  challenge_rating: Float!
+  charisma: Int!
+
+  """Conditions the monster is immune to."""
+  condition_immunities: [Condition!]
+  constitution: Int!
+  damage_immunities: [String!]!
+  damage_resistances: [String!]!
+  damage_vulnerabilities: [String!]!
+  dexterity: Int!
+
+  """Other forms the monster can assume."""
+  forms: [Monster!]
+  hit_dice: String!
+  hit_points: Int!
+  hit_points_roll: String!
+  image: String
+  index: String!
+  intelligence: Int!
+  languages: String!
+
+  """The legendary actions for the monster."""
+  legendary_actions: [LegendaryAction!]
+  name: String!
+
+  """The proficiencies for the monster."""
+  proficiencies: [MonsterProficiency!]
+
+  """The reactions for the monster."""
+  reactions: [Reaction!]
+  senses: Sense!
+  size: String!
+
+  """The special abilities for the monster."""
+  special_abilities: [SpecialAbility!]
+  speed: MonsterSpeed!
+  strength: Int!
+  subtype: String
+  type: String!
+  wisdom: Int!
+  xp: Int!
+  updated_at: String!
+  armor_class: [MonsterArmorClass!]!
+}
+
+"""An action a monster can perform"""
+type MonsterAction {
+  """The name of the action."""
+  name: String!
+
+  """The description of the action."""
+  desc: String!
+
+  """The attack bonus for the action."""
+  attack_bonus: Int
+
+  """The difficulty class for the action."""
+  dc: DifficultyClass
+
+  """The usage for the action."""
+  usage: ActionUsage
+
+  """The type of multiattack for the action."""
+  multiattack_type: String
+
+  """The actions for the action."""
+  actions: [ActionOption!]
+  damage: [DamageOrDamageChoice!]
+  action_options: ActionChoice
+  options: BreathChoice
+}
+
+"""
+Represents a Difficulty Class (DC) for saving throws or ability checks where a value is expected.
+"""
+type DifficultyClass {
+  """The ability score associated with this DC."""
+  dc_type: AbilityScore!
+
+  """The value of the DC."""
+  dc_value: Int!
+
+  """The result of a successful save against this DC."""
+  success_type: String!
+}
+
+"""Usage details for a monster action or ability"""
+type ActionUsage {
+  """The type of action usage."""
+  type: String!
+
+  """The dice roll for the action usage."""
+  dice: String
+
+  """The minimum value for the action usage."""
+  min_value: Int
+}
+
+"""Option within a monster action"""
+type ActionOption {
+  """The name of the action."""
+  action_name: String!
+
+  """Number of times the action can be used."""
+  count: String!
+
+  """The type of action."""
+  type: String!
+}
+
+union DamageOrDamageChoice = Damage | DamageChoice
+
+"""A choice of damage options"""
+type DamageChoice {
+  """The number of options to choose."""
+  choose: Float!
+
+  """The type of choice."""
+  type: String!
+
+  """The options to choose from."""
+  from: DamageChoiceOptionSet!
+
+  """The description of the choice."""
+  desc: String
+}
+
+"""A set of damage options"""
+type DamageChoiceOptionSet {
+  """The type of option set."""
+  option_set_type: String!
+
+  """The options in this set."""
+  options: [DamageChoiceOption!]!
+}
+
+"""A single damage option in a damage choice"""
+type DamageChoiceOption {
+  """The type of option."""
+  option_type: String!
+
+  """The damage for this option."""
+  damage: Damage!
+}
+
+"""A choice of actions for a monster"""
+type ActionChoice {
+  """Number of actions to choose."""
+  choose: Int!
+
+  """Type of actions to choose from."""
+  type: String!
+
+  """The options to choose from."""
+  from: ActionChoiceOptionSet!
+
+  """Description of the action choice."""
+  desc: String
+}
+
+"""A set of action options to choose from"""
+type ActionChoiceOptionSet {
+  """The type of option set."""
+  option_set_type: String!
+
+  """The available options."""
+  options: [ActionOptionUnion!]!
+}
+
+union ActionOptionUnion = ActionChoiceOption | MultipleActionChoiceOption
+
+"""A single action option within a choice"""
+type ActionChoiceOption {
+  """The type of option."""
+  option_type: String!
+
+  """The name of the action."""
+  action_name: String!
+
+  """Number of times the action can be used."""
+  count: Int!
+
+  """The type of action."""
+  type: String!
+
+  """Additional notes about the action."""
+  notes: String
+}
+
+"""A multiple action option containing a set of actions"""
+type MultipleActionChoiceOption {
+  """The type of option."""
+  option_type: String!
+
+  """The set of actions in this option."""
+  items: [ActionChoiceOption!]!
+}
+
+"""A choice of breath options for a monster action"""
+type BreathChoice {
+  """Number of breath options to choose."""
+  choose: Int!
+
+  """Type of breath options to choose from."""
+  type: String!
+
+  """The options to choose from."""
+  from: BreathChoiceOptionSet!
+
+  """Description of the breath choice."""
+  desc: String
+}
+
+"""A set of breath options to choose from"""
+type BreathChoiceOptionSet {
+  """The type of option set."""
+  option_set_type: String!
+
+  """The available breath options."""
+  options: [BreathChoiceOption!]!
+}
+
+"""A single breath option within a breath choice"""
+type BreathChoiceOption {
+  """The type of option (e.g., breath)."""
+  option_type: String!
+
+  """The name of the breath option."""
+  name: String!
+
+  """The difficulty class for the breath."""
+  dc: DifficultyClass!
+
+  """The damage dealt by the breath."""
+  damage: [Damage!]
+}
+
+"""A legendary action a monster can perform"""
+type LegendaryAction {
+  """The name of the legendary action."""
+  name: String!
+
+  """The description of the legendary action."""
+  desc: String!
+
+  """The attack bonus for the legendary action."""
+  attack_bonus: Int
+
+  """The damage for the legendary action."""
+  damage: [Damage!]
+
+  """The difficulty class for the legendary action."""
+  dc: DifficultyClass
+}
+
+"""A monster's specific proficiency and its bonus value."""
+type MonsterProficiency {
+  """The specific proficiency (e.g., Saving Throw: STR, Skill: Athletics)."""
+  proficiency: Proficiency!
+
+  """The proficiency bonus value for this monster."""
+  value: Int!
+}
+
+"""A reaction a monster can perform"""
+type Reaction {
+  """The name of the reaction."""
+  name: String!
+
+  """The description of the reaction."""
+  desc: String!
+
+  """The difficulty class for the reaction."""
+  dc: DifficultyClass
+}
+
+"""Monster senses details"""
+type Sense {
+  blindsight: String
+  darkvision: String
+  passive_perception: Int!
+  tremorsense: String
+  truesight: String
+}
+
+"""A special ability of the monster"""
+type SpecialAbility {
+  """The name of the special ability."""
+  name: String!
+
+  """The description of the special ability."""
+  desc: String!
+
+  """The attack bonus for the special ability."""
+  attack_bonus: Int
+
+  """The damage for the special ability."""
+  damage: [Damage!]
+
+  """The difficulty class for the special ability."""
+  dc: DifficultyClass
+
+  """The spellcasting for the special ability."""
+  spellcasting: SpecialAbilitySpellcasting
+
+  """The usage for the special ability."""
+  usage: SpecialAbilityUsage
+}
+
+"""Spellcasting details for a monster special ability"""
+type SpecialAbilitySpellcasting {
+  """The level of the spellcasting."""
+  level: Int
+
+  """The ability for the spellcasting."""
+  ability: AbilityScore!
+
+  """The difficulty class for the spellcasting."""
+  dc: Int
+
+  """The modifier for the spellcasting."""
+  modifier: Int
+
+  """The components required for the spellcasting."""
+  components_required: [String!]!
+
+  """The school of the spellcasting."""
+  school: String
+
+  """The spells for the spellcasting."""
+  spells: [SpecialAbilitySpell!]!
+  slots: [SpellSlotCount!]
+}
+
+"""A spell within a monster's special ability spellcasting"""
+type SpecialAbilitySpell {
+  """The level of the spell."""
+  level: Int!
+
+  """The notes for the spell."""
+  notes: String
+
+  """The usage for the spell."""
+  usage: SpecialAbilityUsage
+
+  """The resolved spell object."""
+  spell: Spell!
+}
+
+"""Usage details for a special ability"""
+type SpecialAbilityUsage {
+  """The type of usage for the special ability."""
+  type: String!
+
+  """The number of times the special ability can be used."""
+  times: Int
+
+  """The types of rest the special ability can be used on."""
+  rest_types: [String!]
+}
+
+"""Represents a count of spell slots for a specific level."""
+type SpellSlotCount {
+  """The spell slot level."""
+  slot_level: Int!
+
+  """The number of spell slots available for this level."""
+  count: Int!
+}
+
+"""Monster movement speeds"""
+type MonsterSpeed {
+  burrow: String
+  climb: String
+  fly: String
+  hover: Boolean
+  swim: String
+  walk: String
+}
+
+union MonsterArmorClass = ArmorClassDex | ArmorClassNatural | ArmorClassArmor | ArmorClassSpell | ArmorClassCondition
+
+"""Monster Armor Class component: Dexterity based"""
+type ArmorClassDex {
+  """Type of AC component: 'dex'"""
+  type: String!
+
+  """AC value from dexterity."""
+  value: Int!
+
+  """Optional description for this AC component."""
+  desc: String
+}
+
+"""Monster Armor Class component: Natural armor"""
+type ArmorClassNatural {
+  """Type of AC component: 'natural'"""
+  type: String!
+
+  """AC value from natural armor."""
+  value: Int!
+
+  """Optional description for this AC component."""
+  desc: String
+}
+
+"""Monster Armor Class component: Armor worn"""
+type ArmorClassArmor {
+  """Type of AC component: 'armor'"""
+  type: String!
+
+  """AC value from worn armor."""
+  value: Int!
+
+  """Optional description for this AC component."""
+  desc: String
+  armor: [Armor!]
+}
+
+"""Monster Armor Class component: Spell effect"""
+type ArmorClassSpell {
+  """Type of AC component: 'spell'"""
+  type: String!
+
+  """AC value from spell effect."""
+  value: Int!
+
+  """The spell providing the AC bonus. Resolved via resolver."""
+  spell: Spell!
+
+  """Optional description for this AC component."""
+  desc: String
+}
+
+"""Monster Armor Class component: Condition effect"""
+type ArmorClassCondition {
+  """Type of AC component: 'condition'"""
+  type: String!
+
+  """AC value from condition effect."""
+  value: Int!
+
+  """The condition providing the AC bonus. Resolved via resolver."""
+  condition: Condition!
+
+  """Optional description for this AC component."""
+  desc: String
+}
+
+input MonsterOrder {
+  by: MonsterOrderField!
+  direction: OrderByDirection!
+  then_by: MonsterOrder
+}
+
+"""Fields to sort Monsters by"""
+enum MonsterOrderField {
+  NAME
+  TYPE
+  SIZE
+  CHALLENGE_RATING
+  STRENGTH
+  DEXTERITY
+  CONSTITUTION
+  INTELLIGENCE
+  WISDOM
+  CHARISMA
+}
+
+input ProficiencyOrder {
+  by: ProficiencyOrderField!
+  direction: OrderByDirection!
+  then_by: ProficiencyOrder
+}
+
+"""Fields to sort Proficiencies by"""
+enum ProficiencyOrderField {
+  NAME
+  TYPE
+}
+
+input RaceOrder {
+  by: RaceOrderField!
+  direction: OrderByDirection!
+  then_by: RaceOrder
+}
+
+"""Fields to sort Races by"""
+enum RaceOrderField {
+  NAME
+}
+
+"""A specific rule from the SRD."""
+type Rule {
+  """A description of the rule."""
+  desc: String!
+
+  """The unique identifier for this rule (e.g., adventuring)."""
+  index: String!
+
+  """The name of the rule (e.g., Adventuring)."""
+  name: String!
+
+  """Subsections clarifying or detailing this rule."""
+  subsections: [RuleSection!]!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+"""Represents a named section of the SRD rules document."""
+type RuleSection {
+  """A description of the rule section."""
+  desc: String!
+
+  """The unique identifier for this rule section (e.g., ability-checks)."""
+  index: String!
+
+  """The name of the rule section (e.g., Ability Checks)."""
+  name: String!
+
+  """Timestamp of the last update."""
+  updated_at: String!
+}
+
+input RuleOrder {
+  by: RuleOrderField!
+  direction: OrderByDirection!
+  then_by: RuleOrder
+}
+
+"""Fields to sort Rules by"""
+enum RuleOrderField {
+  NAME
+}
+
+input RuleSectionOrder {
+  by: RuleSectionOrderField!
+  direction: OrderByDirection!
+  then_by: RuleSectionOrder
+}
+
+"""Fields to sort Rule Sections by"""
+enum RuleSectionOrderField {
+  NAME
+}
+
+input SkillOrder {
+  by: SkillOrderField!
+  direction: OrderByDirection!
+  then_by: SkillOrder
+}
+
+"""Fields to sort Skills by"""
+enum SkillOrderField {
+  NAME
+  ABILITY_SCORE
+}
+
+"""Input for filtering by area of effect properties."""
+input AreaOfEffectFilterInput {
+  """Filter by area of effect type (e.g., ["sphere", "cone"])"""
+  type: [String!]
+
+  """Filter by area of effect size (in feet)."""
+  size: NumberFilterInput
+}
+
+input SpellOrder {
+  by: SpellOrderField!
+  direction: OrderByDirection!
+  then_by: SpellOrder
+}
+
+"""Fields to sort Spells by"""
+enum SpellOrderField {
+  NAME
+  LEVEL
+  SCHOOL
+  AREA_OF_EFFECT_SIZE
+}
+
+input SubclassOrder {
+  by: SubclassOrderField!
+  direction: OrderByDirection!
+  then_by: SubclassOrder
+}
+
+"""Fields to sort Subclasses by"""
+enum SubclassOrderField {
+  NAME
+}
+
+input SubraceOrder {
+  by: SubraceOrderField!
+  direction: OrderByDirection!
+  then_by: SubraceOrder
+}
+
+"""Fields to sort Subraces by"""
+enum SubraceOrderField {
+  NAME
+}
+
+input TraitOrder {
+  by: TraitOrderField!
+  direction: OrderByDirection!
+  then_by: TraitOrder
+}
+
+"""Fields to sort Traits by"""
+enum TraitOrderField {
+  NAME
+}
+
+input WeaponPropertyOrder {
+  by: WeaponPropertyOrderField!
+  direction: OrderByDirection!
+  then_by: WeaponPropertyOrder
+}
+
+"""Fields to sort Weapon Properties by"""
+enum WeaponPropertyOrderField {
+  NAME
+}

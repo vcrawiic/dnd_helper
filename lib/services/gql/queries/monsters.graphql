@@ -1,0 +1,49 @@
+query Monsters($order: MonsterOrder) {
+  monsters(order: $order) {
+    name
+    image
+    size
+    type
+    hit_points
+    hit_points_roll
+    senses {
+      blindsight
+      darkvision
+      passive_perception
+      tremorsense
+      truesight
+    }
+    damage_immunities
+    damage_resistances
+    damage_vulnerabilities
+    hit_dice
+    speed {
+      burrow
+      climb
+      fly
+      hover
+      swim
+      walk
+    }
+    armor_class {
+      ... on ArmorClassNatural {
+        type
+        value
+        desc
+      }
+      ... on ArmorClassDex {
+        type
+        value
+        desc
+      }
+    }
+    charisma
+    constitution
+    dexterity
+    intelligence
+    strength
+    wisdom
+    challenge_rating
+    xp
+  }
+}

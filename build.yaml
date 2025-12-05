@@ -1,0 +1,8 @@
+targets:
+  $default:
+    builders:
+      graphql_codegen:
+        enabled: true
+        options:
+          schema: lib/services/gql/schema.graphql
+          queries_glob: lib/services/**/*.graphql

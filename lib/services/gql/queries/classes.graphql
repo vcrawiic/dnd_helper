@@ -1,0 +1,38 @@
+query Classes($order: ClassOrder) {
+  classes(order: $order) {
+    name
+    proficiencies {
+      name
+    }
+    saving_throws {
+      full_name
+      desc
+      skills {
+        name
+      }
+    }
+    spellcasting {
+      info {
+        name
+        desc
+      }
+      level
+      spellcasting_ability {
+        name
+        skills {
+          name
+          desc
+          ability_score {
+            name
+            desc
+            skills {
+              name
+              desc
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

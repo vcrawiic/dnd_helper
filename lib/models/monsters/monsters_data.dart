@@ -1,4 +1,4 @@
-import 'package:dnd_helper/models/monsters_info/monster.dart';
+import 'package:dnd_helper/models/monsters/monster.dart';
 
 class MonstersData {
   List<Monster>? monsters;

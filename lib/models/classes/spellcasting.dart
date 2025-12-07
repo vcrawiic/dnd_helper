@@ -1,5 +1,5 @@
-import 'package:dnd_helper/models/classes_info/order_info.dart';
-import 'package:dnd_helper/models/classes_info/spellcasting_ability.dart';
+import 'package:dnd_helper/models/classes/order_info.dart';
+import 'package:dnd_helper/models/classes/spellcasting_ability.dart';
 
 class Spellcasting {
   List<OrderInfo>? info;

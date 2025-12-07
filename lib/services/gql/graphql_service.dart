@@ -1,7 +1,7 @@
-import 'package:dnd_helper/models/classes_info/class_order.dart';
-import 'package:dnd_helper/models/classes_info/classes.dart';
-import 'package:dnd_helper/models/monsters_info/monster_order.dart';
-import 'package:dnd_helper/models/monsters_info/monsters.dart';
+import 'package:dnd_helper/models/classes/class_order.dart';
+import 'package:dnd_helper/models/classes/classes.dart';
+import 'package:dnd_helper/models/monsters/monster_order.dart';
+import 'package:dnd_helper/models/monsters/monsters.dart';
 import 'package:dnd_helper/services/gql/extensions/class_order_extension.dart';
 import 'package:dnd_helper/services/gql/extensions/monster_order_extension.dart';
 import 'package:dnd_helper/services/gql/queries/classes.graphql.dart';

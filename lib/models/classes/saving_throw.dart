@@ -1,4 +1,4 @@
-import 'package:dnd_helper/models/classes_info/proficiency.dart';
+import 'package:dnd_helper/models/classes/proficiency.dart';
 
 class SavingThrow {
   String? fullName;

@@ -1,5 +1,5 @@
-import 'package:dnd_helper/cubits/classes_state.dart';
-import 'package:dnd_helper/models/classes_info/class_order.dart';
+import 'package:dnd_helper/pages/classes/classes_state.dart';
+import 'package:dnd_helper/models/classes/class_order.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

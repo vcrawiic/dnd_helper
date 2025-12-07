@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dnd_helper/models/classes_info/classes_data.dart';
+import 'package:dnd_helper/models/classes/classes_data.dart';
 
 Classes classesFromJson(String str) => Classes.fromJson(json.decode(str));
 

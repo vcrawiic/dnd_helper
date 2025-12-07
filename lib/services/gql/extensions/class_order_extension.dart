@@ -1,4 +1,4 @@
-import 'package:dnd_helper/models/classes_info/class_order.dart';
+import 'package:dnd_helper/models/classes/class_order.dart';
 import 'package:dnd_helper/services/gql/schema.graphql.dart';
 
 extension ClassOrderDirectionMapper on ClassOrderDirection {

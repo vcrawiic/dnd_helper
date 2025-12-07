@@ -1,6 +1,6 @@
 import 'package:dnd_helper/pages/color_page.dart';
-import 'package:dnd_helper/pages/initial_page.dart';
-import 'package:dnd_helper/pages/navigation_page.dart';
+import 'package:dnd_helper/pages/initial/initial_page.dart';
+import 'package:dnd_helper/pages/navigation/navigation_page.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> routeFactory(RouteSettings settings) {

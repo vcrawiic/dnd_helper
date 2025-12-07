@@ -1,7 +1,7 @@
-import 'package:dnd_helper/cubits/classes_cubit.dart';
-import 'package:dnd_helper/cubits/classes_state.dart';
-import 'package:dnd_helper/models/classes_info/class.dart';
-import 'package:dnd_helper/pages/widgets/class_info_widget.dart';
+import 'package:dnd_helper/pages/classes/classes_cubit.dart';
+import 'package:dnd_helper/pages/classes/classes_state.dart';
+import 'package:dnd_helper/models/classes/class.dart';
+import 'package:dnd_helper/pages/classes/widgets/class_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

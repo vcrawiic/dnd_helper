@@ -1,4 +1,4 @@
-import 'package:dnd_helper/models/monsters_info/enum_values.dart';
+import 'package:dnd_helper/models/monsters/enum_values.dart';
 
 class ArmorClass {
   Type? type;

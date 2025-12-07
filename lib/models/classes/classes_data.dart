@@ -1,4 +1,4 @@
-import 'package:dnd_helper/models/classes_info/class.dart';
+import 'package:dnd_helper/models/classes/class.dart';
 
 class ClassesData {
   List<Class>? classes;

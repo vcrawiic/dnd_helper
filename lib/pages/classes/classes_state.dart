@@ -1,4 +1,4 @@
-import 'package:dnd_helper/models/classes_info/classes.dart';
+import 'package:dnd_helper/models/classes/classes.dart';
 
 abstract class ClassesState {}
 

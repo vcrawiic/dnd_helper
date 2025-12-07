@@ -1,6 +1,6 @@
 
 
-import 'package:dnd_helper/models/classes_info/class.dart';
+import 'package:dnd_helper/models/classes/class.dart';
 import 'package:dnd_helper/models/widgets_models/class_info_widget_model.dart';
 import 'package:flutter/material.dart';
 

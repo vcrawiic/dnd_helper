@@ -1,5 +1,5 @@
-import 'package:dnd_helper/models/monsters_info/monster.dart';
-import 'package:dnd_helper/models/monsters_info/monsters.dart';
+import 'package:dnd_helper/models/monsters/monster.dart';
+import 'package:dnd_helper/models/monsters/monsters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

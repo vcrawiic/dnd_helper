@@ -1,6 +1,6 @@
-import 'package:dnd_helper/models/classes_info/proficiency.dart';
-import 'package:dnd_helper/models/classes_info/saving_throw.dart';
-import 'package:dnd_helper/models/classes_info/spellcasting.dart';
+import 'package:dnd_helper/models/classes/proficiency.dart';
+import 'package:dnd_helper/models/classes/saving_throw.dart';
+import 'package:dnd_helper/models/classes/spellcasting.dart';
 
 class Class {
   String? name;

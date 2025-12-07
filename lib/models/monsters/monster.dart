@@ -1,7 +1,7 @@
-import 'package:dnd_helper/models/monsters_info/armor_class.dart';
-import 'package:dnd_helper/models/monsters_info/monster_size.dart';
-import 'package:dnd_helper/models/monsters_info/monster_speed.dart';
-import 'package:dnd_helper/models/monsters_info/senses.dart';
+import 'package:dnd_helper/models/monsters/armor_class.dart';
+import 'package:dnd_helper/models/monsters/monster_size.dart';
+import 'package:dnd_helper/models/monsters/monster_speed.dart';
+import 'package:dnd_helper/models/monsters/senses.dart';
 
 class Monster {
   String? name;

@@ -1,6 +1,6 @@
-import 'package:dnd_helper/models/monsters_info/monster_order.dart';
-import 'package:dnd_helper/models/monsters_info/monsters.dart';
-import 'package:dnd_helper/pages/widgets/monsters_list_widget.dart';
+import 'package:dnd_helper/models/monsters/monster_order.dart';
+import 'package:dnd_helper/models/monsters/monsters.dart';
+import 'package:dnd_helper/pages/monsters/widgets/monsters_list_widget.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dnd_helper/models/monsters_info/monsters_data.dart';
+import 'package:dnd_helper/models/monsters/monsters_data.dart';
 
 Monsters monstersFromJson(String str) => Monsters.fromJson(json.decode(str));
 

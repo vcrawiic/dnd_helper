@@ -1,8 +1,8 @@
 import 'package:dnd_helper/DI/global_dependencies.dart';
-import 'package:dnd_helper/cubits/classes_cubit.dart';
-import 'package:dnd_helper/pages/classes_page.dart';
+import 'package:dnd_helper/pages/classes/classes_cubit.dart';
+import 'package:dnd_helper/pages/classes/classes_page.dart';
 import 'package:dnd_helper/pages/color_page.dart';
-import 'package:dnd_helper/pages/monsters_page.dart';
+import 'package:dnd_helper/pages/monsters/monsters_page.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

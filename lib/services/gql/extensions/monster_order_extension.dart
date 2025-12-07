@@ -1,4 +1,4 @@
-import 'package:dnd_helper/models/monsters_info/monster_order.dart';
+import 'package:dnd_helper/models/monsters/monster_order.dart';
 import 'package:dnd_helper/services/gql/schema.graphql.dart';
 
 extension MonsterOrderDirectionMapper on MonsterOrderDirection {

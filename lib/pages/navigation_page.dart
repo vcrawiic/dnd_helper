@@ -1,6 +1,12 @@
+import 'package:dnd_helper/DI/global_dependencies.dart';
+import 'package:dnd_helper/cubits/classes_cubit.dart';
 import 'package:dnd_helper/pages/classes_page.dart';
 import 'package:dnd_helper/pages/color_page.dart';
+import 'package:dnd_helper/pages/monsters_page.dart';
+import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -12,7 +18,12 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   int index = 0;
 
-  final List<Color> baseColors = [Colors.red, Colors.green, Colors.blue, Colors.orange];
+  final List<Color> baseColors = [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.orange,
+  ];
 
   final List<GlobalKey<NavigatorState>> navKeys = [
     GlobalKey<NavigatorState>(),
@@ -22,23 +33,37 @@ class _NavigationPageState extends State<NavigationPage> {
   ];
 
   Widget _buildStack(int i) {
+    final GraphQLService service = GlobalDependencies.graphQLService;
     return Navigator(
       key: navKeys[i],
       onGenerateRoute: (settings) {
         if (settings.name == '/') {
           return MaterialPageRoute(
-            builder: (_) => i == 0 ? const ClassesPage() : ColorPage(baseColor: baseColors[i], level: 1),
+            builder: (_) => switch (i) {
+              // cubit realization
+              0 => BlocProvider(
+                create: (context) =>
+                    ClassesCubit(service),
+                child: ClassesPage(),
+              ),
+              // riverpod realization
+              1 => ProviderScope(child: MonstersPage(service)),
+              _ => ColorPage(baseColor: baseColors[i], level: 1),
+            },
           );
         }
 
         if (settings.name == '/colorPage') {
           final args = settings.arguments as ColorPageArgs;
           return MaterialPageRoute(
-            builder: (_) => ColorPage(baseColor: args.baseColor, level: args.level),
+            builder: (_) =>
+                ColorPage(baseColor: args.baseColor, level: args.level),
           );
         }
 
-        return MaterialPageRoute(builder: (_) => const Scaffold(body: Text('404')));
+        return MaterialPageRoute(
+          builder: (_) => const Scaffold(body: Text('404')),
+        );
       },
     );
   }
@@ -75,7 +100,10 @@ class _NavigationPageState extends State<NavigationPage> {
           },
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.looks_one), label: 'Red'),
-            BottomNavigationBarItem(icon: Icon(Icons.looks_two), label: 'Green'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.looks_two),
+              label: 'Green',
+            ),
             BottomNavigationBarItem(icon: Icon(Icons.looks_3), label: 'Blue'),
             BottomNavigationBarItem(icon: Icon(Icons.looks_4), label: 'Orange'),
           ],

@@ -5,8 +5,8 @@ import 'package:dnd_helper/pages/widgets/class_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListViewWidget extends StatelessWidget {
-  const ListViewWidget({super.key});
+class GridViewClassesWidget extends StatelessWidget {
+  const GridViewClassesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   graphql: ^5.2.3
+  flutter_riverpod: ^2.6.1
 
 dev_dependencies:
   flutter_test:

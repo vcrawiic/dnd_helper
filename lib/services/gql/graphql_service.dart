@@ -1,4 +1,3 @@
-
 import 'package:dnd_helper/models/classes_info/class_order.dart';
 import 'package:dnd_helper/models/classes_info/classes.dart';
 import 'package:dnd_helper/models/monsters_info/monster_order.dart';
@@ -19,9 +18,7 @@ class GraphQLService {
   }
 
   Future<Classes?> fetchClasses(ClassOrder order) async {
-    final variables = Variables$Query$Classes(
-      order.toGraphQL()
-    );
+    final variables = Variables$Query$Classes(order.toGraphQL());
 
     final res = await _client.query(
       QueryOptions(
@@ -42,10 +39,13 @@ class GraphQLService {
   }
 
   Future<Monsters?> fetchMonsters(MonsterOrder order) async {
-    final variables = Variables$Query$Monsters(
-      order.toGraphQL()
+    final variables = Variables$Query$Monsters(order.toGraphQL());
+    final res = await _client.query(
+      QueryOptions(
+        document: documentNodeQueryMonsters,
+        variables: variables.toJson(),
+      ),
     );
-    final res = await _client.query(QueryOptions(document: documentNodeQueryMonsters, variables: variables.toJson()));
 
     if (res.hasException) {
       throw Exception('GraphQL Error: ${res.exception.toString()}');
@@ -58,4 +58,3 @@ class GraphQLService {
     return monsters;
   }
 }
-

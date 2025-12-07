@@ -1,7 +1,7 @@
 
 
 import 'package:dnd_helper/models/classes/class.dart';
-import 'package:dnd_helper/models/widgets_models/class_info_widget_model.dart';
+import 'package:dnd_helper/pages/classes/models/class_info_widget_model.dart';
 import 'package:flutter/material.dart';
 
 class ClassInfoWidget extends StatelessWidget {

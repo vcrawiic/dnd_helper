@@ -2,7 +2,7 @@ import '../schema.graphql.dart';
 import 'package:gql/ast.dart';
 
 class Variables$Query$Classes {
-  factory Variables$Query$Classes(Input$ClassOrder input$classOrder, {Input$ClassOrder? order}) =>
+  factory Variables$Query$Classes(Input$ClassOrder graphQL, {Input$ClassOrder? order}) =>
       Variables$Query$Classes._({if (order != null) r'order': order});
 
   Variables$Query$Classes._(this._$data);

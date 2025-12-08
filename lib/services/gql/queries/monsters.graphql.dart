@@ -2,8 +2,15 @@ import '../schema.graphql.dart';
 import 'package:gql/ast.dart';
 
 class Variables$Query$Monsters {
-  factory Variables$Query$Monsters(Input$MonsterOrder graphQL, {Input$MonsterOrder? order}) =>
-      Variables$Query$Monsters._({if (order != null) r'order': order});
+  factory Variables$Query$Monsters(Input$MonsterOrder graphQL, {
+    Input$MonsterOrder? order,
+    int? limit,
+    int? skip,
+  }) => Variables$Query$Monsters._({
+    if (order != null) r'order': order,
+    if (limit != null) r'limit': limit,
+    if (skip != null) r'skip': skip,
+  });
 
   Variables$Query$Monsters._(this._$data);
 
@@ -15,6 +22,14 @@ class Variables$Query$Monsters {
           ? null
           : Input$MonsterOrder.fromJson((l$order as Map<String, dynamic>));
     }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('skip')) {
+      final l$skip = data['skip'];
+      result$data['skip'] = (l$skip as int?);
+    }
     return Variables$Query$Monsters._(result$data);
   }
 
@@ -22,11 +37,23 @@ class Variables$Query$Monsters {
 
   Input$MonsterOrder? get order => (_$data['order'] as Input$MonsterOrder?);
 
+  int? get limit => (_$data['limit'] as int?);
+
+  int? get skip => (_$data['skip'] as int?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('order')) {
       final l$order = order;
       result$data['order'] = l$order?.toJson();
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('skip')) {
+      final l$skip = skip;
+      result$data['skip'] = l$skip;
     }
     return result$data;
   }
@@ -51,13 +78,35 @@ class Variables$Query$Monsters {
     if (l$order != lOther$order) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$skip = skip;
+    final lOther$skip = other.skip;
+    if (_$data.containsKey('skip') != other._$data.containsKey('skip')) {
+      return false;
+    }
+    if (l$skip != lOther$skip) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$order = order;
-    return Object.hashAll([_$data.containsKey('order') ? l$order : const {}]);
+    final l$limit = limit;
+    final l$skip = skip;
+    return Object.hashAll([
+      _$data.containsKey('order') ? l$order : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('skip') ? l$skip : const {},
+    ]);
   }
 }
 
@@ -70,7 +119,7 @@ abstract class CopyWith$Variables$Query$Monsters<TRes> {
   factory CopyWith$Variables$Query$Monsters.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$Monsters;
 
-  TRes call({Input$MonsterOrder? order});
+  TRes call({Input$MonsterOrder? order, int? limit, int? skip});
 }
 
 class _CopyWithImpl$Variables$Query$Monsters<TRes>
@@ -83,10 +132,16 @@ class _CopyWithImpl$Variables$Query$Monsters<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  TRes call({Object? order = _undefined}) => _then(
+  TRes call({
+    Object? order = _undefined,
+    Object? limit = _undefined,
+    Object? skip = _undefined,
+  }) => _then(
     Variables$Query$Monsters._({
       ..._instance._$data,
       if (order != _undefined) 'order': (order as Input$MonsterOrder?),
+      if (limit != _undefined) 'limit': (limit as int?),
+      if (skip != _undefined) 'skip': (skip as int?),
     }),
   );
 }
@@ -97,7 +152,7 @@ class _CopyWithStubImpl$Variables$Query$Monsters<TRes>
 
   TRes _res;
 
-  call({Input$MonsterOrder? order}) => _res;
+  call({Input$MonsterOrder? order, int? limit, int? skip}) => _res;
 }
 
 class Query$Monsters {
@@ -256,6 +311,18 @@ const documentNodeQueryMonsters = DocumentNode(
           defaultValue: DefaultValueNode(value: null),
           directives: [],
         ),
+        VariableDefinitionNode(
+          variable: VariableNode(name: NameNode(value: 'limit')),
+          type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
+          defaultValue: DefaultValueNode(value: null),
+          directives: [],
+        ),
+        VariableDefinitionNode(
+          variable: VariableNode(name: NameNode(value: 'skip')),
+          type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
+          defaultValue: DefaultValueNode(value: null),
+          directives: [],
+        ),
       ],
       directives: [],
       selectionSet: SelectionSetNode(
@@ -267,6 +334,14 @@ const documentNodeQueryMonsters = DocumentNode(
               ArgumentNode(
                 name: NameNode(value: 'order'),
                 value: VariableNode(name: NameNode(value: 'order')),
+              ),
+              ArgumentNode(
+                name: NameNode(value: 'limit'),
+                value: VariableNode(name: NameNode(value: 'limit')),
+              ),
+              ArgumentNode(
+                name: NameNode(value: 'skip'),
+                value: VariableNode(name: NameNode(value: 'skip')),
               ),
             ],
             directives: [],

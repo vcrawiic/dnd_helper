@@ -1,5 +1,5 @@
-query Monsters($order: MonsterOrder) {
-  monsters(order: $order) {
+query Monsters($order: MonsterOrder, $limit: Int, $skip: Int) {
+  monsters(order: $order, limit: $limit, skip: $skip) {
     name
     image
     size

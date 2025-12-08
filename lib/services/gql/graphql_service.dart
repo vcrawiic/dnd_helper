@@ -1,5 +1,6 @@
 import 'package:dnd_helper/models/classes/class_order.dart';
 import 'package:dnd_helper/models/classes/classes.dart';
+import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/models/monsters/monster_order.dart';
 import 'package:dnd_helper/models/monsters/monsters.dart';
 import 'package:dnd_helper/services/gql/extensions/class_order_extension.dart';
@@ -38,8 +39,16 @@ class GraphQLService {
     return classes;
   }
 
-  Future<Monsters?> fetchMonsters(MonsterOrder order) async {
-    final variables = Variables$Query$Monsters(order.toGraphQL());
+  Future<Monsters?> fetchMonsters(
+    MonsterOrder order, {
+    int? limit,
+    int? skip,
+  }) async {
+    final variables = Variables$Query$Monsters(
+      order.toGraphQL(),
+      limit: limit,
+      skip: skip,
+    );
     final res = await _client.query(
       QueryOptions(
         document: documentNodeQueryMonsters,
@@ -56,6 +65,30 @@ class GraphQLService {
 
     Monsters monsters = Monsters.fromJson({"data": data});
     return monsters;
+  }
+
+  /// Загружает всех монстров используя пагинацию
+  Future<List<Monster>> fetchAllMonsters(MonsterOrder order) async {
+    final List<Monster> allMonsters = [];
+    const int pageSize = 100;
+    int skip = 0;
+    bool hasMore = true;
+
+    while (hasMore) {
+      final monsters = await fetchMonsters(
+        order,
+        limit: pageSize,
+        skip: skip,
+      );
+
+      final monsterList = monsters?.data?.monsters ?? [];
+      allMonsters.addAll(monsterList);
+
+      hasMore = monsterList.length == pageSize;
+      skip += pageSize;
+    }
+
+    return allMonsters;
   }
 }
           

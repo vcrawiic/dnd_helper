@@ -1,10 +1,12 @@
 import 'package:dnd_helper/models/monsters/enum_values.dart';
 
-enum MonsterSize { GARGANTUAN, HUGE, LARGE, MEDIUM }
+enum MonsterSize { TINY, SMALL, MEDIUM, LARGE, HUGE, GARGANTUAN }
 
 final sizeValues = EnumValues({
-  "Gargantuan": MonsterSize.GARGANTUAN,
-  "Huge": MonsterSize.HUGE,
-  "Large": MonsterSize.LARGE,
+  "Tiny": MonsterSize.TINY,
+  "Small": MonsterSize.SMALL,
   "Medium": MonsterSize.MEDIUM,
+  "Large": MonsterSize.LARGE,
+  "Huge": MonsterSize.HUGE,
+  "Gargantuan": MonsterSize.GARGANTUAN,
 });

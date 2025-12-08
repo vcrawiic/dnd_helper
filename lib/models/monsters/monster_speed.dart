@@ -18,12 +18,12 @@ class MonsterSpeed {
   });
 
   factory MonsterSpeed.fromJson(Map<String, dynamic> json) => MonsterSpeed(
-    burrow: burrowValues.map[json["burrow"]]!,
-    climb: burrowValues.map[json["climb"]]!,
+    burrow: json["burrow"] == null ? null : burrowValues.map[json["burrow"]],
+    climb: json["climb"] == null ? null : burrowValues.map[json["climb"]],
     fly: json["fly"],
     hover: json["hover"],
     swim: json["swim"],
-    walk: burrowValues.map[json["walk"]]!,
+    walk: json["walk"] == null ? null : burrowValues.map[json["walk"]],
   );
 
   Map<String, dynamic> toJson() => {

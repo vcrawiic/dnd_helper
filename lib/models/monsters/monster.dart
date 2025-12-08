@@ -53,9 +53,11 @@ class Monster {
   factory Monster.fromJson(Map<String, dynamic> json) => Monster(
     name: json["name"],
     image: json["image"],
-    size: sizeValues.map[json["size"]]!,
+    size: json["size"] == null ? null : sizeValues.map[json["size"]],
     type: json["type"],
-    hitPoints: json["hit_points"],
+    hitPoints: json["hit_points"] == null
+        ? null
+        : (json["hit_points"] as num).toInt(),
     hitPointsRoll: json["hit_points_roll"],
     senses: json["senses"] == null ? null : Senses.fromJson(json["senses"]),
     damageImmunities: json["damage_immunities"] == null
@@ -74,14 +76,26 @@ class Monster {
         : List<ArmorClass>.from(
             json["armor_class"]!.map((x) => ArmorClass.fromJson(x)),
           ),
-    charisma: json["charisma"],
-    constitution: json["constitution"],
-    dexterity: json["dexterity"],
-    intelligence: json["intelligence"],
-    strength: json["strength"],
-    wisdom: json["wisdom"],
-    challengeRating: json["challenge_rating"],
-    xp: json["xp"],
+    charisma: json["charisma"] == null
+        ? null
+        : (json["charisma"] as num).toInt(),
+    constitution: json["constitution"] == null
+        ? null
+        : (json["constitution"] as num).toInt(),
+    dexterity: json["dexterity"] == null
+        ? null
+        : (json["dexterity"] as num).toInt(),
+    intelligence: json["intelligence"] == null
+        ? null
+        : (json["intelligence"] as num).toInt(),
+    strength: json["strength"] == null
+        ? null
+        : (json["strength"] as num).toInt(),
+    wisdom: json["wisdom"] == null ? null : (json["wisdom"] as num).toInt(),
+    challengeRating: json["challenge_rating"] == null
+        ? null
+        : (json["challenge_rating"] as num).toInt(),
+    xp: json["xp"] == null ? null : (json["xp"] as num).toInt(),
   );
 
   Map<String, dynamic> toJson() => {

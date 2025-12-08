@@ -58,3 +58,4 @@ class GraphQLService {
     return monsters;
   }
 }
+          

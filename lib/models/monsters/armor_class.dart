@@ -8,8 +8,8 @@ class ArmorClass {
   ArmorClass({this.type, this.value, this.desc});
 
   factory ArmorClass.fromJson(Map<String, dynamic> json) => ArmorClass(
-    type: typeValues.map[json["type"]]!,
-    value: json["value"],
+    type: json["type"] == null ? null : typeValues.map[json["type"]],
+    value: json["value"] == null ? null : (json["value"] as num).toInt(),
     desc: json["desc"],
   );
 

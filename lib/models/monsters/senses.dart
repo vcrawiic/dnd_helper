@@ -16,11 +16,21 @@ class Senses {
   });
 
   factory Senses.fromJson(Map<String, dynamic> json) => Senses(
-    blindsight: blindsightValues.map[json["blindsight"]]!,
-    darkvision: darkvisionValues.map[json["darkvision"]]!,
-    passivePerception: json["passive_perception"],
-    tremorsense: blindsightValues.map[json["tremorsense"]]!,
-    truesight: blindsightValues.map[json["truesight"]]!,
+    blindsight: json["blindsight"] == null
+        ? null
+        : blindsightValues.map[json["blindsight"]],
+    darkvision: json["darkvision"] == null
+        ? null
+        : darkvisionValues.map[json["darkvision"]],
+    passivePerception: json["passive_perception"] == null
+        ? null
+        : (json["passive_perception"] as num).toInt(),
+    tremorsense: json["tremorsense"] == null
+        ? null
+        : blindsightValues.map[json["tremorsense"]],
+    truesight: json["truesight"] == null
+        ? null
+        : blindsightValues.map[json["truesight"]],
   );
 
   Map<String, dynamic> toJson() => {

@@ -1,5 +1,6 @@
 import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/models/monsters/monsters.dart';
+import 'package:dnd_helper/pages/monsters/widgets/list_view_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,12 +18,30 @@ class MonstersListWidget extends StatelessWidget {
           data: (monsters) {
             final monsterList = monsters?.data?.monsters ?? [];
 
-            return ListView.builder(
-              itemCount: monsterList.length,
-              itemBuilder: (context, index) {
-                final monster = monsterList[index];
-                return ListViewItem(monsterItem: monster);
-              },
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search monsters...',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: ListView.builder(
+                      itemCount: monsterList.length,
+                      itemBuilder: (context, index) {
+                        final monster = monsterList[index];
+                        return ListViewItem(monsterItem: monster);
+                      },
+                    ),
+                  ),
+                ),
+              ],
             );
           },
           loading: () => Center(child: CircularProgressIndicator.adaptive()),
@@ -33,39 +52,6 @@ class MonstersListWidget extends StatelessWidget {
             ),
           ),
         );
-      },
-    );
-  }
-}
-
-class ListViewItem extends StatelessWidget {
-  final Monster monsterItem;
-
-  const ListViewItem({super.key, required this.monsterItem});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Card(
-        color: Colors.blueAccent.shade100,
-        child: Center(child: Text(monsterItem.name ?? 'Unknown')),
-      ),
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(
-                  title: Text(monsterItem.name ?? 'test'),
-                  backgroundColor: Colors.white,
-                  surfaceTintColor: Colors.transparent,
-                ),
-                backgroundColor: Colors.white,
-                // TODO: Implement MonsterInfoWidget
-                body: Placeholder(),
-              ),
-            ),
-          );
       },
     );
   }

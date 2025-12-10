@@ -1,7 +1,9 @@
-
-
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/models/classes/class.dart';
 import 'package:dnd_helper/pages/classes/models/class_info_widget_model.dart';
+import 'package:dnd_helper/widgets/info_chip.dart';
+import 'package:dnd_helper/widgets/section_title.dart';
+import 'package:dnd_helper/widgets/chip_list.dart';
 import 'package:flutter/material.dart';
 
 class ClassInfoWidget extends StatelessWidget {
@@ -12,7 +14,8 @@ class ClassInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = ClassInfoWidgetModel(classItem: classItem);
 
-    return SingleChildScrollView(padding: EdgeInsets.symmetric(vertical: 24),
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(vertical: 24),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -21,26 +24,25 @@ class ClassInfoWidget extends StatelessWidget {
           children: [
             Text(
               model.className,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Pallete.primaryText,
+              ),
             ),
-            Text(
-              'Saving throws:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
+            SectionTitle(title: 'Saving throws:'),
+            ChipList(
               children: [
                 ...model.savingThrowsNames.asMap().entries.map((entry) {
                   final index = entry.key;
                   final stItem = entry.value;
-                  return GestureDetector(
-                    child: Chip(label: Text(stItem)),
+                  return InfoChip(
+                    label: stItem,
                     onTap: () {
                       showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text(stItem),
+                        builder: (context) => AlertDialog(backgroundColor: Pallete.primaryBG,
+                          title: Text(stItem,),
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +65,7 @@ class ClassInfoWidget extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context),
-                              child: Text('Close'),
+                              child: Text('Close', style: TextStyle(color: Pallete.primaryText),),
                             ),
                           ],
                         ),
@@ -73,22 +75,14 @@ class ClassInfoWidget extends StatelessWidget {
                 }),
               ],
             ),
-            Text(
-              'Proficiencies:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
+            SectionTitle(title: 'Proficiencies:'),
+            ChipList(
               children: model.proficienciesNames.map((prof) {
-                return Chip(label: Text(prof));
+                return InfoChip(label: prof);
               }).toList(),
             ),
             if (model.spellcastingLevel != null) ...[
-              Text(
-                'Spellcasting:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
+              SectionTitle(title: 'Spellcasting:'),
               Text('Level: ${model.spellcastingLevel}'),
               Text('Ability: ${model.spellcastingAbilityName}'),
               if (model.spellcastingInfoNames.isNotEmpty) ...[
@@ -102,7 +96,10 @@ class ClassInfoWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(name, style: TextStyle(fontWeight: FontWeight.w500)),
+                        Text(
+                          name,
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
                         Text(
                           model.spellcastingInfoDescriptions[index],
                           style: TextStyle(fontSize: 12),

@@ -1,4 +1,5 @@
 import 'package:dnd_helper/DI/global_dependencies.dart';
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/classes/classes_cubit.dart';
 import 'package:dnd_helper/pages/classes/classes_page.dart';
 import 'package:dnd_helper/pages/color_page.dart';
@@ -84,12 +85,14 @@ class _NavigationPageState extends State<NavigationPage> {
           }
         }
       },
-      child: Scaffold(
+      child: Scaffold(backgroundColor: Pallete.primaryBG,
         body: IndexedStack(
           index: index,
           children: List.generate(baseColors.length, _buildStack),
         ),
-        bottomNavigationBar: BottomNavigationBar(
+        bottomNavigationBar: BottomNavigationBar(elevation: 1,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Pallete.primaryBG,
           currentIndex: index,
           onTap: (i) {
             if (i == index) {
@@ -99,16 +102,16 @@ class _NavigationPageState extends State<NavigationPage> {
             }
           },
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.looks_one), label: 'Red'),
+            BottomNavigationBarItem(icon: Icon(Icons.looks_one), label: 'Classes'),
             BottomNavigationBarItem(
               icon: Icon(Icons.looks_two),
-              label: 'Green',
+              label: 'Monsters',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.looks_3), label: 'Blue'),
             BottomNavigationBarItem(icon: Icon(Icons.looks_4), label: 'Orange'),
           ],
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey,
+          selectedItemColor: Pallete.primary,
+          unselectedItemColor: Pallete.unactiveNB,
         ),
       ),
     );

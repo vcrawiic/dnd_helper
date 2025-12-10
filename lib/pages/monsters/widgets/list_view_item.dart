@@ -1,4 +1,6 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/models/monsters/monster.dart';
+import 'package:dnd_helper/pages/monsters/widgets/monster_info_widget.dart';
 import 'package:flutter/material.dart';
 
 class ListViewItem extends StatelessWidget {
@@ -16,7 +18,7 @@ class ListViewItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: Card(
-          color: Colors.blueAccent.shade100,
+          color: Pallete.primary,
           child: Row(
             spacing: 16,
             children: [
@@ -25,7 +27,10 @@ class ListViewItem extends StatelessWidget {
                 height: 70,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8),
+                  ),
                   image: imageUrl.isNotEmpty
                       ? DecorationImage(
                           image: NetworkImage(imageUrl),
@@ -37,27 +42,32 @@ class ListViewItem extends StatelessWidget {
                     ? Icon(Icons.image_not_supported, color: Colors.grey)
                     : null,
               ),
-              Text(monsterItem.name ?? 'Unknown', style: TextStyle(fontSize: 16)),
+              Text(
+                monsterItem.name ?? 'Unknown',
+                style: TextStyle(fontSize: 16, color: Pallete.secondaryBG),
+              ),
             ],
           ),
         ),
       ),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Scaffold(
-              appBar: AppBar(
-                title: Text(monsterItem.name ?? 'test'),
-                backgroundColor: Colors.white,
-                surfaceTintColor: Colors.transparent,
+        final item = monsterItem;
+        if (item != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Scaffold(
+                appBar: AppBar(
+                  title: Text(item.name ?? 'Monster Details'),
+                  backgroundColor: Pallete.primaryBG,
+                  surfaceTintColor: Colors.transparent,
+                ),
+                backgroundColor: Pallete.primaryBG,
+                body: MonsterInfoWidget(monsterItem: item),
               ),
-              backgroundColor: Colors.white,
-              // TODO: Implement MonsterInfoWidget
-              body: Placeholder(),
             ),
-          ),
-        );
+          );
+        }
       },
     );
   }

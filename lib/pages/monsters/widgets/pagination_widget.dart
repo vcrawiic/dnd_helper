@@ -1,12 +1,10 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/monsters/providers/pagination_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PaginationWidget extends ConsumerWidget {
-  const PaginationWidget({
-    super.key,
-    required this.totalCount,
-  });
+  const PaginationWidget({super.key, required this.totalCount});
 
   final int totalCount;
 
@@ -60,9 +58,7 @@ class PaginationWidget extends ConsumerWidget {
   ) {
     List<Widget> pageButtons = [];
 
-  
-
-    const int delta = 2; 
+    const int delta = 2;
 
     for (int i = 1; i <= totalPages; i++) {
       if (i == 1) {
@@ -115,9 +111,7 @@ class PaginationWidget extends ConsumerWidget {
           child: Text(
             '$pageNumber',
             style: TextStyle(
-              color: isCurrentPage
-                  ? Theme.of(context).primaryColor
-                  : Colors.grey[700],
+              color: isCurrentPage ? Pallete.primary : Pallete.secondaryText,
               fontWeight: isCurrentPage ? FontWeight.bold : FontWeight.w500,
               fontSize: isCurrentPage ? 18 : 16,
             ),
@@ -137,7 +131,7 @@ class PaginationWidget extends ConsumerWidget {
           child: Text(
             '...',
             style: TextStyle(
-              color: Colors.grey[600],
+              color: Pallete.secondaryText,
               fontWeight: FontWeight.bold,
             ),
           ),

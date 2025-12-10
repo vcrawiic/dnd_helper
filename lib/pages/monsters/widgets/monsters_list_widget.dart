@@ -5,14 +5,27 @@ import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MonstersListWidget extends ConsumerWidget {
+class MonstersListWidget extends ConsumerStatefulWidget {
   const MonstersListWidget(this._service, {super.key});
   final GraphQLService _service;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MonstersListWidget> createState() => _MonstersListWidgetState();
+}
+
+class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final displayedMonstersAsync = ref.watch(
-      displayedMonstersProvider(_service),
+      displayedMonstersProvider(widget._service),
     );
     final searchQuery = ref.watch(searchQueryProvider);
 
@@ -21,22 +34,23 @@ class MonstersListWidget extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: TextField(
+            controller: _searchController,
             decoration: InputDecoration(
               hintText: 'Search monsters...',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              prefixIcon: const Icon(Icons.search),
               filled: true,
               fillColor: Colors.grey[100],
               suffixIcon: searchQuery.isNotEmpty
                   ? IconButton(
                       icon: const Icon(Icons.clear),
                       onPressed: () {
+                        _searchController.clear();
                         ref.read(searchQueryProvider.notifier).state = '';
                       },
                     )
-                  : null,
+                  : const Icon(Icons.search),
             ),
             onChanged: (value) {
               ref.read(searchQueryProvider.notifier).state = value;

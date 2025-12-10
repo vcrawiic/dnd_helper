@@ -1,3 +1,4 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/classes/classes_cubit.dart';
 import 'package:dnd_helper/models/classes/class_order.dart';
 import 'package:dnd_helper/pages/classes/widgets/grid_view_classes_widget.dart';
@@ -26,12 +27,12 @@ class _ClassesPageState extends State<ClassesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Pallete.primaryBG,
       appBar: AppBar(
         centerTitle: true,
         title: Text('D&D Classes'),
         surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.white,
+        backgroundColor: Pallete.primaryBG,
       ),
       body: GridViewClassesWidget(),
     );

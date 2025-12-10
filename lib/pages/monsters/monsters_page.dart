@@ -1,3 +1,4 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/monsters/widgets/monsters_list_widget.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,12 @@ class MonstersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Pallete.primaryBG,
       appBar: AppBar(
         centerTitle: true,
         title: Text('D&D Bestiary'),
         surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.white,
+        backgroundColor: Pallete.primaryBG,
       ),
       body: MonstersListWidget(_service),
     );

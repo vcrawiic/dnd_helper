@@ -9,17 +9,23 @@ class ClassesCubit extends Cubit<ClassesState> {
   final GraphQLService _service;
 
   Future<void> fetchClasses(ClassOrder order) async {
-    emit(ClassesLoading());
+    if (!isClosed) {
+      emit(ClassesLoading());
+    }
 
     try {
       final classes = await _service.fetchClasses(order);
-      if (classes != null) {
-        emit(ClassesLoaded(classes));
-      } else {
-        emit(ClassesError('no data'));
+      if (!isClosed) {
+        if (classes != null) {
+          emit(ClassesLoaded(classes));
+        } else {
+          emit(ClassesError('no data'));
+        }
       }
     } catch (e) {
-      emit(ClassesError(e.toString()));
+      if (!isClosed) {
+        emit(ClassesError(e.toString()));
+      }
     }
   }
 }

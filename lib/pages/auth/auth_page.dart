@@ -35,9 +35,6 @@ class _AuthPageState extends State<AuthPage> {
       backgroundColor: Pallete.primaryBG,
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is Authenticated) {
-            Navigator.pushReplacementNamed(context, '/');
-          }
           if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -136,6 +133,6 @@ class _AuthPageState extends State<AuthPage> {
           _passwordController.text,
         );
       }
-    } else {}
+    } 
   }
 }

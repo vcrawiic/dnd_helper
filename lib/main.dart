@@ -1,6 +1,7 @@
 import 'package:dnd_helper/DI/global_dependencies.dart';
 import 'package:dnd_helper/factories/route_factory.dart';
 import 'package:dnd_helper/pages/auth/auth_cubit.dart';
+import 'package:dnd_helper/pages/auth/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,16 +17,28 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => AuthCubit(GlobalDependencies.authService),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        onGenerateRoute: routeFactory
+      child: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is Authenticated) {
+            navigatorKey.currentState?.pushNamedAndRemoveUntil('/', (route) => false);
+          } else if (state is Unauthenticated) {
+            navigatorKey.currentState?.pushNamedAndRemoveUntil('/', (route) => false);
+          }
+        },
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          debugShowCheckedModeBanner: false,
+          initialRoute: '/',
+          onGenerateRoute: routeFactory
+        ),
       ),
     );
   }

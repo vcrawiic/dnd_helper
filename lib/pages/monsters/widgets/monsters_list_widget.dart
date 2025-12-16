@@ -32,6 +32,7 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
   }
 
   void _onScroll() {
+    if (!mounted) return;
     if (_isBottom) {
       final searchQuery = ref.read(searchQueryProvider);
       if (searchQuery.isEmpty) {
@@ -57,11 +58,11 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
-
+          
               hintText: 'Search monsters...',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -72,6 +73,7 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
                   ? IconButton(
                       icon: const Icon(Icons.clear),
                       onPressed: () {
+                        if (!mounted) return;
                         _searchController.clear();
                         ref.read(searchQueryProvider.notifier).state = '';
                         ref
@@ -82,6 +84,7 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
                   : const Icon(Icons.search),
             ),
             onChanged: (value) {
+              if (!mounted) return;
               ref.read(searchQueryProvider.notifier).state = value;
             },
           ),

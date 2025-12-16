@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/models/monsters/monster_order.dart';

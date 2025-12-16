@@ -53,12 +53,14 @@ class InfiniteScrollNotifier extends StateNotifier<InfiniteScrollState> {
   }
 
   Future<void> loadInitial() async {
+    if (!mounted) return;
     state = state.copyWith(monsters: [], currentPage: 0, hasMoreData: true);
     await loadMore();
   }
 
   Future<void> loadMore() async {
     if (state.isLoading || !state.hasMoreData) return;
+    if (!mounted) return;
 
     state = state.copyWith(isLoading: true);
 
@@ -77,6 +79,8 @@ class InfiniteScrollNotifier extends StateNotifier<InfiniteScrollState> {
         skip: skip,
       );
 
+      if (!mounted) return;
+
       final newMonsters = result?.data?.monsters ?? [];
       final hasMore = newMonsters.length >= monstersPerPage;
 
@@ -87,6 +91,7 @@ class InfiniteScrollNotifier extends StateNotifier<InfiniteScrollState> {
         currentPage: nextPage,
       );
     } catch (e) {
+      if (!mounted) return;
       state = state.copyWith(
         isLoading: false,
         error: e.toString(),
@@ -95,6 +100,7 @@ class InfiniteScrollNotifier extends StateNotifier<InfiniteScrollState> {
   }
 
   void reset() {
+    if (!mounted) return;
     state = InfiniteScrollState(
       monsters: [],
       isLoading: false,

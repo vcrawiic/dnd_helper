@@ -1,3 +1,4 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/monsters/providers/infinite_scroll_providers.dart';
 import 'package:dnd_helper/pages/monsters/widgets/list_view_item.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
@@ -60,12 +61,13 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
+
               hintText: 'Search monsters...',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               filled: true,
-              fillColor: Colors.grey[100],
+              fillColor: Pallete.primaryBG,
               suffixIcon: searchQuery.isNotEmpty
                   ? IconButton(
                       icon: const Icon(Icons.clear),

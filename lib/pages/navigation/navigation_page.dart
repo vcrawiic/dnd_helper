@@ -4,6 +4,8 @@ import 'package:dnd_helper/pages/classes/classes_cubit.dart';
 import 'package:dnd_helper/pages/classes/classes_page.dart';
 import 'package:dnd_helper/pages/color_page.dart';
 import 'package:dnd_helper/pages/monsters/monsters_page.dart';
+import 'package:dnd_helper/pages/profile/profile_cubit.dart';
+import 'package:dnd_helper/pages/profile/profile_page.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,12 +21,8 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   int index = 0;
 
-  final List<Color> baseColors = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
-    Colors.orange,
-  ];
+  late final ClassesCubit _classesCubit;
+  late final ProfileCubit _profileCubit;
 
   final List<GlobalKey<NavigatorState>> navKeys = [
     GlobalKey<NavigatorState>(),
@@ -33,37 +31,37 @@ class _NavigationPageState extends State<NavigationPage> {
     GlobalKey<NavigatorState>(),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    final GraphQLService gqlService = GlobalDependencies.graphQLService;
+    _classesCubit = ClassesCubit(gqlService);
+    _profileCubit = ProfileCubit();
+  }
+
+  @override
+  void dispose() {
+    _classesCubit.close();
+    _profileCubit.close();
+    super.dispose();
+  }
+
   Widget _buildStack(int i) {
-    final GraphQLService service = GlobalDependencies.graphQLService;
     return Navigator(
       key: navKeys[i],
       onGenerateRoute: (settings) {
-        if (settings.name == '/') {
-          return MaterialPageRoute(
-            builder: (_) => switch (i) {
-              // cubit realization
-              0 => BlocProvider(
-                create: (context) =>
-                    ClassesCubit(service),
-                child: ClassesPage(),
-              ),
-              // riverpod realization
-              1 => ProviderScope(child: MonstersPage(service)),
-              _ => ColorPage(baseColor: baseColors[i], level: 1),
-            },
-          );
-        }
-
-        if (settings.name == '/colorPage') {
-          final args = settings.arguments as ColorPageArgs;
-          return MaterialPageRoute(
-            builder: (_) =>
-                ColorPage(baseColor: args.baseColor, level: args.level),
-          );
-        }
-
+        final GraphQLService gqlService = GlobalDependencies.graphQLService;
         return MaterialPageRoute(
-          builder: (_) => const Scaffold(body: Text('404')),
+          builder: (_) => switch (i) {
+            // cubit realization
+            0 => BlocProvider.value(value: _classesCubit, child: ClassesPage()),
+            // riverpod realization
+            1 => ProviderScope(child: MonstersPage(gqlService)),
+            2 => ColorPage(baseColor: Pallete.primary, level: 1),
+            // profile page
+            3 => BlocProvider.value(value: _profileCubit, child: ProfilePage()),
+            _ => ColorPage(baseColor: Pallete.primary, level: 1),
+          },
         );
       },
     );
@@ -85,12 +83,14 @@ class _NavigationPageState extends State<NavigationPage> {
           }
         }
       },
-      child: Scaffold(backgroundColor: Pallete.primaryBG,
+      child: Scaffold(
+        backgroundColor: Pallete.primaryBG,
         body: IndexedStack(
           index: index,
-          children: List.generate(baseColors.length, _buildStack),
+          children: List.generate(navKeys.length, _buildStack),
         ),
-        bottomNavigationBar: BottomNavigationBar(elevation: 1,
+        bottomNavigationBar: BottomNavigationBar(
+          elevation: 1,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Pallete.primaryBG,
           currentIndex: index,
@@ -102,13 +102,19 @@ class _NavigationPageState extends State<NavigationPage> {
             }
           },
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.looks_one), label: 'Classes'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.looks_one),
+              label: 'Classes',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.looks_two),
               label: 'Monsters',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.looks_3), label: 'Blue'),
-            BottomNavigationBarItem(icon: Icon(Icons.looks_4), label: 'Orange'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.looks_4),
+              label: 'Profile',
+            ),
           ],
           selectedItemColor: Pallete.primary,
           unselectedItemColor: Pallete.unactiveNB,

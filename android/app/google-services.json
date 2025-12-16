@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1018036301820",
+    "project_id": "dnd-helper-2d6fb",
+    "storage_bucket": "dnd-helper-2d6fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018036301820:android:3739601c346ce402b0cc79",
+        "android_client_info": {
+          "package_name": "com.example.dnd_helper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018036301820-qv81gj859qc616q2m5o7kbvv19cjppgt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOcbIrTTxULy-f8hz7V7W4rUaoWMulNr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1018036301820-qv81gj859qc616q2m5o7kbvv19cjppgt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1018036301820-0p5jqm9g6q1tsbh01u12hdaeq275jhsk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dndHelper"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

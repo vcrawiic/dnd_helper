@@ -1,6 +1,7 @@
 import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/models/classes/class.dart';
 import 'package:dnd_helper/pages/classes/widgets/class_info_widget.dart';
+import 'package:dnd_helper/widgets/liquid_container.dart';
 import 'package:flutter/material.dart';
 
 class ListViewItem extends StatelessWidget {
@@ -11,12 +12,15 @@ class ListViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Card(
-        color: Pallete.primary,
-        child: Center(
-          child: Text(
-            classItem?.name ?? 'Unknown',
-            style: TextStyle(color: Pallete.secondaryBG),
+      child: LiquidContainer(
+        radius: 12,
+        child: Card(
+          color: Pallete.primaryAlpha100,
+          child: Center(
+            child: Text(
+              classItem?.name ?? 'Unknown',
+              style: TextStyle(color: Pallete.secondaryBG, fontSize: 21),
+            ),
           ),
         ),
       ),
@@ -26,14 +30,25 @@ class ListViewItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(
-                  title: Text(item.name ?? 'Class Details'),
-                  backgroundColor: Pallete.primaryBG,
-                  surfaceTintColor: Colors.transparent,
+              builder: (context) => Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/dung.jpg'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                backgroundColor: Pallete.primaryBG,
-                body: ClassInfoWidget(classItem: item),
+                child: Scaffold(
+                  extendBody: true,
+                  appBar: AppBar(
+                    title: Text(item.name ?? 'Class Details', style: TextStyle(color: Pallete.secondaryBG, fontSize: 24),),
+                    backgroundColor: Colors.transparent,
+                    surfaceTintColor: Colors.transparent,
+                  ),
+                  backgroundColor: Colors.transparent,
+                  body: ClassInfoWidget(classItem: item),
+                ),
               ),
             ),
           );

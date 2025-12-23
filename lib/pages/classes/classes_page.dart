@@ -26,15 +26,23 @@ class _ClassesPageState extends State<ClassesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Pallete.primaryBG,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('D&D Classes'),
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Pallete.primaryBG,
+    return Container(width: double.infinity, height: double.infinity,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/dung.jpg'),
+          fit: BoxFit.cover,
+        ),
       ),
-      body: GridViewClassesWidget(),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('D&D Classes', style: TextStyle(color: Pallete.secondaryBG, fontSize: 24),),
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+        ),
+        body: GridViewClassesWidget(),
+      ),
     );
   }
 }

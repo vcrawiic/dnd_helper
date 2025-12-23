@@ -1,5 +1,11 @@
 import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/monsters/providers/infinite_scroll_providers.dart';
+import 'package:dnd_helper/pages/monsters/widgets/common/empty_widget.dart';
+import 'package:dnd_helper/pages/monsters/widgets/common/error_state_widget.dart';
+import 'package:dnd_helper/pages/monsters/widgets/common/load_more_indicator.dart';
+import 'package:dnd_helper/pages/monsters/widgets/common/loading_indicator.dart';
+import 'package:dnd_helper/pages/monsters/widgets/common/monsters_search_field.dart';
+import 'package:dnd_helper/pages/monsters/widgets/common/result_counter.dart';
 import 'package:dnd_helper/pages/monsters/widgets/list_view_item.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +42,7 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
     if (_isBottom) {
       final searchQuery = ref.read(searchQueryProvider);
       if (searchQuery.isEmpty) {
-        ref
-            .read(infiniteScrollProvider(widget._service).notifier)
-            .loadMore();
+        ref.read(infiniteScrollProvider(widget._service).notifier).loadMore();
       }
     }
   }
@@ -54,46 +58,34 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
   Widget build(BuildContext context) {
     final searchQuery = ref.watch(searchQueryProvider);
     final isSearching = searchQuery.isNotEmpty;
+    final topPadding = MediaQuery.of(context).padding.top;
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-          
-              hintText: 'Search monsters...',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              filled: true,
-              fillColor: Pallete.primaryBG,
-              suffixIcon: searchQuery.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        if (!mounted) return;
-                        _searchController.clear();
-                        ref.read(searchQueryProvider.notifier).state = '';
-                        ref
-                            .read(infiniteScrollProvider(widget._service).notifier)
-                            .reset();
-                      },
-                    )
-                  : const Icon(Icons.search),
+    return CustomScrollView(
+      controller: _scrollController,
+      slivers: [
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: _SearchFieldDelegate(
+            topPadding: topPadding,
+            child: MonstersSearchField(
+              controller: _searchController,
+              searchQuery: searchQuery,
+              onClear: () {
+                if (!mounted) return;
+                _searchController.clear();
+                ref.read(searchQueryProvider.notifier).state = '';
+                ref.read(infiniteScrollProvider(widget._service).notifier).reset();
+              },
+              onChanged: (value) {
+                if (!mounted) return;
+                ref.read(searchQueryProvider.notifier).state = value;
+              },
             ),
-            onChanged: (value) {
-              if (!mounted) return;
-              ref.read(searchQueryProvider.notifier).state = value;
-            },
           ),
         ),
-        Expanded(
-          child: isSearching
-              ? _buildSearchResults()
-              : _buildInfiniteScrollList(),
-        ),
+        isSearching
+            ? _buildSearchResults()
+            : _buildInfiniteScrollList(),
       ],
     );
   }
@@ -107,23 +99,34 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
     return filteredMonstersAsync.when(
       data: (monsters) {
         if (monsters.isEmpty) {
-          return _buildEmptyState('No monsters found for "$searchQuery"');
+          return SliverFillRemaining(
+            child: EmptyWidget(message: 'No monsters found for "$searchQuery"'),
+          );
         }
 
-        return Column(
-          children: [
-            _buildResultsCounter(monsters.length),
-            Expanded(
-              child: _buildMonstersList(
-                monsters: monsters,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+        return SliverMainAxisGroup(
+          slivers: [
+            SliverToBoxAdapter(
+              child: ResultCounter(count: monsters.length),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 120),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => ListViewItem(monsterItem: monsters[index]),
+                  childCount: monsters.length,
+                ),
               ),
             ),
           ],
         );
       },
-      loading: () => _buildLoadingIndicator(),
-      error: (error, stack) => _buildErrorState(error.toString()),
+      loading: () => const SliverFillRemaining(
+        child: LoadingIndicator(),
+      ),
+      error: (error, stack) => SliverFillRemaining(
+        child: ErrorStateWidget(error: error.toString()),
+      ),
     );
   }
 
@@ -131,83 +134,80 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
     final state = ref.watch(infiniteScrollProvider(widget._service));
 
     if (state.monsters.isEmpty && state.isLoading) {
-      return _buildLoadingIndicator();
+      return const SliverFillRemaining(
+        child: LoadingIndicator(),
+      );
     }
-
     if (state.monsters.isEmpty && !state.isLoading) {
-      return _buildEmptyState('No monsters found');
+      return const SliverFillRemaining(
+        child: EmptyWidget(message: 'No monsters found'),
+      );
     }
-
     if (state.error != null && state.monsters.isEmpty) {
-      return _buildErrorState(state.error!);
+      return SliverFillRemaining(
+        child: ErrorStateWidget(error: state.error!),
+      );
     }
-
-    return ListView.builder(
-      controller: _scrollController,
-      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 80),
-      itemCount: state.monsters.length + (state.hasMoreData ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (index >= state.monsters.length) {
-          return _buildLoadMoreIndicator(state.isLoading);
-        }
-        return ListViewItem(monsterItem: state.monsters[index]);
-      },
+    return SliverPadding(
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 120, top: 20),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            if (index >= state.monsters.length) {
+              return LoadMoreIndicator(isLoading: state.isLoading);
+            }
+            return ListViewItem(monsterItem: state.monsters[index]);
+          },
+          childCount: state.monsters.length + (state.hasMoreData ? 1 : 0),
+        ),
+      ),
     );
   }
+}
 
-  Widget _buildLoadingIndicator() {
-    return const Center(child: CircularProgressIndicator.adaptive());
-  }
+class _SearchFieldDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+  final double topPadding;
+  static const double _titleHeight = 50.0;
+  static const double _searchHeight = 56.0;
 
-  Widget _buildEmptyState(String message) {
-    return Center(
-      child: Text(
-        message,
-        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+  _SearchFieldDelegate({required this.child, required this.topPadding});
+
+  @override
+  double get minExtent => _searchHeight + topPadding;
+
+  @override
+  double get maxExtent => _searchHeight + topPadding + _titleHeight;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final titleOpacity = (1 - shrinkOffset / _titleHeight).clamp(0.0, 1.0);
+
+    return SizedBox.expand(
+      child: Column(
+        children: [
+          SizedBox(height: topPadding),
+          Opacity(
+            opacity: titleOpacity,
+            child: SizedBox(
+              height: (_titleHeight - shrinkOffset).clamp(0.0, _titleHeight),
+              child: const Center(
+                child: Text(
+                  'D&D Bestiary',
+                  style: TextStyle(fontSize: 24, color: Pallete.primaryBG),
+                ),
+              ),
+            ),
+          ),
+          Expanded(child: child),
+        ],
       ),
     );
   }
 
-  Widget _buildErrorState(String error) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Text('Error loading monsters: $error'),
-      ),
-    );
-  }
-
-  Widget _buildResultsCounter(int count) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Text(
-        'Found $count monster(s)',
-        style: TextStyle(color: Colors.grey[600], fontSize: 14),
-      ),
-    );
-  }
-
-  Widget _buildMonstersList({
-    required List monsters,
-    required EdgeInsets padding,
-    ScrollController? controller,
-  }) {
-    return ListView.builder(
-      controller: controller,
-      padding: padding,
-      itemCount: monsters.length,
-      itemBuilder: (context, index) => ListViewItem(monsterItem: monsters[index]),
-    );
-  }
-
-  Widget _buildLoadMoreIndicator(bool isLoading) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: isLoading
-            ? const CircularProgressIndicator.adaptive()
-            : const SizedBox.shrink(),
-      ),
-    );
+  @override
+  bool shouldRebuild(_SearchFieldDelegate oldDelegate) {
+    return true;
   }
 }

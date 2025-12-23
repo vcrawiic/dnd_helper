@@ -30,6 +30,8 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Pallete.primaryBG.withAlpha(150),
         labelText: labelText,
         labelStyle: const TextStyle(color: Pallete.greyDark),
         border: OutlineInputBorder(

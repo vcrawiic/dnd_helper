@@ -6,7 +6,10 @@ import 'package:dnd_helper/pages/color_page.dart';
 import 'package:dnd_helper/pages/monsters/monsters_page.dart';
 import 'package:dnd_helper/pages/profile/profile_cubit.dart';
 import 'package:dnd_helper/pages/profile/profile_page.dart';
+import 'package:dnd_helper/services/auth/auth_service.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
+import 'package:dnd_helper/widgets/liquid_container.dart';
+import 'package:dnd_helper/widgets/custom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,12 +34,14 @@ class _NavigationPageState extends State<NavigationPage> {
     GlobalKey<NavigatorState>(),
   ];
 
+  final GraphQLService _gqlService = GlobalDependencies.graphQLService;
+  final AuthService _authService = GlobalDependencies.authService;
+
   @override
   void initState() {
     super.initState();
-    final GraphQLService gqlService = GlobalDependencies.graphQLService;
-    _classesCubit = ClassesCubit(gqlService);
-    _profileCubit = ProfileCubit();
+    _classesCubit = ClassesCubit(_gqlService);
+    _profileCubit = ProfileCubit(_authService);
   }
 
   @override
@@ -50,13 +55,12 @@ class _NavigationPageState extends State<NavigationPage> {
     return Navigator(
       key: navKeys[i],
       onGenerateRoute: (settings) {
-        final GraphQLService gqlService = GlobalDependencies.graphQLService;
         return MaterialPageRoute(
           builder: (_) => switch (i) {
             // cubit realization
             0 => BlocProvider.value(value: _classesCubit, child: ClassesPage()),
             // riverpod realization
-            1 => ProviderScope(child: MonstersPage(gqlService)),
+            1 => ProviderScope(child: MonstersPage(_gqlService)),
             2 => ColorPage(baseColor: Pallete.primary, level: 1),
             // profile page
             3 => BlocProvider.value(value: _profileCubit, child: ProfilePage()),
@@ -85,39 +89,38 @@ class _NavigationPageState extends State<NavigationPage> {
       },
       child: Scaffold(
         backgroundColor: Pallete.primaryBG,
+        extendBody: true,
         body: IndexedStack(
           index: index,
           children: List.generate(navKeys.length, _buildStack),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 1,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Pallete.primaryBG,
-          currentIndex: index,
-          onTap: (i) {
-            if (i == index) {
-              navKeys[i].currentState?.popUntil((route) => route.isFirst);
-            } else {
-              setState(() => index = i);
-            }
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.looks_one),
-              label: 'Classes',
+        bottomNavigationBar: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: LiquidContainer(
+              radius: 20,
+              child: CustomNavBar(
+                currentIndex: index,
+                onTap: (i) {
+                  if (i == index) {
+                    navKeys[i].currentState?.popUntil((route) => route.isFirst);
+                  } else {
+                    setState(() => index = i);
+                  }
+                },
+                items: const [
+                  CustomNavBarItem(icon: Icons.shield, label: 'Classes'),
+                  CustomNavBarItem(icon: Icons.pets, label: 'Monsters'),
+                  CustomNavBarItem(icon: Icons.palette, label: 'Blue'),
+                  CustomNavBarItem(icon: Icons.person, label: 'Profile'),
+                ],
+                selectedColor: Pallete.primaryAlpha200,
+                unselectedColor: Pallete.primaryBGAlpha200,
+                backgroundColor: Pallete.greyDarkAlpha100,
+                selectedBackgroundColor: Pallete.greyDarkAlpha100,
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.looks_two),
-              label: 'Monsters',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.looks_3), label: 'Blue'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.looks_4),
-              label: 'Profile',
-            ),
-          ],
-          selectedItemColor: Pallete.primary,
-          unselectedItemColor: Pallete.unactiveNB,
+          ),
         ),
       ),
     );

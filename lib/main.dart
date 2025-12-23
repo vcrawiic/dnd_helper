@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
           }
         },
         child: MaterialApp(
+          theme: ThemeData(fontFamily: 'Jersey'),
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           initialRoute: '/',

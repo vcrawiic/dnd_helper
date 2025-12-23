@@ -24,10 +24,12 @@ class GridViewClassesWidget extends StatelessWidget {
         }
         if (state is ClassesLoaded) {
           final classes = state.classes;
-          return Center(
+          return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
               child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
                 itemCount: classes.data?.classes?.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
                   final classItem = classes.data?.classes?[index];
@@ -35,6 +37,8 @@ class GridViewClassesWidget extends StatelessWidget {
                 },
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
+                  crossAxisSpacing: 6,
+                  mainAxisSpacing: 9,
                 ),
               ),
             ),

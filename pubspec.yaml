@@ -16,6 +16,8 @@ dependencies:
   firebase_auth: ^6.1.2
   firebase_core: ^4.2.1
   equatable: ^2.0.7
+  liquid_glass_renderer: ^0.2.0-dev.4
+  image_picker: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -26,3 +28,15 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+  fonts:
+    - family: Pixelify
+      fonts:
+        - asset: fonts/PixelifySans-Regular.ttf
+        - asset: fonts/PixelifySans-Medium.ttf
+        - asset: fonts/PixelifySans-Semibold.ttf
+        - asset: fonts/PixelifySans-Bold.ttf
+    - family: Jersey
+      fonts:
+        - asset: fonts/Jersey15-Regular.ttf

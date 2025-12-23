@@ -1,6 +1,7 @@
 import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/profile/profile_cubit.dart';
 import 'package:dnd_helper/pages/profile/profile_state.dart';
+import 'package:dnd_helper/pages/profile/image_picker/profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,6 +36,7 @@ class ProfilePage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    ProfileImage(),
                     Text(
                       state.user.email ?? 'User',
                       style: Theme.of(context).textTheme.headlineSmall,
@@ -82,8 +84,8 @@ class ProfilePage extends StatelessWidget {
                           horizontal: 32,
                           vertical: 16,
                         ),
-                        backgroundColor: Colors.red,
-                        foregroundColor: Colors.white,
+                        backgroundColor: Pallete.primary,
+                        foregroundColor: Pallete.secondaryBG,
                       ),
                     ),
                   ],

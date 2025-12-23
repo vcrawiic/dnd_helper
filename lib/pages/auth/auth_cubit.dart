@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:dnd_helper/pages/auth/auth_state.dart';
-import 'package:dnd_helper/services/auth_service.dart';
+import 'package:dnd_helper/services/auth/auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {

@@ -1,4 +1,4 @@
-import 'package:dnd_helper/services/auth_service.dart';
+import 'package:dnd_helper/services/auth/auth_service.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
 
 class GlobalDependencies {

@@ -1,4 +1,5 @@
 import 'package:dnd_helper/DS/pallete.dart';
+import 'package:dnd_helper/widgets/liquid_container.dart';
 import 'package:flutter/material.dart';
 
 class InfoChip extends StatelessWidget {
@@ -13,12 +14,15 @@ class InfoChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chip = Chip(
-      label: Text(
-        label,
-        style: TextStyle(color: Pallete.secondaryBG),
+    final chip = LiquidContainer(
+      radius: 8,
+      child: Chip(
+        label: Text(
+          label,
+          style: TextStyle(color: Pallete.secondaryBG),
+        ),
+        backgroundColor: Pallete.primaryAlpha200,
       ),
-      backgroundColor: Pallete.primary,
     );
 
     if (onTap != null) {

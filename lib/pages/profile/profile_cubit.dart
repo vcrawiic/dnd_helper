@@ -1,14 +1,15 @@
-import 'package:dnd_helper/DI/global_dependencies.dart';
 import 'package:dnd_helper/pages/profile/profile_state.dart';
+import 'package:dnd_helper/services/auth/auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-    ProfileCubit() : super(ProfileInitial()) {
+  final AuthService _authService;
+    ProfileCubit(this._authService) : super(ProfileInitial()) {
       _loadCurrentUser();
     }
 
     void _loadCurrentUser() {
-      final user = GlobalDependencies.authService.currentUser;
+      final user = _authService.currentUser;
       if (user != null) {
         emit(ProfileLoaded(user));
       } else {
@@ -21,7 +22,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         if (!isClosed) {
           emit(ProfileLoading());
         }
-        await GlobalDependencies.authService.signOut();
+        await _authService.signOut();
       } catch (e) {
         if (!isClosed) {
           emit(ProfileError(e.toString()));

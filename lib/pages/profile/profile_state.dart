@@ -14,6 +14,7 @@ class ProfileLoading extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {
   final User user;
+
   const ProfileLoaded(this.user);
 
   @override
@@ -28,3 +29,4 @@ class ProfileError extends ProfileState {
   @override
   List<Object?> get props => [message];
 }
+

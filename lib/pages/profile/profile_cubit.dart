@@ -4,29 +4,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final AuthService _authService;
-    ProfileCubit(this._authService) : super(ProfileInitial()) {
-      _loadCurrentUser();
-    }
 
-    void _loadCurrentUser() {
-      final user = _authService.currentUser;
-      if (user != null) {
-        emit(ProfileLoaded(user));
-      } else {
-        emit(ProfileInitial());
+  ProfileCubit(this._authService) : super(ProfileInitial()) {
+    _init();
+  }
+
+  Future<void> _init() async {
+    final user = _authService.currentUser;
+    if (user != null) {
+      emit(ProfileLoaded(user));
+    } else {
+      emit(ProfileInitial());
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      if (!isClosed) {
+        emit(ProfileLoading());
       }
-    }
-
-    Future<void> signOut() async {
-      try {
-        if (!isClosed) {
-          emit(ProfileLoading());
-        }
-        await _authService.signOut();
-      } catch (e) {
-        if (!isClosed) {
-          emit(ProfileError(e.toString()));
-        }
+      await _authService.signOut();
+    } catch (e) {
+      if (!isClosed) {
+        emit(ProfileError(e.toString()));
       }
     }
   }
+}

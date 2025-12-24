@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Разрешите доступ к камере для загрузки фото профиля</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Разрешите доступ к галерее для выбора фото профиля</string>
 </dict>
 </plist>

@@ -29,6 +29,10 @@ class ProfilePage extends StatelessWidget {
         },
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
+          if (state is ProfileInitial || state is ProfileLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
           if (state is ProfileLoaded) {
             return Center(
               child: Padding(
@@ -36,7 +40,7 @@ class ProfilePage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ProfileImage(),
+                    const ProfileImage(),
                     Text(
                       state.user.email ?? 'User',
                       style: Theme.of(context).textTheme.headlineSmall,
@@ -94,6 +98,7 @@ class ProfilePage extends StatelessWidget {
             );
           }
 
+          // ProfileError или неизвестное состояние
           return const Center(child: Text('Unauthorized'));
           },
         ),

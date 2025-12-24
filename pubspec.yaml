@@ -18,6 +18,9 @@ dependencies:
   equatable: ^2.0.7
   liquid_glass_renderer: ^0.2.0-dev.4
   image_picker: ^1.2.1
+  permission_handler: ^11.3.1
+  shared_preferences: ^2.3.4
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -40,3 +43,6 @@ flutter:
     - family: Jersey
       fonts:
         - asset: fonts/Jersey15-Regular.ttf
+    - family: Dung
+      fonts:
+        - asset: fonts/dung.ttf

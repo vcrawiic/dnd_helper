@@ -1,13 +1,16 @@
 import 'package:dnd_helper/DI/global_dependencies.dart';
+import 'package:dnd_helper/DS/dung_icons.dart';
 import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/classes/classes_cubit.dart';
 import 'package:dnd_helper/pages/classes/classes_page.dart';
 import 'package:dnd_helper/pages/color_page.dart';
 import 'package:dnd_helper/pages/monsters/monsters_page.dart';
+import 'package:dnd_helper/pages/profile/image_picker/image_cubit.dart';
 import 'package:dnd_helper/pages/profile/profile_cubit.dart';
 import 'package:dnd_helper/pages/profile/profile_page.dart';
 import 'package:dnd_helper/services/auth/auth_service.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
+import 'package:dnd_helper/services/storage_service/storage_service.dart';
 import 'package:dnd_helper/widgets/liquid_container.dart';
 import 'package:dnd_helper/widgets/custom_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +29,7 @@ class _NavigationPageState extends State<NavigationPage> {
 
   late final ClassesCubit _classesCubit;
   late final ProfileCubit _profileCubit;
+  late final ImageCubit _imageCubit;
 
   final List<GlobalKey<NavigatorState>> navKeys = [
     GlobalKey<NavigatorState>(),
@@ -36,18 +40,21 @@ class _NavigationPageState extends State<NavigationPage> {
 
   final GraphQLService _gqlService = GlobalDependencies.graphQLService;
   final AuthService _authService = GlobalDependencies.authService;
+  final StorageService _storageService = GlobalDependencies.storageService;
 
   @override
   void initState() {
     super.initState();
     _classesCubit = ClassesCubit(_gqlService);
     _profileCubit = ProfileCubit(_authService);
+    _imageCubit = ImageCubit(_storageService)..loadSavedImage();
   }
 
   @override
   void dispose() {
     _classesCubit.close();
     _profileCubit.close();
+    _imageCubit.close();
     super.dispose();
   }
 
@@ -63,7 +70,13 @@ class _NavigationPageState extends State<NavigationPage> {
             1 => ProviderScope(child: MonstersPage(_gqlService)),
             2 => ColorPage(baseColor: Pallete.primary, level: 1),
             // profile page
-            3 => BlocProvider.value(value: _profileCubit, child: ProfilePage()),
+            3 => MultiBlocProvider(
+              providers: [
+                BlocProvider.value(value: _profileCubit),
+                BlocProvider.value(value: _imageCubit),
+              ],
+              child: ProfilePage(),
+            ),
             _ => ColorPage(baseColor: Pallete.primary, level: 1),
           },
         );
@@ -109,13 +122,13 @@ class _NavigationPageState extends State<NavigationPage> {
                   }
                 },
                 items: const [
-                  CustomNavBarItem(icon: Icons.shield, label: 'Classes'),
-                  CustomNavBarItem(icon: Icons.pets, label: 'Monsters'),
-                  CustomNavBarItem(icon: Icons.palette, label: 'Blue'),
-                  CustomNavBarItem(icon: Icons.person, label: 'Profile'),
+                  CustomNavBarItem(icon: DungIcons.twenty, label: 'Classes'),
+                  CustomNavBarItem(icon: DungIcons.fangs, label: 'Monsters'),
+                  CustomNavBarItem(icon: DungIcons.fire, label: 'Dices'),
+                  CustomNavBarItem(icon: DungIcons.character, label: 'Profile'),
                 ],
-                selectedColor: Pallete.primaryAlpha200,
-                unselectedColor: Pallete.primaryBGAlpha200,
+                selectedColor: Pallete.primary,
+                unselectedColor: Pallete.primaryBG,
                 backgroundColor: Pallete.greyDarkAlpha100,
                 selectedBackgroundColor: Pallete.greyDarkAlpha100,
               ),

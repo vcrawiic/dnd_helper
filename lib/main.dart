@@ -1,7 +1,7 @@
 import 'package:dnd_helper/DI/global_dependencies.dart';
-import 'package:dnd_helper/factories/route_factory.dart';
 import 'package:dnd_helper/pages/auth/auth_cubit.dart';
 import 'package:dnd_helper/pages/auth/auth_state.dart';
+import 'package:dnd_helper/pages/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,17 +28,15 @@ class MyApp extends StatelessWidget {
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is Authenticated) {
-            navigatorKey.currentState?.pushNamedAndRemoveUntil('/', (route) => false);
+            appRouter.go('/classes');
           } else if (state is Unauthenticated) {
-            navigatorKey.currentState?.pushNamedAndRemoveUntil('/', (route) => false);
+            appRouter.go('/auth');
           }
         },
-        child: MaterialApp(
+        child: MaterialApp.router(
           theme: ThemeData(fontFamily: 'Jersey'),
-          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          onGenerateRoute: routeFactory
+          routerConfig: appRouter,
         ),
       ),
     );

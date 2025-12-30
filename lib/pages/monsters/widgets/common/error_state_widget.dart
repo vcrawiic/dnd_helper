@@ -1,3 +1,4 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:flutter/material.dart';
 
 class ErrorStateWidget extends StatelessWidget {
@@ -10,7 +11,10 @@ class ErrorStateWidget extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Text('Error loading monsters: $error'),
+        child: Text(
+          'Error loading monsters: $error',
+          style: TextStyle(color: Pallete.primaryWhiteText),
+        ),
       ),
     );
   }

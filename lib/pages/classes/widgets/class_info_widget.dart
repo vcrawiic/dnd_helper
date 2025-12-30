@@ -2,6 +2,7 @@ import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/models/classes/class.dart';
 import 'package:dnd_helper/pages/classes/models/class_info_widget_model.dart';
 import 'package:dnd_helper/widgets/info_chip.dart';
+import 'package:dnd_helper/widgets/liquid_container.dart';
 import 'package:dnd_helper/widgets/section_title.dart';
 import 'package:dnd_helper/widgets/chip_list.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class ClassInfoWidget extends StatelessWidget {
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 24),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 90),
         child: Column(
           spacing: 16,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +28,7 @@ class ClassInfoWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Pallete.primaryText,
+                color: Pallete.primaryWhiteText,
               ),
             ),
             SectionTitle(title: 'Saving throws:'),
@@ -41,33 +42,57 @@ class ClassInfoWidget extends StatelessWidget {
                     onTap: () {
                       showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(backgroundColor: Pallete.primaryBG,
-                          title: Text(stItem,),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Description:',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                        builder: (context) => LiquidContainer(radius: 12,
+                          child: AlertDialog(
+                            backgroundColor: Pallete.primaryBGAlpha100,
+                            title: Text(stItem),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Description:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Pallete.primaryBlackText,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  model.savingThrowsDescriptions[index],
+                                  style: TextStyle(
+                                    color: Pallete.primaryBlackText,
+                                  ),
+                                ),
+                                SizedBox(height: 16),
+                                Text(
+                                  'Skills:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Pallete.primaryBlackText,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  model.savingThrowsSkills[index],
+                                  style: TextStyle(
+                                    color: Pallete.primaryBlackText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  'Close',
+                                  style: TextStyle(
+                                    color: Pallete.primaryBlackText,
+                                  ),
+                                ),
                               ),
-                              SizedBox(height: 8),
-                              Text(model.savingThrowsDescriptions[index]),
-                              SizedBox(height: 16),
-                              Text(
-                                'Skills:',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 8),
-                              Text(model.savingThrowsSkills[index]),
                             ],
                           ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text('Close', style: TextStyle(color: Pallete.primaryText),),
-                            ),
-                          ],
                         ),
                       );
                     },
@@ -83,11 +108,23 @@ class ClassInfoWidget extends StatelessWidget {
             ),
             if (model.spellcastingLevel != null) ...[
               SectionTitle(title: 'Spellcasting:'),
-              Text('Level: ${model.spellcastingLevel}'),
-              Text('Ability: ${model.spellcastingAbilityName}'),
+              Text(
+                'Level: ${model.spellcastingLevel}',
+                style: TextStyle(color: Pallete.primaryWhiteText),
+              ),
+              Text(
+                'Ability: ${model.spellcastingAbilityName}',
+                style: TextStyle(color: Pallete.primaryWhiteText),
+              ),
               if (model.spellcastingInfoNames.isNotEmpty) ...[
                 SizedBox(height: 8),
-                Text('Info:', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(
+                  'Info:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Pallete.primaryWhiteText,
+                  ),
+                ),
                 ...model.spellcastingInfoNames.asMap().entries.map((entry) {
                   final index = entry.key;
                   final name = entry.value;
@@ -98,11 +135,17 @@ class ClassInfoWidget extends StatelessWidget {
                       children: [
                         Text(
                           name,
-                          style: TextStyle(fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Pallete.primaryWhiteText,
+                          ),
                         ),
                         Text(
                           model.spellcastingInfoDescriptions[index],
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Pallete.primaryWhiteText,
+                          ),
                         ),
                       ],
                     ),

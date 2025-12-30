@@ -1,8 +1,8 @@
 import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/models/monsters/monster.dart';
-import 'package:dnd_helper/pages/monsters/widgets/monster_info_widget.dart';
 import 'package:dnd_helper/widgets/liquid_container.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ListViewItem extends StatelessWidget {
   final Monster monsterItem;
@@ -11,7 +11,6 @@ class ListViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8),
@@ -23,29 +22,15 @@ class ListViewItem extends StatelessWidget {
               padding: const EdgeInsets.all(24.0),
               child: Text(
                 monsterItem.name ?? 'Unknown',
-                style: TextStyle(fontSize: 21, color: Pallete.secondaryBG),
+                style: TextStyle(fontSize: 21, color: Pallete.primaryWhiteText),
               ),
             ),
           ),
         ),
       ),
       onTap: () {
-        final item = monsterItem;
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(
-                  title: Text(item.name ?? 'Monster Details'),
-                  backgroundColor: Pallete.primaryBG,
-                  surfaceTintColor: Colors.transparent,
-                ),
-                backgroundColor: Pallete.primaryBG,
-                body: MonsterInfoWidget(monsterItem: item),
-              ),
-            ),
-          );
-        }
+        context.push('/monsters/info', extra: monsterItem);
+      },
     );
   }
 }

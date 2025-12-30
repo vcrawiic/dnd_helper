@@ -65,11 +65,11 @@ class CustomSegmentedControl<T> extends StatelessWidget {
                     style: TextStyle(
                       color: isSelected
                           ? (selectedColor.computeLuminance() > 0.5
-                              ? Pallete.primaryText
-                              : Pallete.primaryBG)
+                              ? Pallete.primaryBlackText
+                              : Pallete.primaryWhiteText)
                           : (unselectedColor.computeLuminance() > 0.5
-                              ? Pallete.primaryText
-                              : Pallete.primaryBG),
+                              ? Pallete.primaryBlackText
+                              : Pallete.primaryWhiteText),
                       fontSize: 14,
                       fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                     ),

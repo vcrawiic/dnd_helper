@@ -1,4 +1,5 @@
 import 'package:dnd_helper/DS/pallete.dart';
+import 'package:dnd_helper/widgets/liquid_container.dart';
 import 'package:flutter/material.dart';
 
 class InfoContainer extends StatelessWidget {
@@ -17,15 +18,18 @@ class InfoContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      decoration: BoxDecoration(
-        color: backgroundColor ?? Pallete.greyLight,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: padding,
-        child: child,
+    return LiquidContainer(
+      radius: 8,
+      child: Container(
+        width: width,
+        decoration: BoxDecoration(
+          color: backgroundColor ?? Pallete.greyDarkAlpha100,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: padding,
+          child: child,
+        ),
       ),
     );
   }

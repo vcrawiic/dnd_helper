@@ -24,16 +24,31 @@ class MonstersSearchField extends StatelessWidget {
         radius: 16,
         child: TextField(
           controller: controller,
-          style: const TextStyle(color: Pallete.primaryBG, fontSize: 18),
+          style: const TextStyle(color: Pallete.primaryWhiteText, fontSize: 18),
           decoration: InputDecoration(
-            hintText: 'Search monsters...', hintStyle: TextStyle(color: Pallete.primaryBG, fontSize: 18),
+            hintText: 'Search monsters...',
+            hintStyle: TextStyle(color: Pallete.primaryWhiteText, fontSize: 18),
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
+            ),
             suffixIcon: searchQuery.isNotEmpty
-                ? IconButton(icon: const Icon(Icons.clear, size: 18, color: Pallete.primaryBG), onPressed: onClear)
-                : const Icon(Icons.search, size: 18, color: Pallete.primaryBG),
+                ? IconButton(
+                    icon: const Icon(
+                      Icons.clear,
+                      size: 18,
+                      color: Pallete.primaryWhiteText,
+                    ),
+                    onPressed: onClear,
+                  )
+                : const Icon(
+                    Icons.search,
+                    size: 18,
+                    color: Pallete.primaryWhiteText,
+                  ),
           ),
-          
+
           onChanged: onChanged,
         ),
       ),

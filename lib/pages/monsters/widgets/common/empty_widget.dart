@@ -11,7 +11,7 @@ class EmptyWidget extends StatelessWidget {
     return Center(
       child: Text(
         message,
-        style: TextStyle(fontSize: 16, color: Pallete.primaryText),
+        style: TextStyle(fontSize: 16, color: Pallete.primaryWhiteText),
       ),
     );
   }

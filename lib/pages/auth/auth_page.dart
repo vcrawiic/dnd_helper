@@ -138,7 +138,7 @@ class _AuthPageState extends State<AuthPage> {
                                           : 'Sign Up',
                                       style: const TextStyle(
                                         fontSize: 16,
-                                        color: Pallete.primaryBG,
+                                        color: Pallete.primary,
                                       ),
                                     ),
                                   ),

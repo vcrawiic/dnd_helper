@@ -22,6 +22,7 @@ dependencies:
   shared_preferences: ^2.3.4
   path_provider: ^2.1.5
   go_router: ^17.0.1
+  flutter_native_splash: ^2.4.7
 
 dev_dependencies:
   flutter_test:
@@ -48,3 +49,16 @@ flutter:
       fonts:
         - asset: fonts/dung.ttf
 
+flutter_native_splash:
+  # iOS настроен нативно через LaunchScreen.storyboard
+  ios: false
+
+  # Android < 12
+  background_image: "assets/tower.png"
+  fullscreen: true
+
+  # Android 12+
+  android_12:
+    color: "#1E1E1E"
+    image: assets/tower.png
+    icon_background_color: "#1E1E1E"

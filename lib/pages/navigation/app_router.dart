@@ -1,11 +1,12 @@
 import 'package:dnd_helper/DI/global_dependencies.dart';
 import 'package:dnd_helper/models/classes/class.dart';
 import 'package:dnd_helper/models/monsters/monster.dart';
-import 'package:dnd_helper/pages/auth/%D1%88%D1%85.dart';
+import 'package:dnd_helper/pages/auth/auth_page.dart';
 import 'package:dnd_helper/pages/classes/class_info_page.dart';
 import 'package:dnd_helper/pages/classes/classes_cubit.dart';
 import 'package:dnd_helper/pages/classes/classes_page.dart';
-import 'package:dnd_helper/pages/dice_page.dart';
+import 'package:dnd_helper/pages/dices/dice_cubit.dart';
+import 'package:dnd_helper/pages/dices/dice_page.dart';
 import 'package:dnd_helper/pages/monsters/monster_info_page.dart';
 import 'package:dnd_helper/pages/monsters/monsters_page.dart';
 import 'package:dnd_helper/pages/navigation/main_shell.dart';
@@ -85,7 +86,10 @@ final appRouter = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.dices,
-              builder: (context, state) => DicePage(),
+              builder: (context, state) => BlocProvider(
+                create: (_) => DiceCubit(GlobalDependencies.diceRollerService),
+                child: const DicePage(),
+              ),
             ),
           ],
         ),
@@ -99,7 +103,9 @@ final appRouter = GoRouter(
                     create: (_) => ProfileCubit(GlobalDependencies.authService),
                   ),
                   BlocProvider(
-                    create: (_) => ImageCubit(GlobalDependencies.storageService)..loadSavedImage(),
+                    create: (_) =>
+                        ImageCubit(GlobalDependencies.storageService)
+                          ..loadSavedImage(),
                   ),
                 ],
                 child: const ProfilePage(),

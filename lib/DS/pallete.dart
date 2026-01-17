@@ -24,4 +24,5 @@ class Pallete {
   static final Color greyDarkAlpha200 = const Color(0xFF878787).withAlpha(200);
 
   static final Color transparent = Colors.transparent;
+
 }

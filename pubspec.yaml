@@ -23,6 +23,7 @@ dependencies:
   path_provider: ^2.1.5
   go_router: ^17.0.1
   flutter_native_splash: ^2.4.7
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:

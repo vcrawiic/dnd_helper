@@ -1,13 +1,11 @@
 class Validators {
   Validators._();
 
-  /// Validates email format
   static String? email(String? value) {
     if (value == null || value.isEmpty) {
       return 'Enter email';
     }
 
-    // Basic email regex pattern
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if (!emailRegex.hasMatch(value)) {
@@ -16,9 +14,6 @@ class Validators {
 
     return null;
   }
-
-  /// Validates password
-  /// Requires at least 6 characters
   static String? password(String? value) {
     if (value == null || value.isEmpty) {
       return 'Enter password';

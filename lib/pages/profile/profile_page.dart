@@ -1,10 +1,12 @@
 import 'package:dnd_helper/DS/pallete.dart';
+import 'package:dnd_helper/pages/navigation/routes.dart';
 import 'package:dnd_helper/pages/profile/profile_cubit.dart';
 import 'package:dnd_helper/pages/profile/profile_state.dart';
 import 'package:dnd_helper/pages/profile/image_picker/profile_image.dart';
 import 'package:dnd_helper/widgets/liquid_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -28,6 +30,12 @@ class ProfilePage extends StatelessWidget {
             'Profile',
             style: TextStyle(color: Pallete.primaryWhiteText),
           ),
+          actions: [
+            IconButton.outlined(
+              onPressed: () => context.go('${AppRoutes.profile}/${AppRoutes.charSheet}'),
+              icon: const Icon(Icons.add),
+            ),
+          ],
         ),
         body: BlocListener<ProfileCubit, ProfileState>(
           listener: (context, state) {
@@ -68,7 +76,8 @@ class ProfilePage extends StatelessWidget {
                               ),
                         ),
                         const SizedBox(height: 48),
-                        LiquidContainer(radius: 16,
+                        LiquidContainer(
+                          radius: 16,
                           child: ElevatedButton.icon(
                             onPressed: () async {
                               final shouldLogout = await showDialog<bool>(
@@ -92,7 +101,7 @@ class ProfilePage extends StatelessWidget {
                                   ],
                                 ),
                               );
-                          
+
                               if (shouldLogout == true && context.mounted) {
                                 context.read<ProfileCubit>().signOut();
                               }

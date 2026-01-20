@@ -2,6 +2,7 @@ import 'package:dnd_helper/DI/global_dependencies.dart';
 import 'package:dnd_helper/models/classes/class.dart';
 import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/pages/auth/auth_page.dart';
+import 'package:dnd_helper/pages/char_sheet/char_page.dart';
 import 'package:dnd_helper/pages/classes/class_info_page.dart';
 import 'package:dnd_helper/pages/classes/classes_cubit.dart';
 import 'package:dnd_helper/pages/classes/classes_page.dart';
@@ -110,6 +111,12 @@ final appRouter = GoRouter(
                 ],
                 child: const ProfilePage(),
               ),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.charSheet,
+                  builder: (context, state) => const CharPage(),
+                ),
+              ],
             ),
           ],
         ),

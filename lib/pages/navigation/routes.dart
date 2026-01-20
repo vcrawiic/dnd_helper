@@ -8,4 +8,5 @@ abstract class AppRoutes {
 
   static const classInfo = 'info';
   static const monsterInfo = 'info';
+  static const charSheet = 'char_sheet';
 }

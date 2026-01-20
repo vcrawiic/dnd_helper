@@ -51,14 +51,11 @@ flutter:
         - asset: fonts/dung.ttf
 
 flutter_native_splash:
-  # iOS настроен нативно через LaunchScreen.storyboard
   ios: false
 
-  # Android < 12
   background_image: "assets/tower.png"
   fullscreen: true
 
-  # Android 12+
   android_12:
     color: "#1E1E1E"
     image: assets/tower.png

@@ -37,7 +37,15 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: AppRoutes.auth,
-      builder: (context, state) => const AuthPage(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: const AuthPage(),
+          transitionDuration: const Duration(milliseconds: 300),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        );
+      },
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -55,9 +63,19 @@ final appRouter = GoRouter(
               routes: [
                 GoRoute(
                   path: AppRoutes.classInfo,
-                  builder: (context, state) {
+                  pageBuilder: (context, state) {
                     final classItem = state.extra as Class;
-                    return ClassInfoPage(classItem: classItem);
+                    return CustomTransitionPage(
+                      child: ClassInfoPage(classItem: classItem),
+                      transitionDuration: const Duration(milliseconds: 300),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                    );
                   },
                 ),
               ],
@@ -74,9 +92,19 @@ final appRouter = GoRouter(
               routes: [
                 GoRoute(
                   path: AppRoutes.monsterInfo,
-                  builder: (context, state) {
+                  pageBuilder: (context, state) {
                     final monsterItem = state.extra as Monster;
-                    return MonsterInfoPage(monsterItem: monsterItem);
+                    return CustomTransitionPage(
+                      child: MonsterInfoPage(monsterItem: monsterItem),
+                      transitionDuration: const Duration(milliseconds: 300),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                    );
                   },
                 ),
               ],
@@ -114,7 +142,19 @@ final appRouter = GoRouter(
               routes: [
                 GoRoute(
                   path: AppRoutes.charSheet,
-                  builder: (context, state) => const CharPage(),
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage(
+                      child: const CharPage(),
+                      transitionDuration: const Duration(milliseconds: 300),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                    );
+                  },
                 ),
               ],
             ),

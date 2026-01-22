@@ -40,7 +40,7 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
   void _onScroll() {
     if (!mounted) return;
     if (_isBottom) {
-      final searchQuery = ref.read(searchQueryProvider);
+      final searchQuery = ref.read(infiniteScrollSearchQueryProvider);
       if (searchQuery.isEmpty) {
         ref.read(infiniteScrollProvider(widget._service).notifier).loadMore();
       }
@@ -56,7 +56,7 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final searchQuery = ref.watch(searchQueryProvider);
+    final searchQuery = ref.watch(infiniteScrollSearchQueryProvider);
     final isSearching = searchQuery.isNotEmpty;
     final topPadding = MediaQuery.of(context).padding.top;
 
@@ -73,12 +73,12 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
               onClear: () {
                 if (!mounted) return;
                 _searchController.clear();
-                ref.read(searchQueryProvider.notifier).state = '';
+                ref.read(infiniteScrollSearchQueryProvider.notifier).update('');
                 ref.read(infiniteScrollProvider(widget._service).notifier).reset();
               },
               onChanged: (value) {
                 if (!mounted) return;
-                ref.read(searchQueryProvider.notifier).state = value;
+                ref.read(infiniteScrollSearchQueryProvider.notifier).update(value);
               },
             ),
           ),
@@ -92,9 +92,9 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
 
   Widget _buildSearchResults() {
     final filteredMonstersAsync = ref.watch(
-      filteredMonstersProvider(widget._service),
+      filteredMonstersInfiniteProvider(widget._service),
     );
-    final searchQuery = ref.watch(searchQueryProvider);
+    final searchQuery = ref.watch(infiniteScrollSearchQueryProvider);
 
     return filteredMonstersAsync.when(
       data: (monsters) {

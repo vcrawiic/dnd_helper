@@ -19,7 +19,7 @@ class GraphQLService {
   }
 
   Future<Classes?> fetchClasses(ClassOrder order) async {
-    final variables = Variables$Query$Classes(order.toGraphQL());
+    final variables = Variables$Query$Classes(order: order.toGraphQL());
 
     final res = await _client.query(
       QueryOptions(
@@ -45,7 +45,7 @@ class GraphQLService {
     int? skip,
   }) async {
     final variables = Variables$Query$Monsters(
-      order.toGraphQL(),
+      order: order.toGraphQL(),
       limit: limit,
       skip: skip,
     );

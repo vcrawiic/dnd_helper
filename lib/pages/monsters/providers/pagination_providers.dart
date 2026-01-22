@@ -2,98 +2,126 @@ import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/models/monsters/monster_order.dart';
 import 'package:dnd_helper/models/monsters/monsters.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final currentPageProvider = StateProvider<int>((ref) => 1);
-
-final searchQueryProvider = StateProvider<String>((ref) => '');
+part 'pagination_providers.g.dart';
 
 const int monstersPerPage = 50;
 
-final paginatedMonstersProvider = FutureProvider.family<Monsters?, GraphQLService>(
-  (ref, service) async {
-    final currentPage = ref.watch(currentPageProvider);
-    final skip = (currentPage - 1) * monstersPerPage;
+@riverpod
+class CurrentPage extends _$CurrentPage {
+  @override
+  int build() => 1;
 
-    return service.fetchMonsters(
-      MonsterOrder(
-        orderDirection: MonsterOrderDirection.ASC,
-        orderBy: MonsterOrderBy.CHALLENGE_RATING,
-      ),
-      limit: monstersPerPage,
-      skip: skip,
-    );
-  },
-);
+  void setPage(int page) => state = page;
 
-final allMonstersProvider = FutureProvider.family<List<Monster>, GraphQLService>(
-  (ref, service) async {
-    return service.fetchAllMonsters(
-      MonsterOrder(
-        orderDirection: MonsterOrderDirection.ASC,
-        orderBy: MonsterOrderBy.CHALLENGE_RATING,
-      ),
-    );
-  },
-);
+  void nextPage() => state++;
 
-final displayedMonstersProvider = Provider.family<AsyncValue<DisplayedMonstersResult>, GraphQLService>(
-  (ref, service) {
-    final searchQuery = ref.watch(searchQueryProvider).toLowerCase();
+  void previousPage() {
+    if (state > 1) state--;
+  }
+}
 
-    if (searchQuery.isNotEmpty) {
-      final allMonstersAsync = ref.watch(allMonstersProvider(service));
+@riverpod
+class PaginationSearchQuery extends _$PaginationSearchQuery {
+  @override
+  String build() => '';
 
-      return allMonstersAsync.when(
-        data: (allMonsters) {
-          final filtered = allMonsters.where((monster) {
-            final name = monster.name?.toLowerCase() ?? '';
-            final type = monster.type?.toLowerCase() ?? '';
-            final size = monster.size?.name.toLowerCase() ?? '';
+  void update(String query) => state = query;
 
-            return name.contains(searchQuery) ||
-                   type.contains(searchQuery) ||
-                   size.contains(searchQuery);
-          }).toList();
+  void clear() => state = '';
+}
 
-          return AsyncValue.data(DisplayedMonstersResult(
-            monsters: filtered,
-            totalCount: filtered.length,
-            isPaginated: false,
-          ));
-        },
-        loading: () => const AsyncValue.loading(),
-        error: (error, stack) => AsyncValue.error(error, stack),
-      );
-    }
+@riverpod
+Future<Monsters?> paginatedMonsters(
+  Ref ref,
+  GraphQLService service,
+) async {
+  final currentPage = ref.watch(currentPageProvider);
+  final skip = (currentPage - 1) * monstersPerPage;
 
-    final paginatedAsync = ref.watch(paginatedMonstersProvider(service));
+  return service.fetchMonsters(
+    MonsterOrder(
+      orderDirection: MonsterOrderDirection.ASC,
+      orderBy: MonsterOrderBy.NAME,
+    ),
+    limit: monstersPerPage,
+    skip: skip,
+  );
+}
 
-    return paginatedAsync.when(
-      data: (monsters) {
-        final monsterList = monsters?.data?.monsters ?? [];
+@riverpod
+Future<List<Monster>> allMonstersPagination(
+  Ref ref,
+  GraphQLService service,
+) async {
+  return service.fetchAllMonsters(
+    MonsterOrder(
+      orderDirection: MonsterOrderDirection.ASC,
+      orderBy: MonsterOrderBy.NAME,
+    ),
+  );
+}
 
-        final currentPage = ref.watch(currentPageProvider);
-        final estimatedTotal = monsterList.length < monstersPerPage
-            ? (currentPage - 1) * monstersPerPage + monsterList.length
-            : currentPage * monstersPerPage + 1; // +1 чтобы показать что есть еще
+@riverpod
+AsyncValue<DisplayedMonstersResult> displayedMonsters(
+  Ref ref,
+  GraphQLService service,
+) {
+  final searchQuery = ref.watch(paginationSearchQueryProvider).toLowerCase();
+
+  if (searchQuery.isNotEmpty) {
+    final allMonstersAsync = ref.watch(allMonstersPaginationProvider(service));
+
+    return allMonstersAsync.when(
+      data: (allMonsters) {
+        final filtered = allMonsters.where((monster) {
+          final name = monster.name?.toLowerCase() ?? '';
+          final type = monster.type?.toLowerCase() ?? '';
+          final size = monster.size?.name.toLowerCase() ?? '';
+
+          return name.contains(searchQuery) ||
+              type.contains(searchQuery) ||
+              size.contains(searchQuery);
+        }).toList();
 
         return AsyncValue.data(DisplayedMonstersResult(
-          monsters: monsterList,
-          totalCount: estimatedTotal,
-          isPaginated: true,
+          monsters: filtered,
+          totalCount: filtered.length,
+          isPaginated: false,
         ));
       },
       loading: () => const AsyncValue.loading(),
       error: (error, stack) => AsyncValue.error(error, stack),
     );
-  },
-);
+  }
+
+  final paginatedAsync = ref.watch(paginatedMonstersProvider(service));
+
+  return paginatedAsync.when(
+    data: (monsters) {
+      final monsterList = monsters?.data?.monsters ?? [];
+
+      final currentPage = ref.watch(currentPageProvider);
+      final estimatedTotal = monsterList.length < monstersPerPage
+          ? (currentPage - 1) * monstersPerPage + monsterList.length
+          : currentPage * monstersPerPage + 1;
+
+      return AsyncValue.data(DisplayedMonstersResult(
+        monsters: monsterList,
+        totalCount: estimatedTotal,
+        isPaginated: true,
+      ));
+    },
+    loading: () => const AsyncValue.loading(),
+    error: (error, stack) => AsyncValue.error(error, stack),
+  );
+}
 
 class DisplayedMonstersResult {
   final List<Monster> monsters;
   final int totalCount;
-  final bool isPaginated; 
+  final bool isPaginated;
 
   DisplayedMonstersResult({
     required this.monsters,

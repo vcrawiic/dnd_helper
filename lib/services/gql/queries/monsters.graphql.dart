@@ -1,8 +1,10 @@
+// ignore_for_file: depend_on_referenced_packages, annotate_overrides, prefer_final_fields, non_constant_identifier_names, no_leading_underscores_for_local_identifiers, camel_case_types, camel_case_extensions, library_private_types_in_public_api
+
 import '../schema.graphql.dart';
 import 'package:gql/ast.dart';
 
 class Variables$Query$Monsters {
-  factory Variables$Query$Monsters(Input$MonsterOrder graphQL, {
+  factory Variables$Query$Monsters({
     Input$MonsterOrder? order,
     int? limit,
     int? skip,
@@ -132,7 +134,6 @@ class _CopyWithImpl$Variables$Query$Monsters<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? order = _undefined,
     Object? limit = _undefined,
@@ -151,9 +152,8 @@ class _CopyWithStubImpl$Variables$Query$Monsters<TRes>
     implements CopyWith$Variables$Query$Monsters<TRes> {
   _CopyWithStubImpl$Variables$Query$Monsters(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({Input$MonsterOrder? order, int? limit, int? skip}) => _res;
 }
 
@@ -179,12 +179,12 @@ class Query$Monsters {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$monsters = monsters;
-    resultData['monsters'] = l$monsters.map((e) => e.toJson()).toList();
+    _resultData['monsters'] = l$monsters.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -245,7 +245,7 @@ abstract class CopyWith$Query$Monsters<TRes> {
     Iterable<Query$Monsters$monsters> Function(
       Iterable<CopyWith$Query$Monsters$monsters<Query$Monsters$monsters>>,
     )
-    fn,
+    _fn,
   );
 }
 
@@ -259,7 +259,6 @@ class _CopyWithImpl$Query$Monsters<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? monsters = _undefined,
     Object? $__typename = _undefined,
@@ -274,14 +273,13 @@ class _CopyWithImpl$Query$Monsters<TRes>
     ),
   );
 
-  @override
   TRes monsters(
     Iterable<Query$Monsters$monsters> Function(
       Iterable<CopyWith$Query$Monsters$monsters<Query$Monsters$monsters>>,
     )
-    fn,
+    _fn,
   ) => call(
-    monsters: fn(
+    monsters: _fn(
       _instance.monsters.map(
         (e) => CopyWith$Query$Monsters$monsters(e, (i) => i),
       ),
@@ -293,13 +291,11 @@ class _CopyWithStubImpl$Query$Monsters<TRes>
     implements CopyWith$Query$Monsters<TRes> {
   _CopyWithStubImpl$Query$Monsters(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({List<Query$Monsters$monsters>? monsters, String? $__typename}) => _res;
 
-  @override
-  monsters(fn) => _res;
+  monsters(_fn) => _res;
 }
 
 const documentNodeQueryMonsters = DocumentNode(
@@ -743,22 +739,22 @@ class Query$Monsters$monsters {
     final l$image = json['image'];
     final l$size = json['size'];
     final l$type = json['type'];
-    final l$hitPoints = json['hit_points'];
-    final l$hitPointsRoll = json['hit_points_roll'];
+    final l$hit_points = json['hit_points'];
+    final l$hit_points_roll = json['hit_points_roll'];
     final l$senses = json['senses'];
-    final l$damageImmunities = json['damage_immunities'];
-    final l$damageResistances = json['damage_resistances'];
-    final l$damageVulnerabilities = json['damage_vulnerabilities'];
-    final l$hitDice = json['hit_dice'];
+    final l$damage_immunities = json['damage_immunities'];
+    final l$damage_resistances = json['damage_resistances'];
+    final l$damage_vulnerabilities = json['damage_vulnerabilities'];
+    final l$hit_dice = json['hit_dice'];
     final l$speed = json['speed'];
-    final l$armorClass = json['armor_class'];
+    final l$armor_class = json['armor_class'];
     final l$charisma = json['charisma'];
     final l$constitution = json['constitution'];
     final l$dexterity = json['dexterity'];
     final l$intelligence = json['intelligence'];
     final l$strength = json['strength'];
     final l$wisdom = json['wisdom'];
-    final l$challengeRating = json['challenge_rating'];
+    final l$challenge_rating = json['challenge_rating'];
     final l$xp = json['xp'];
     final l$$__typename = json['__typename'];
     return Query$Monsters$monsters(
@@ -766,25 +762,25 @@ class Query$Monsters$monsters {
       image: (l$image as String?),
       size: (l$size as String),
       type: (l$type as String),
-      hit_points: (l$hitPoints as int),
-      hit_points_roll: (l$hitPointsRoll as String),
+      hit_points: (l$hit_points as int),
+      hit_points_roll: (l$hit_points_roll as String),
       senses: Query$Monsters$monsters$senses.fromJson(
         (l$senses as Map<String, dynamic>),
       ),
-      damage_immunities: (l$damageImmunities as List<dynamic>)
+      damage_immunities: (l$damage_immunities as List<dynamic>)
           .map((e) => (e as String))
           .toList(),
-      damage_resistances: (l$damageResistances as List<dynamic>)
+      damage_resistances: (l$damage_resistances as List<dynamic>)
           .map((e) => (e as String))
           .toList(),
-      damage_vulnerabilities: (l$damageVulnerabilities as List<dynamic>)
+      damage_vulnerabilities: (l$damage_vulnerabilities as List<dynamic>)
           .map((e) => (e as String))
           .toList(),
-      hit_dice: (l$hitDice as String),
+      hit_dice: (l$hit_dice as String),
       speed: Query$Monsters$monsters$speed.fromJson(
         (l$speed as Map<String, dynamic>),
       ),
-      armor_class: (l$armorClass as List<dynamic>)
+      armor_class: (l$armor_class as List<dynamic>)
           .map(
             (e) => Query$Monsters$monsters$armor_class.fromJson(
               (e as Map<String, dynamic>),
@@ -797,7 +793,7 @@ class Query$Monsters$monsters {
       intelligence: (l$intelligence as int),
       strength: (l$strength as int),
       wisdom: (l$wisdom as int),
-      challenge_rating: (l$challengeRating as num).toDouble(),
+      challenge_rating: (l$challenge_rating as num).toDouble(),
       xp: (l$xp as int),
       $__typename: (l$$__typename as String),
     );
@@ -848,58 +844,58 @@ class Query$Monsters$monsters {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$image = image;
-    resultData['image'] = l$image;
+    _resultData['image'] = l$image;
     final l$size = size;
-    resultData['size'] = l$size;
+    _resultData['size'] = l$size;
     final l$type = type;
-    resultData['type'] = l$type;
-    final l$hitPoints = hit_points;
-    resultData['hit_points'] = l$hitPoints;
-    final l$hitPointsRoll = hit_points_roll;
-    resultData['hit_points_roll'] = l$hitPointsRoll;
+    _resultData['type'] = l$type;
+    final l$hit_points = hit_points;
+    _resultData['hit_points'] = l$hit_points;
+    final l$hit_points_roll = hit_points_roll;
+    _resultData['hit_points_roll'] = l$hit_points_roll;
     final l$senses = senses;
-    resultData['senses'] = l$senses.toJson();
-    final l$damageImmunities = damage_immunities;
-    resultData['damage_immunities'] = l$damageImmunities
+    _resultData['senses'] = l$senses.toJson();
+    final l$damage_immunities = damage_immunities;
+    _resultData['damage_immunities'] = l$damage_immunities
         .map((e) => e)
         .toList();
-    final l$damageResistances = damage_resistances;
-    resultData['damage_resistances'] = l$damageResistances
+    final l$damage_resistances = damage_resistances;
+    _resultData['damage_resistances'] = l$damage_resistances
         .map((e) => e)
         .toList();
-    final l$damageVulnerabilities = damage_vulnerabilities;
-    resultData['damage_vulnerabilities'] = l$damageVulnerabilities
+    final l$damage_vulnerabilities = damage_vulnerabilities;
+    _resultData['damage_vulnerabilities'] = l$damage_vulnerabilities
         .map((e) => e)
         .toList();
-    final l$hitDice = hit_dice;
-    resultData['hit_dice'] = l$hitDice;
+    final l$hit_dice = hit_dice;
+    _resultData['hit_dice'] = l$hit_dice;
     final l$speed = speed;
-    resultData['speed'] = l$speed.toJson();
-    final l$armorClass = armor_class;
-    resultData['armor_class'] = l$armorClass.map((e) => e.toJson()).toList();
+    _resultData['speed'] = l$speed.toJson();
+    final l$armor_class = armor_class;
+    _resultData['armor_class'] = l$armor_class.map((e) => e.toJson()).toList();
     final l$charisma = charisma;
-    resultData['charisma'] = l$charisma;
+    _resultData['charisma'] = l$charisma;
     final l$constitution = constitution;
-    resultData['constitution'] = l$constitution;
+    _resultData['constitution'] = l$constitution;
     final l$dexterity = dexterity;
-    resultData['dexterity'] = l$dexterity;
+    _resultData['dexterity'] = l$dexterity;
     final l$intelligence = intelligence;
-    resultData['intelligence'] = l$intelligence;
+    _resultData['intelligence'] = l$intelligence;
     final l$strength = strength;
-    resultData['strength'] = l$strength;
+    _resultData['strength'] = l$strength;
     final l$wisdom = wisdom;
-    resultData['wisdom'] = l$wisdom;
-    final l$challengeRating = challenge_rating;
-    resultData['challenge_rating'] = l$challengeRating;
+    _resultData['wisdom'] = l$wisdom;
+    final l$challenge_rating = challenge_rating;
+    _resultData['challenge_rating'] = l$challenge_rating;
     final l$xp = xp;
-    resultData['xp'] = l$xp;
+    _resultData['xp'] = l$xp;
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -908,22 +904,22 @@ class Query$Monsters$monsters {
     final l$image = image;
     final l$size = size;
     final l$type = type;
-    final l$hitPoints = hit_points;
-    final l$hitPointsRoll = hit_points_roll;
+    final l$hit_points = hit_points;
+    final l$hit_points_roll = hit_points_roll;
     final l$senses = senses;
-    final l$damageImmunities = damage_immunities;
-    final l$damageResistances = damage_resistances;
-    final l$damageVulnerabilities = damage_vulnerabilities;
-    final l$hitDice = hit_dice;
+    final l$damage_immunities = damage_immunities;
+    final l$damage_resistances = damage_resistances;
+    final l$damage_vulnerabilities = damage_vulnerabilities;
+    final l$hit_dice = hit_dice;
     final l$speed = speed;
-    final l$armorClass = armor_class;
+    final l$armor_class = armor_class;
     final l$charisma = charisma;
     final l$constitution = constitution;
     final l$dexterity = dexterity;
     final l$intelligence = intelligence;
     final l$strength = strength;
     final l$wisdom = wisdom;
-    final l$challengeRating = challenge_rating;
+    final l$challenge_rating = challenge_rating;
     final l$xp = xp;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -931,22 +927,22 @@ class Query$Monsters$monsters {
       l$image,
       l$size,
       l$type,
-      l$hitPoints,
-      l$hitPointsRoll,
+      l$hit_points,
+      l$hit_points_roll,
       l$senses,
-      Object.hashAll(l$damageImmunities.map((v) => v)),
-      Object.hashAll(l$damageResistances.map((v) => v)),
-      Object.hashAll(l$damageVulnerabilities.map((v) => v)),
-      l$hitDice,
+      Object.hashAll(l$damage_immunities.map((v) => v)),
+      Object.hashAll(l$damage_resistances.map((v) => v)),
+      Object.hashAll(l$damage_vulnerabilities.map((v) => v)),
+      l$hit_dice,
       l$speed,
-      Object.hashAll(l$armorClass.map((v) => v)),
+      Object.hashAll(l$armor_class.map((v) => v)),
       l$charisma,
       l$constitution,
       l$dexterity,
       l$intelligence,
       l$strength,
       l$wisdom,
-      l$challengeRating,
+      l$challenge_rating,
       l$xp,
       l$$__typename,
     ]);
@@ -980,14 +976,14 @@ class Query$Monsters$monsters {
     if (l$type != lOther$type) {
       return false;
     }
-    final l$hitPoints = hit_points;
-    final lother$hitPoints = other.hit_points;
-    if (l$hitPoints != lother$hitPoints) {
+    final l$hit_points = hit_points;
+    final lOther$hit_points = other.hit_points;
+    if (l$hit_points != lOther$hit_points) {
       return false;
     }
-    final l$hitPointsRoll = hit_points_roll;
-    final lother$hitPointsRoll = other.hit_points_roll;
-    if (l$hitPointsRoll != lother$hitPointsRoll) {
+    final l$hit_points_roll = hit_points_roll;
+    final lOther$hit_points_roll = other.hit_points_roll;
+    if (l$hit_points_roll != lOther$hit_points_roll) {
       return false;
     }
     final l$senses = senses;
@@ -995,48 +991,48 @@ class Query$Monsters$monsters {
     if (l$senses != lOther$senses) {
       return false;
     }
-    final l$damageImmunities = damage_immunities;
-    final lother$damageImmunities = other.damage_immunities;
-    if (l$damageImmunities.length != lother$damageImmunities.length) {
+    final l$damage_immunities = damage_immunities;
+    final lOther$damage_immunities = other.damage_immunities;
+    if (l$damage_immunities.length != lOther$damage_immunities.length) {
       return false;
     }
-    for (int i = 0; i < l$damageImmunities.length; i++) {
-      final l$damageImmunities$entry = l$damageImmunities[i];
-      final lother$damageImmunities$entry = lother$damageImmunities[i];
-      if (l$damageImmunities$entry != lother$damageImmunities$entry) {
+    for (int i = 0; i < l$damage_immunities.length; i++) {
+      final l$damage_immunities$entry = l$damage_immunities[i];
+      final lOther$damage_immunities$entry = lOther$damage_immunities[i];
+      if (l$damage_immunities$entry != lOther$damage_immunities$entry) {
         return false;
       }
     }
-    final l$damageResistances = damage_resistances;
-    final lother$damageResistances = other.damage_resistances;
-    if (l$damageResistances.length != lother$damageResistances.length) {
+    final l$damage_resistances = damage_resistances;
+    final lOther$damage_resistances = other.damage_resistances;
+    if (l$damage_resistances.length != lOther$damage_resistances.length) {
       return false;
     }
-    for (int i = 0; i < l$damageResistances.length; i++) {
-      final l$damageResistances$entry = l$damageResistances[i];
-      final lother$damageResistances$entry = lother$damageResistances[i];
-      if (l$damageResistances$entry != lother$damageResistances$entry) {
+    for (int i = 0; i < l$damage_resistances.length; i++) {
+      final l$damage_resistances$entry = l$damage_resistances[i];
+      final lOther$damage_resistances$entry = lOther$damage_resistances[i];
+      if (l$damage_resistances$entry != lOther$damage_resistances$entry) {
         return false;
       }
     }
-    final l$damageVulnerabilities = damage_vulnerabilities;
-    final lother$damageVulnerabilities = other.damage_vulnerabilities;
-    if (l$damageVulnerabilities.length !=
-        lother$damageVulnerabilities.length) {
+    final l$damage_vulnerabilities = damage_vulnerabilities;
+    final lOther$damage_vulnerabilities = other.damage_vulnerabilities;
+    if (l$damage_vulnerabilities.length !=
+        lOther$damage_vulnerabilities.length) {
       return false;
     }
-    for (int i = 0; i < l$damageVulnerabilities.length; i++) {
-      final l$damageVulnerabilities$entry = l$damageVulnerabilities[i];
-      final lother$damageVulnerabilities$entry =
-          lother$damageVulnerabilities[i];
-      if (l$damageVulnerabilities$entry !=
-          lother$damageVulnerabilities$entry) {
+    for (int i = 0; i < l$damage_vulnerabilities.length; i++) {
+      final l$damage_vulnerabilities$entry = l$damage_vulnerabilities[i];
+      final lOther$damage_vulnerabilities$entry =
+          lOther$damage_vulnerabilities[i];
+      if (l$damage_vulnerabilities$entry !=
+          lOther$damage_vulnerabilities$entry) {
         return false;
       }
     }
-    final l$hitDice = hit_dice;
-    final lother$hitDice = other.hit_dice;
-    if (l$hitDice != lother$hitDice) {
+    final l$hit_dice = hit_dice;
+    final lOther$hit_dice = other.hit_dice;
+    if (l$hit_dice != lOther$hit_dice) {
       return false;
     }
     final l$speed = speed;
@@ -1044,15 +1040,15 @@ class Query$Monsters$monsters {
     if (l$speed != lOther$speed) {
       return false;
     }
-    final l$armorClass = armor_class;
-    final lother$armorClass = other.armor_class;
-    if (l$armorClass.length != lother$armorClass.length) {
+    final l$armor_class = armor_class;
+    final lOther$armor_class = other.armor_class;
+    if (l$armor_class.length != lOther$armor_class.length) {
       return false;
     }
-    for (int i = 0; i < l$armorClass.length; i++) {
-      final l$armorClass$entry = l$armorClass[i];
-      final lother$armorClass$entry = lother$armorClass[i];
-      if (l$armorClass$entry != lother$armorClass$entry) {
+    for (int i = 0; i < l$armor_class.length; i++) {
+      final l$armor_class$entry = l$armor_class[i];
+      final lOther$armor_class$entry = lOther$armor_class[i];
+      if (l$armor_class$entry != lOther$armor_class$entry) {
         return false;
       }
     }
@@ -1086,9 +1082,9 @@ class Query$Monsters$monsters {
     if (l$wisdom != lOther$wisdom) {
       return false;
     }
-    final l$challengeRating = challenge_rating;
-    final lother$challengeRating = other.challenge_rating;
-    if (l$challengeRating != lother$challengeRating) {
+    final l$challenge_rating = challenge_rating;
+    final lOther$challenge_rating = other.challenge_rating;
+    if (l$challenge_rating != lOther$challenge_rating) {
       return false;
     }
     final l$xp = xp;
@@ -1153,7 +1149,7 @@ abstract class CopyWith$Query$Monsters$monsters<TRes> {
         >
       >,
     )
-    fn,
+    _fn,
   );
 }
 
@@ -1167,7 +1163,6 @@ class _CopyWithImpl$Query$Monsters$monsters<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? name = _undefined,
     Object? image = _undefined,
@@ -1262,7 +1257,6 @@ class _CopyWithImpl$Query$Monsters$monsters<TRes>
     ),
   );
 
-  @override
   CopyWith$Query$Monsters$monsters$senses<TRes> get senses {
     final local$senses = _instance.senses;
     return CopyWith$Query$Monsters$monsters$senses(
@@ -1271,7 +1265,6 @@ class _CopyWithImpl$Query$Monsters$monsters<TRes>
     );
   }
 
-  @override
   CopyWith$Query$Monsters$monsters$speed<TRes> get speed {
     final local$speed = _instance.speed;
     return CopyWith$Query$Monsters$monsters$speed(
@@ -1280,7 +1273,6 @@ class _CopyWithImpl$Query$Monsters$monsters<TRes>
     );
   }
 
-  @override
   TRes armor_class(
     Iterable<Query$Monsters$monsters$armor_class> Function(
       Iterable<
@@ -1289,9 +1281,9 @@ class _CopyWithImpl$Query$Monsters$monsters<TRes>
         >
       >,
     )
-    fn,
+    _fn,
   ) => call(
-    armor_class: fn(
+    armor_class: _fn(
       _instance.armor_class.map(
         (e) => CopyWith$Query$Monsters$monsters$armor_class(e, (i) => i),
       ),
@@ -1303,9 +1295,8 @@ class _CopyWithStubImpl$Query$Monsters$monsters<TRes>
     implements CopyWith$Query$Monsters$monsters<TRes> {
   _CopyWithStubImpl$Query$Monsters$monsters(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     String? name,
     String? image,
@@ -1331,16 +1322,13 @@ class _CopyWithStubImpl$Query$Monsters$monsters<TRes>
     String? $__typename,
   }) => _res;
 
-  @override
   CopyWith$Query$Monsters$monsters$senses<TRes> get senses =>
       CopyWith$Query$Monsters$monsters$senses.stub(_res);
 
-  @override
   CopyWith$Query$Monsters$monsters$speed<TRes> get speed =>
       CopyWith$Query$Monsters$monsters$speed.stub(_res);
 
-  @override
-  armor_class(fn) => _res;
+  armor_class(_fn) => _res;
 }
 
 class Query$Monsters$monsters$senses {
@@ -1356,14 +1344,14 @@ class Query$Monsters$monsters$senses {
   factory Query$Monsters$monsters$senses.fromJson(Map<String, dynamic> json) {
     final l$blindsight = json['blindsight'];
     final l$darkvision = json['darkvision'];
-    final l$passivePerception = json['passive_perception'];
+    final l$passive_perception = json['passive_perception'];
     final l$tremorsense = json['tremorsense'];
     final l$truesight = json['truesight'];
     final l$$__typename = json['__typename'];
     return Query$Monsters$monsters$senses(
       blindsight: (l$blindsight as String?),
       darkvision: (l$darkvision as String?),
-      passive_perception: (l$passivePerception as int),
+      passive_perception: (l$passive_perception as int),
       tremorsense: (l$tremorsense as String?),
       truesight: (l$truesight as String?),
       $__typename: (l$$__typename as String),
@@ -1383,34 +1371,34 @@ class Query$Monsters$monsters$senses {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$blindsight = blindsight;
-    resultData['blindsight'] = l$blindsight;
+    _resultData['blindsight'] = l$blindsight;
     final l$darkvision = darkvision;
-    resultData['darkvision'] = l$darkvision;
-    final l$passivePerception = passive_perception;
-    resultData['passive_perception'] = l$passivePerception;
+    _resultData['darkvision'] = l$darkvision;
+    final l$passive_perception = passive_perception;
+    _resultData['passive_perception'] = l$passive_perception;
     final l$tremorsense = tremorsense;
-    resultData['tremorsense'] = l$tremorsense;
+    _resultData['tremorsense'] = l$tremorsense;
     final l$truesight = truesight;
-    resultData['truesight'] = l$truesight;
+    _resultData['truesight'] = l$truesight;
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
   int get hashCode {
     final l$blindsight = blindsight;
     final l$darkvision = darkvision;
-    final l$passivePerception = passive_perception;
+    final l$passive_perception = passive_perception;
     final l$tremorsense = tremorsense;
     final l$truesight = truesight;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$blindsight,
       l$darkvision,
-      l$passivePerception,
+      l$passive_perception,
       l$tremorsense,
       l$truesight,
       l$$__typename,
@@ -1436,9 +1424,9 @@ class Query$Monsters$monsters$senses {
     if (l$darkvision != lOther$darkvision) {
       return false;
     }
-    final l$passivePerception = passive_perception;
-    final lother$passivePerception = other.passive_perception;
-    if (l$passivePerception != lother$passivePerception) {
+    final l$passive_perception = passive_perception;
+    final lOther$passive_perception = other.passive_perception;
+    if (l$passive_perception != lOther$passive_perception) {
       return false;
     }
     final l$tremorsense = tremorsense;
@@ -1495,7 +1483,6 @@ class _CopyWithImpl$Query$Monsters$monsters$senses<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? blindsight = _undefined,
     Object? darkvision = _undefined,
@@ -1532,9 +1519,8 @@ class _CopyWithStubImpl$Query$Monsters$monsters$senses<TRes>
     implements CopyWith$Query$Monsters$monsters$senses<TRes> {
   _CopyWithStubImpl$Query$Monsters$monsters$senses(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     String? blindsight,
     String? darkvision,
@@ -1590,22 +1576,22 @@ class Query$Monsters$monsters$speed {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$burrow = burrow;
-    resultData['burrow'] = l$burrow;
+    _resultData['burrow'] = l$burrow;
     final l$climb = climb;
-    resultData['climb'] = l$climb;
+    _resultData['climb'] = l$climb;
     final l$fly = fly;
-    resultData['fly'] = l$fly;
+    _resultData['fly'] = l$fly;
     final l$hover = hover;
-    resultData['hover'] = l$hover;
+    _resultData['hover'] = l$hover;
     final l$swim = swim;
-    resultData['swim'] = l$swim;
+    _resultData['swim'] = l$swim;
     final l$walk = walk;
-    resultData['walk'] = l$walk;
+    _resultData['walk'] = l$walk;
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -1712,7 +1698,6 @@ class _CopyWithImpl$Query$Monsters$monsters$speed<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? burrow = _undefined,
     Object? climb = _undefined,
@@ -1740,9 +1725,8 @@ class _CopyWithStubImpl$Query$Monsters$monsters$speed<TRes>
     implements CopyWith$Query$Monsters$monsters$speed<TRes> {
   _CopyWithStubImpl$Query$Monsters$monsters$speed(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     String? burrow,
     String? climb,
@@ -1797,10 +1781,10 @@ class Query$Monsters$monsters$armor_class {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -1967,7 +1951,6 @@ class _CopyWithImpl$Query$Monsters$monsters$armor_class<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({Object? $__typename = _undefined}) => _then(
     Query$Monsters$monsters$armor_class(
       $__typename: $__typename == _undefined || $__typename == null
@@ -1981,9 +1964,8 @@ class _CopyWithStubImpl$Query$Monsters$monsters$armor_class<TRes>
     implements CopyWith$Query$Monsters$monsters$armor_class<TRes> {
   _CopyWithStubImpl$Query$Monsters$monsters$armor_class(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? $__typename}) => _res;
 }
 
@@ -2017,21 +1999,19 @@ class Query$Monsters$monsters$armor_class$$ArmorClassNatural
 
   final String? desc;
 
-  @override
   final String $__typename;
 
-  @override
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$type = type;
-    resultData['type'] = l$type;
+    _resultData['type'] = l$type;
     final l$value = value;
-    resultData['value'] = l$value;
+    _resultData['value'] = l$value;
     final l$desc = desc;
-    resultData['desc'] = l$desc;
+    _resultData['desc'] = l$desc;
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -2118,7 +2098,6 @@ class _CopyWithImpl$Query$Monsters$monsters$armor_class$$ArmorClassNatural<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? type = _undefined,
     Object? value = _undefined,
@@ -2149,9 +2128,8 @@ class _CopyWithStubImpl$Query$Monsters$monsters$armor_class$$ArmorClassNatural<
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? type, int? value, String? desc, String? $__typename}) => _res;
 }
 
@@ -2185,21 +2163,19 @@ class Query$Monsters$monsters$armor_class$$ArmorClassDex
 
   final String? desc;
 
-  @override
   final String $__typename;
 
-  @override
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$type = type;
-    resultData['type'] = l$type;
+    _resultData['type'] = l$type;
     final l$value = value;
-    resultData['value'] = l$value;
+    _resultData['value'] = l$value;
     final l$desc = desc;
-    resultData['desc'] = l$desc;
+    _resultData['desc'] = l$desc;
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -2284,7 +2260,6 @@ class _CopyWithImpl$Query$Monsters$monsters$armor_class$$ArmorClassDex<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? type = _undefined,
     Object? value = _undefined,
@@ -2313,9 +2288,8 @@ class _CopyWithStubImpl$Query$Monsters$monsters$armor_class$$ArmorClassDex<TRes>
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? type, int? value, String? desc, String? $__typename}) => _res;
 }
 
@@ -2334,15 +2308,13 @@ class Query$Monsters$monsters$armor_class$$ArmorClassArmor
     );
   }
 
-  @override
   final String $__typename;
 
-  @override
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -2410,7 +2382,6 @@ class _CopyWithImpl$Query$Monsters$monsters$armor_class$$ArmorClassArmor<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({Object? $__typename = _undefined}) => _then(
     Query$Monsters$monsters$armor_class$$ArmorClassArmor(
       $__typename: $__typename == _undefined || $__typename == null
@@ -2429,9 +2400,8 @@ class _CopyWithStubImpl$Query$Monsters$monsters$armor_class$$ArmorClassArmor<
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? $__typename}) => _res;
 }
 
@@ -2450,15 +2420,13 @@ class Query$Monsters$monsters$armor_class$$ArmorClassSpell
     );
   }
 
-  @override
   final String $__typename;
 
-  @override
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -2526,7 +2494,6 @@ class _CopyWithImpl$Query$Monsters$monsters$armor_class$$ArmorClassSpell<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({Object? $__typename = _undefined}) => _then(
     Query$Monsters$monsters$armor_class$$ArmorClassSpell(
       $__typename: $__typename == _undefined || $__typename == null
@@ -2545,9 +2512,8 @@ class _CopyWithStubImpl$Query$Monsters$monsters$armor_class$$ArmorClassSpell<
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? $__typename}) => _res;
 }
 
@@ -2566,15 +2532,13 @@ class Query$Monsters$monsters$armor_class$$ArmorClassCondition
     );
   }
 
-  @override
   final String $__typename;
 
-  @override
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -2648,7 +2612,6 @@ class _CopyWithImpl$Query$Monsters$monsters$armor_class$$ArmorClassCondition<
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({Object? $__typename = _undefined}) => _then(
     Query$Monsters$monsters$armor_class$$ArmorClassCondition(
       $__typename: $__typename == _undefined || $__typename == null
@@ -2669,8 +2632,7 @@ class _CopyWithStubImpl$Query$Monsters$monsters$armor_class$$ArmorClassCondition
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? $__typename}) => _res;
 }

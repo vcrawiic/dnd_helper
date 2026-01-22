@@ -1,46 +1,57 @@
 import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/models/monsters/monster_order.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final searchQueryProvider = StateProvider<String>((ref) => '');
+part 'monsters_providers.g.dart';
 
-final monstersProvider = FutureProvider.family<List<Monster>, GraphQLService>(
-  (ref, service) async {
-    return service.fetchAllMonsters(
-      MonsterOrder(
-        orderDirection: MonsterOrderDirection.ASC,
-        orderBy: MonsterOrderBy.CHALLENGE_RATING,
-      ),
-    );
-  },
-);
+@riverpod
+class SearchQuery extends _$SearchQuery {
+  @override
+  String build() => '';
 
-final filteredMonstersProvider = Provider.family<AsyncValue<List<Monster>>, GraphQLService>(
-  (ref, service) {
-    final monstersAsync = ref.watch(monstersProvider(service));
-    final searchQuery = ref.watch(searchQueryProvider).toLowerCase();
+  void update(String query) => state = query;
 
-    return monstersAsync.when(
-      data: (monsterList) {
-        if (searchQuery.isEmpty) {
-          return AsyncValue.data(monsterList);
-        }
+  void clear() => state = '';
+}
 
-        final filtered = monsterList.where((monster) {
-          final name = monster.name?.toLowerCase() ?? '';
-          final type = monster.type?.toLowerCase() ?? '';
-          final size = monster.size?.name.toLowerCase() ?? '';
+@riverpod
+Future<List<Monster>> monsters(Ref ref, GraphQLService service) async {
+  return service.fetchAllMonsters(
+    MonsterOrder(
+      orderDirection: MonsterOrderDirection.ASC,
+      orderBy: MonsterOrderBy.NAME,
+    ),
+  );
+}
 
-          return name.contains(searchQuery) ||
-                 type.contains(searchQuery) ||
-                 size.contains(searchQuery);
-        }).toList();
+@riverpod
+AsyncValue<List<Monster>> filteredMonsters(
+  Ref ref,
+  GraphQLService service,
+) {
+  final monstersAsync = ref.watch(monstersProvider(service));
+  final searchQuery = ref.watch(searchQueryProvider).toLowerCase();
 
-        return AsyncValue.data(filtered);
-      },
-      loading: () => const AsyncValue.loading(),
-      error: (error, stack) => AsyncValue.error(error, stack),
-    );
-  },
-);
+  return monstersAsync.when(
+    data: (monsterList) {
+      if (searchQuery.isEmpty) {
+        return AsyncValue.data(monsterList);
+      }
+
+      final filtered = monsterList.where((monster) {
+        final name = monster.name?.toLowerCase() ?? '';
+        final type = monster.type?.toLowerCase() ?? '';
+        final size = monster.size?.name.toLowerCase() ?? '';
+
+        return name.contains(searchQuery) ||
+            type.contains(searchQuery) ||
+            size.contains(searchQuery);
+      }).toList();
+
+      return AsyncValue.data(filtered);
+    },
+    loading: () => const AsyncValue.loading(),
+    error: (error, stack) => AsyncValue.error(error, stack),
+  );
+}

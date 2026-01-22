@@ -2,68 +2,76 @@ import 'dart:async';
 import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/models/monsters/monster_order.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class SearchQueryNotifier extends StateNotifier<String> {
-  SearchQueryNotifier() : super('');
+part 'monsters_providers_with_debounce.g.dart';
 
+@riverpod
+class SearchQueryWithDebounce extends _$SearchQueryWithDebounce {
   Timer? _debounce;
 
+  @override
+  String build() {
+    ref.onDispose(() {
+      _debounce?.cancel();
+    });
+    return '';
+  }
+
   void updateQuery(String query) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce?.cancel();
 
     _debounce = Timer(const Duration(milliseconds: 300), () {
       state = query;
     });
   }
 
-  @override
-  void dispose() {
+  void clear() {
     _debounce?.cancel();
-    super.dispose();
+    state = '';
   }
 }
 
-final searchQueryWithDebounceProvider = StateNotifierProvider<SearchQueryNotifier, String>(
-  (ref) => SearchQueryNotifier(),
-);
+@riverpod
+Future<List<Monster>> monstersWithDebounce(
+  Ref ref,
+  GraphQLService service,
+) async {
+  return service.fetchAllMonsters(
+    MonsterOrder(
+      orderDirection: MonsterOrderDirection.ASC,
+      orderBy: MonsterOrderBy.NAME,
+    ),
+  );
+}
 
-final monstersProvider = FutureProvider.family<List<Monster>, GraphQLService>(
-  (ref, service) async {
-    return service.fetchAllMonsters(
-      MonsterOrder(
-        orderDirection: MonsterOrderDirection.ASC,
-        orderBy: MonsterOrderBy.CHALLENGE_RATING,
-      ),
-    );
-  },
-);
+@riverpod
+AsyncValue<List<Monster>> filteredMonstersWithDebounce(
+  Ref ref,
+  GraphQLService service,
+) {
+  final monstersAsync = ref.watch(monstersWithDebounceProvider(service));
+  final searchQuery = ref.watch(searchQueryWithDebounceProvider).toLowerCase();
 
-final filteredMonstersWithDebounceProvider = Provider.family<AsyncValue<List<Monster>>, GraphQLService>(
-  (ref, service) {
-    final monstersAsync = ref.watch(monstersProvider(service));
-    final searchQuery = ref.watch(searchQueryWithDebounceProvider).toLowerCase();
+  return monstersAsync.when(
+    data: (monsterList) {
+      if (searchQuery.isEmpty) {
+        return AsyncValue.data(monsterList);
+      }
 
-    return monstersAsync.when(
-      data: (monsterList) {
-        if (searchQuery.isEmpty) {
-          return AsyncValue.data(monsterList);
-        }
+      final filtered = monsterList.where((monster) {
+        final name = monster.name?.toLowerCase() ?? '';
+        final type = monster.type?.toLowerCase() ?? '';
+        final size = monster.size?.name.toLowerCase() ?? '';
 
-        final filtered = monsterList.where((monster) {
-          final name = monster.name?.toLowerCase() ?? '';
-          final type = monster.type?.toLowerCase() ?? '';
-          final size = monster.size?.name.toLowerCase() ?? '';
+        return name.contains(searchQuery) ||
+            type.contains(searchQuery) ||
+            size.contains(searchQuery);
+      }).toList();
 
-          return name.contains(searchQuery) ||
-                 type.contains(searchQuery) ||
-                 size.contains(searchQuery);
-        }).toList();
-
-        return AsyncValue.data(filtered);
-      },
-      loading: () => const AsyncValue.loading(),
-      error: (error, stack) => AsyncValue.error(error, stack),
-    );
-  },
-);
+      return AsyncValue.data(filtered);
+    },
+    loading: () => const AsyncValue.loading(),
+    error: (error, stack) => AsyncValue.error(error, stack),
+  );
+}

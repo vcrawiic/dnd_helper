@@ -1,8 +1,10 @@
+// ignore_for_file: depend_on_referenced_packages, annotate_overrides, prefer_final_fields, non_constant_identifier_names, no_leading_underscores_for_local_identifiers, camel_case_types, camel_case_extensions
+
 import '../schema.graphql.dart';
 import 'package:gql/ast.dart';
 
 class Variables$Query$Classes {
-  factory Variables$Query$Classes(Input$ClassOrder graphQL, {Input$ClassOrder? order}) =>
+  factory Variables$Query$Classes({Input$ClassOrder? order}) =>
       Variables$Query$Classes._({if (order != null) r'order': order});
 
   Variables$Query$Classes._(this._$data);
@@ -82,7 +84,6 @@ class _CopyWithImpl$Variables$Query$Classes<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({Object? order = _undefined}) => _then(
     Variables$Query$Classes._({
       ..._instance._$data,
@@ -95,9 +96,8 @@ class _CopyWithStubImpl$Variables$Query$Classes<TRes>
     implements CopyWith$Variables$Query$Classes<TRes> {
   _CopyWithStubImpl$Variables$Query$Classes(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({Input$ClassOrder? order}) => _res;
 }
 
@@ -122,12 +122,12 @@ class Query$Classes {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$classes = classes;
-    resultData['classes'] = l$classes.map((e) => e.toJson()).toList();
+    _resultData['classes'] = l$classes.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -188,7 +188,7 @@ abstract class CopyWith$Query$Classes<TRes> {
     Iterable<Query$Classes$classes> Function(
       Iterable<CopyWith$Query$Classes$classes<Query$Classes$classes>>,
     )
-    fn,
+    _fn,
   );
 }
 
@@ -202,7 +202,6 @@ class _CopyWithImpl$Query$Classes<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({Object? classes = _undefined, Object? $__typename = _undefined}) =>
       _then(
         Query$Classes(
@@ -215,14 +214,13 @@ class _CopyWithImpl$Query$Classes<TRes>
         ),
       );
 
-  @override
   TRes classes(
     Iterable<Query$Classes$classes> Function(
       Iterable<CopyWith$Query$Classes$classes<Query$Classes$classes>>,
     )
-    fn,
+    _fn,
   ) => call(
-    classes: fn(
+    classes: _fn(
       _instance.classes.map((e) => CopyWith$Query$Classes$classes(e, (i) => i)),
     ).toList(),
   );
@@ -232,13 +230,11 @@ class _CopyWithStubImpl$Query$Classes<TRes>
     implements CopyWith$Query$Classes<TRes> {
   _CopyWithStubImpl$Query$Classes(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({List<Query$Classes$classes>? classes, String? $__typename}) => _res;
 
-  @override
-  classes(fn) => _res;
+  classes(_fn) => _res;
 }
 
 const documentNodeQueryClasses = DocumentNode(
@@ -567,7 +563,7 @@ class Query$Classes$classes {
   factory Query$Classes$classes.fromJson(Map<String, dynamic> json) {
     final l$name = json['name'];
     final l$proficiencies = json['proficiencies'];
-    final l$savingThrows = json['saving_throws'];
+    final l$saving_throws = json['saving_throws'];
     final l$spellcasting = json['spellcasting'];
     final l$$__typename = json['__typename'];
     return Query$Classes$classes(
@@ -579,7 +575,7 @@ class Query$Classes$classes {
             ),
           )
           .toList(),
-      saving_throws: (l$savingThrows as List<dynamic>?)
+      saving_throws: (l$saving_throws as List<dynamic>?)
           ?.map(
             (e) => Query$Classes$classes$saving_throws.fromJson(
               (e as Map<String, dynamic>),
@@ -606,29 +602,29 @@ class Query$Classes$classes {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$proficiencies = proficiencies;
-    resultData['proficiencies'] = l$proficiencies
+    _resultData['proficiencies'] = l$proficiencies
         ?.map((e) => e.toJson())
         .toList();
-    final l$savingThrows = saving_throws;
-    resultData['saving_throws'] = l$savingThrows
+    final l$saving_throws = saving_throws;
+    _resultData['saving_throws'] = l$saving_throws
         ?.map((e) => e.toJson())
         .toList();
     final l$spellcasting = spellcasting;
-    resultData['spellcasting'] = l$spellcasting?.toJson();
+    _resultData['spellcasting'] = l$spellcasting?.toJson();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
   int get hashCode {
     final l$name = name;
     final l$proficiencies = proficiencies;
-    final l$savingThrows = saving_throws;
+    final l$saving_throws = saving_throws;
     final l$spellcasting = spellcasting;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -636,9 +632,9 @@ class Query$Classes$classes {
       l$proficiencies == null
           ? null
           : Object.hashAll(l$proficiencies.map((v) => v)),
-      l$savingThrows == null
+      l$saving_throws == null
           ? null
-          : Object.hashAll(l$savingThrows.map((v) => v)),
+          : Object.hashAll(l$saving_throws.map((v) => v)),
       l$spellcasting,
       l$$__typename,
     ]);
@@ -673,20 +669,20 @@ class Query$Classes$classes {
     } else if (l$proficiencies != lOther$proficiencies) {
       return false;
     }
-    final l$savingThrows = saving_throws;
-    final lother$savingThrows = other.saving_throws;
-    if (l$savingThrows != null && lother$savingThrows != null) {
-      if (l$savingThrows.length != lother$savingThrows.length) {
+    final l$saving_throws = saving_throws;
+    final lOther$saving_throws = other.saving_throws;
+    if (l$saving_throws != null && lOther$saving_throws != null) {
+      if (l$saving_throws.length != lOther$saving_throws.length) {
         return false;
       }
-      for (int i = 0; i < l$savingThrows.length; i++) {
-        final l$savingThrows$entry = l$savingThrows[i];
-        final lother$savingThrows$entry = lother$savingThrows[i];
-        if (l$savingThrows$entry != lother$savingThrows$entry) {
+      for (int i = 0; i < l$saving_throws.length; i++) {
+        final l$saving_throws$entry = l$saving_throws[i];
+        final lOther$saving_throws$entry = lOther$saving_throws[i];
+        if (l$saving_throws$entry != lOther$saving_throws$entry) {
           return false;
         }
       }
-    } else if (l$savingThrows != lother$savingThrows) {
+    } else if (l$saving_throws != lOther$saving_throws) {
       return false;
     }
     final l$spellcasting = spellcasting;
@@ -732,7 +728,7 @@ abstract class CopyWith$Query$Classes$classes<TRes> {
         >
       >?,
     )
-    fn,
+    _fn,
   );
   TRes saving_throws(
     Iterable<Query$Classes$classes$saving_throws>? Function(
@@ -742,7 +738,7 @@ abstract class CopyWith$Query$Classes$classes<TRes> {
         >
       >?,
     )
-    fn,
+    _fn,
   );
   CopyWith$Query$Classes$classes$spellcasting<TRes> get spellcasting;
 }
@@ -757,7 +753,6 @@ class _CopyWithImpl$Query$Classes$classes<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? name = _undefined,
     Object? proficiencies = _undefined,
@@ -784,7 +779,6 @@ class _CopyWithImpl$Query$Classes$classes<TRes>
     ),
   );
 
-  @override
   TRes proficiencies(
     Iterable<Query$Classes$classes$proficiencies>? Function(
       Iterable<
@@ -793,16 +787,15 @@ class _CopyWithImpl$Query$Classes$classes<TRes>
         >
       >?,
     )
-    fn,
+    _fn,
   ) => call(
-    proficiencies: fn(
+    proficiencies: _fn(
       _instance.proficiencies?.map(
         (e) => CopyWith$Query$Classes$classes$proficiencies(e, (i) => i),
       ),
     )?.toList(),
   );
 
-  @override
   TRes saving_throws(
     Iterable<Query$Classes$classes$saving_throws>? Function(
       Iterable<
@@ -811,16 +804,15 @@ class _CopyWithImpl$Query$Classes$classes<TRes>
         >
       >?,
     )
-    fn,
+    _fn,
   ) => call(
-    saving_throws: fn(
+    saving_throws: _fn(
       _instance.saving_throws?.map(
         (e) => CopyWith$Query$Classes$classes$saving_throws(e, (i) => i),
       ),
     )?.toList(),
   );
 
-  @override
   CopyWith$Query$Classes$classes$spellcasting<TRes> get spellcasting {
     final local$spellcasting = _instance.spellcasting;
     return local$spellcasting == null
@@ -836,9 +828,8 @@ class _CopyWithStubImpl$Query$Classes$classes<TRes>
     implements CopyWith$Query$Classes$classes<TRes> {
   _CopyWithStubImpl$Query$Classes$classes(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     String? name,
     List<Query$Classes$classes$proficiencies>? proficiencies,
@@ -847,13 +838,10 @@ class _CopyWithStubImpl$Query$Classes$classes<TRes>
     String? $__typename,
   }) => _res;
 
-  @override
-  proficiencies(fn) => _res;
+  proficiencies(_fn) => _res;
 
-  @override
-  saving_throws(fn) => _res;
+  saving_throws(_fn) => _res;
 
-  @override
   CopyWith$Query$Classes$classes$spellcasting<TRes> get spellcasting =>
       CopyWith$Query$Classes$classes$spellcasting.stub(_res);
 }
@@ -880,12 +868,12 @@ class Query$Classes$classes$proficiencies {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -948,7 +936,6 @@ class _CopyWithImpl$Query$Classes$classes$proficiencies<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({Object? name = _undefined, Object? $__typename = _undefined}) =>
       _then(
         Query$Classes$classes$proficiencies(
@@ -966,9 +953,8 @@ class _CopyWithStubImpl$Query$Classes$classes$proficiencies<TRes>
     implements CopyWith$Query$Classes$classes$proficiencies<TRes> {
   _CopyWithStubImpl$Query$Classes$classes$proficiencies(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? name, String? $__typename}) => _res;
 }
 
@@ -983,12 +969,12 @@ class Query$Classes$classes$saving_throws {
   factory Query$Classes$classes$saving_throws.fromJson(
     Map<String, dynamic> json,
   ) {
-    final l$fullName = json['full_name'];
+    final l$full_name = json['full_name'];
     final l$desc = json['desc'];
     final l$skills = json['skills'];
     final l$$__typename = json['__typename'];
     return Query$Classes$classes$saving_throws(
-      full_name: (l$fullName as String),
+      full_name: (l$full_name as String),
       desc: (l$desc as List<dynamic>).map((e) => (e as String)).toList(),
       skills: (l$skills as List<dynamic>)
           .map(
@@ -1010,26 +996,26 @@ class Query$Classes$classes$saving_throws {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
-    final l$fullName = full_name;
-    resultData['full_name'] = l$fullName;
+    final _resultData = <String, dynamic>{};
+    final l$full_name = full_name;
+    _resultData['full_name'] = l$full_name;
     final l$desc = desc;
-    resultData['desc'] = l$desc.map((e) => e).toList();
+    _resultData['desc'] = l$desc.map((e) => e).toList();
     final l$skills = skills;
-    resultData['skills'] = l$skills.map((e) => e.toJson()).toList();
+    _resultData['skills'] = l$skills.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
   int get hashCode {
-    final l$fullName = full_name;
+    final l$full_name = full_name;
     final l$desc = desc;
     final l$skills = skills;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$fullName,
+      l$full_name,
       Object.hashAll(l$desc.map((v) => v)),
       Object.hashAll(l$skills.map((v) => v)),
       l$$__typename,
@@ -1045,9 +1031,9 @@ class Query$Classes$classes$saving_throws {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$fullName = full_name;
-    final lother$fullName = other.full_name;
-    if (l$fullName != lother$fullName) {
+    final l$full_name = full_name;
+    final lOther$full_name = other.full_name;
+    if (l$full_name != lOther$full_name) {
       return false;
     }
     final l$desc = desc;
@@ -1114,7 +1100,7 @@ abstract class CopyWith$Query$Classes$classes$saving_throws<TRes> {
         >
       >,
     )
-    fn,
+    _fn,
   );
 }
 
@@ -1128,7 +1114,6 @@ class _CopyWithImpl$Query$Classes$classes$saving_throws<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? full_name = _undefined,
     Object? desc = _undefined,
@@ -1151,7 +1136,6 @@ class _CopyWithImpl$Query$Classes$classes$saving_throws<TRes>
     ),
   );
 
-  @override
   TRes skills(
     Iterable<Query$Classes$classes$saving_throws$skills> Function(
       Iterable<
@@ -1160,9 +1144,9 @@ class _CopyWithImpl$Query$Classes$classes$saving_throws<TRes>
         >
       >,
     )
-    fn,
+    _fn,
   ) => call(
-    skills: fn(
+    skills: _fn(
       _instance.skills.map(
         (e) => CopyWith$Query$Classes$classes$saving_throws$skills(e, (i) => i),
       ),
@@ -1174,9 +1158,8 @@ class _CopyWithStubImpl$Query$Classes$classes$saving_throws<TRes>
     implements CopyWith$Query$Classes$classes$saving_throws<TRes> {
   _CopyWithStubImpl$Query$Classes$classes$saving_throws(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     String? full_name,
     List<String>? desc,
@@ -1184,8 +1167,7 @@ class _CopyWithStubImpl$Query$Classes$classes$saving_throws<TRes>
     String? $__typename,
   }) => _res;
 
-  @override
-  skills(fn) => _res;
+  skills(_fn) => _res;
 }
 
 class Query$Classes$classes$saving_throws$skills {
@@ -1210,12 +1192,12 @@ class Query$Classes$classes$saving_throws$skills {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -1282,7 +1264,6 @@ class _CopyWithImpl$Query$Classes$classes$saving_throws$skills<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({Object? name = _undefined, Object? $__typename = _undefined}) =>
       _then(
         Query$Classes$classes$saving_throws$skills(
@@ -1300,9 +1281,8 @@ class _CopyWithStubImpl$Query$Classes$classes$saving_throws$skills<TRes>
     implements CopyWith$Query$Classes$classes$saving_throws$skills<TRes> {
   _CopyWithStubImpl$Query$Classes$classes$saving_throws$skills(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? name, String? $__typename}) => _res;
 }
 
@@ -1319,7 +1299,7 @@ class Query$Classes$classes$spellcasting {
   ) {
     final l$info = json['info'];
     final l$level = json['level'];
-    final l$spellcastingAbility = json['spellcasting_ability'];
+    final l$spellcasting_ability = json['spellcasting_ability'];
     final l$$__typename = json['__typename'];
     return Query$Classes$classes$spellcasting(
       info: (l$info as List<dynamic>)
@@ -1332,7 +1312,7 @@ class Query$Classes$classes$spellcasting {
       level: (l$level as int),
       spellcasting_ability:
           Query$Classes$classes$spellcasting$spellcasting_ability.fromJson(
-            (l$spellcastingAbility as Map<String, dynamic>),
+            (l$spellcasting_ability as Map<String, dynamic>),
           ),
       $__typename: (l$$__typename as String),
     );
@@ -1348,28 +1328,28 @@ class Query$Classes$classes$spellcasting {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$info = info;
-    resultData['info'] = l$info.map((e) => e.toJson()).toList();
+    _resultData['info'] = l$info.map((e) => e.toJson()).toList();
     final l$level = level;
-    resultData['level'] = l$level;
-    final l$spellcastingAbility = spellcasting_ability;
-    resultData['spellcasting_ability'] = l$spellcastingAbility.toJson();
+    _resultData['level'] = l$level;
+    final l$spellcasting_ability = spellcasting_ability;
+    _resultData['spellcasting_ability'] = l$spellcasting_ability.toJson();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
   int get hashCode {
     final l$info = info;
     final l$level = level;
-    final l$spellcastingAbility = spellcasting_ability;
+    final l$spellcasting_ability = spellcasting_ability;
     final l$$__typename = $__typename;
     return Object.hashAll([
       Object.hashAll(l$info.map((v) => v)),
       l$level,
-      l$spellcastingAbility,
+      l$spellcasting_ability,
       l$$__typename,
     ]);
   }
@@ -1400,9 +1380,9 @@ class Query$Classes$classes$spellcasting {
     if (l$level != lOther$level) {
       return false;
     }
-    final l$spellcastingAbility = spellcasting_ability;
-    final lother$spellcastingAbility = other.spellcasting_ability;
-    if (l$spellcastingAbility != lother$spellcastingAbility) {
+    final l$spellcasting_ability = spellcasting_ability;
+    final lOther$spellcasting_ability = other.spellcasting_ability;
+    if (l$spellcasting_ability != lOther$spellcasting_ability) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1446,7 +1426,7 @@ abstract class CopyWith$Query$Classes$classes$spellcasting<TRes> {
         >
       >,
     )
-    fn,
+    _fn,
   );
   CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability<TRes>
   get spellcasting_ability;
@@ -1462,7 +1442,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? info = _undefined,
     Object? level = _undefined,
@@ -1487,7 +1466,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting<TRes>
     ),
   );
 
-  @override
   TRes info(
     Iterable<Query$Classes$classes$spellcasting$info> Function(
       Iterable<
@@ -1496,21 +1474,20 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting<TRes>
         >
       >,
     )
-    fn,
+    _fn,
   ) => call(
-    info: fn(
+    info: _fn(
       _instance.info.map(
         (e) => CopyWith$Query$Classes$classes$spellcasting$info(e, (i) => i),
       ),
     ).toList(),
   );
 
-  @override
   CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability<TRes>
   get spellcasting_ability {
-    final local$spellcastingAbility = _instance.spellcasting_ability;
+    final local$spellcasting_ability = _instance.spellcasting_ability;
     return CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability(
-      local$spellcastingAbility,
+      local$spellcasting_ability,
       (e) => call(spellcasting_ability: e),
     );
   }
@@ -1520,9 +1497,8 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting<TRes>
     implements CopyWith$Query$Classes$classes$spellcasting<TRes> {
   _CopyWithStubImpl$Query$Classes$classes$spellcasting(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     List<Query$Classes$classes$spellcasting$info>? info,
     int? level,
@@ -1531,10 +1507,8 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting<TRes>
     String? $__typename,
   }) => _res;
 
-  @override
-  info(fn) => _res;
+  info(_fn) => _res;
 
-  @override
   CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability<TRes>
   get spellcasting_ability =>
       CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability.stub(
@@ -1569,14 +1543,14 @@ class Query$Classes$classes$spellcasting$info {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$desc = desc;
-    resultData['desc'] = l$desc.map((e) => e).toList();
+    _resultData['desc'] = l$desc.map((e) => e).toList();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -1660,7 +1634,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$info<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? name = _undefined,
     Object? desc = _undefined,
@@ -1684,9 +1657,8 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting$info<TRes>
     implements CopyWith$Query$Classes$classes$spellcasting$info<TRes> {
   _CopyWithStubImpl$Query$Classes$classes$spellcasting$info(this._res);
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? name, List<String>? desc, String? $__typename}) => _res;
 }
 
@@ -1725,14 +1697,14 @@ class Query$Classes$classes$spellcasting$spellcasting_ability {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$skills = skills;
-    resultData['skills'] = l$skills.map((e) => e.toJson()).toList();
+    _resultData['skills'] = l$skills.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -1821,7 +1793,7 @@ abstract class CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability<
         >
       >,
     )
-    fn,
+    _fn,
   );
 }
 
@@ -1842,7 +1814,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability<
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? name = _undefined,
     Object? skills = _undefined,
@@ -1864,7 +1835,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability<
     ),
   );
 
-  @override
   TRes skills(
     Iterable<Query$Classes$classes$spellcasting$spellcasting_ability$skills>
     Function(
@@ -1874,9 +1844,9 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability<
         >
       >,
     )
-    fn,
+    _fn,
   ) => call(
-    skills: fn(
+    skills: _fn(
       _instance.skills.map(
         (e) =>
             CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability$skills(
@@ -1897,9 +1867,8 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting$spellcasting_ability<
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     String? name,
     List<Query$Classes$classes$spellcasting$spellcasting_ability$skills>?
@@ -1907,8 +1876,7 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting$spellcasting_ability<
     String? $__typename,
   }) => _res;
 
-  @override
-  skills(fn) => _res;
+  skills(_fn) => _res;
 }
 
 class Query$Classes$classes$spellcasting$spellcasting_ability$skills {
@@ -1924,14 +1892,14 @@ class Query$Classes$classes$spellcasting$spellcasting_ability$skills {
   ) {
     final l$name = json['name'];
     final l$desc = json['desc'];
-    final l$abilityScore = json['ability_score'];
+    final l$ability_score = json['ability_score'];
     final l$$__typename = json['__typename'];
     return Query$Classes$classes$spellcasting$spellcasting_ability$skills(
       name: (l$name as String),
       desc: (l$desc as List<dynamic>).map((e) => (e as String)).toList(),
       ability_score:
           Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_score.fromJson(
-            (l$abilityScore as Map<String, dynamic>),
+            (l$ability_score as Map<String, dynamic>),
           ),
       $__typename: (l$$__typename as String),
     );
@@ -1947,28 +1915,28 @@ class Query$Classes$classes$spellcasting$spellcasting_ability$skills {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$desc = desc;
-    resultData['desc'] = l$desc.map((e) => e).toList();
-    final l$abilityScore = ability_score;
-    resultData['ability_score'] = l$abilityScore.toJson();
+    _resultData['desc'] = l$desc.map((e) => e).toList();
+    final l$ability_score = ability_score;
+    _resultData['ability_score'] = l$ability_score.toJson();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
   int get hashCode {
     final l$name = name;
     final l$desc = desc;
-    final l$abilityScore = ability_score;
+    final l$ability_score = ability_score;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       Object.hashAll(l$desc.map((v) => v)),
-      l$abilityScore,
+      l$ability_score,
       l$$__typename,
     ]);
   }
@@ -2000,9 +1968,9 @@ class Query$Classes$classes$spellcasting$spellcasting_ability$skills {
         return false;
       }
     }
-    final l$abilityScore = ability_score;
-    final lother$abilityScore = other.ability_score;
-    if (l$abilityScore != lother$abilityScore) {
+    final l$ability_score = ability_score;
+    final lOther$ability_score = other.ability_score;
+    if (l$ability_score != lOther$ability_score) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2076,7 +2044,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability$skil
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? name = _undefined,
     Object? desc = _undefined,
@@ -2100,14 +2067,13 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability$skil
     ),
   );
 
-  @override
   CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_score<
     TRes
   >
   get ability_score {
-    final local$abilityScore = _instance.ability_score;
+    final local$ability_score = _instance.ability_score;
     return CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_score(
-      local$abilityScore,
+      local$ability_score,
       (e) => call(ability_score: e),
     );
   }
@@ -2124,9 +2090,8 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting$spellcasting_ability$
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     String? name,
     List<String>? desc,
@@ -2135,7 +2100,6 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting$spellcasting_ability$
     String? $__typename,
   }) => _res;
 
-  @override
   CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_score<
     TRes
   >
@@ -2187,16 +2151,16 @@ class Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_sco
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$desc = desc;
-    resultData['desc'] = l$desc.map((e) => e).toList();
+    _resultData['desc'] = l$desc.map((e) => e).toList();
     final l$skills = skills;
-    resultData['skills'] = l$skills.map((e) => e.toJson()).toList();
+    _resultData['skills'] = l$skills.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -2309,7 +2273,7 @@ abstract class CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability$
         >
       >,
     )
-    fn,
+    _fn,
   );
 }
 
@@ -2335,7 +2299,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability$skil
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? name = _undefined,
     Object? desc = _undefined,
@@ -2361,7 +2324,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability$skil
     ),
   );
 
-  @override
   TRes skills(
     Iterable<
       Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_score$skills
@@ -2373,9 +2335,9 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability$skil
         >
       >,
     )
-    fn,
+    _fn,
   ) => call(
-    skills: fn(
+    skills: _fn(
       _instance.skills.map(
         (e) =>
             CopyWith$Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_score$skills(
@@ -2398,9 +2360,8 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting$spellcasting_ability$
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({
     String? name,
     List<String>? desc,
@@ -2411,8 +2372,7 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting$spellcasting_ability$
     String? $__typename,
   }) => _res;
 
-  @override
-  skills(fn) => _res;
+  skills(_fn) => _res;
 }
 
 class Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_score$skills {
@@ -2442,14 +2402,14 @@ class Query$Classes$classes$spellcasting$spellcasting_ability$skills$ability_sco
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final resultData = <String, dynamic>{};
+    final _resultData = <String, dynamic>{};
     final l$name = name;
-    resultData['name'] = l$name;
+    _resultData['name'] = l$name;
     final l$desc = desc;
-    resultData['desc'] = l$desc.map((e) => e).toList();
+    _resultData['desc'] = l$desc.map((e) => e).toList();
     final l$$__typename = $__typename;
-    resultData['__typename'] = l$$__typename;
-    return resultData;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
   }
 
   @override
@@ -2554,7 +2514,6 @@ class _CopyWithImpl$Query$Classes$classes$spellcasting$spellcasting_ability$skil
 
   static const _undefined = <dynamic, dynamic>{};
 
-  @override
   TRes call({
     Object? name = _undefined,
     Object? desc = _undefined,
@@ -2585,8 +2544,7 @@ class _CopyWithStubImpl$Query$Classes$classes$spellcasting$spellcasting_ability$
     this._res,
   );
 
-  final TRes _res;
+  TRes _res;
 
-  @override
   call({String? name, List<String>? desc, String? $__typename}) => _res;
 }

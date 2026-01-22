@@ -1,9 +1,9 @@
 import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/models/monsters/monster_order.dart';
 import 'package:dnd_helper/services/gql/graphql_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final searchQueryProvider = StateProvider<String>((ref) => '');
+part 'infinite_scroll_providers.g.dart';
 
 const int monstersPerPage = 20;
 
@@ -14,13 +14,20 @@ class InfiniteScrollState {
   final int currentPage;
   final String? error;
 
-  InfiniteScrollState({
+  const InfiniteScrollState({
     required this.monsters,
     required this.isLoading,
     required this.hasMoreData,
     required this.currentPage,
     this.error,
   });
+
+  factory InfiniteScrollState.initial() => const InfiniteScrollState(
+        monsters: [],
+        isLoading: false,
+        hasMoreData: true,
+        currentPage: 0,
+      );
 
   InfiniteScrollState copyWith({
     List<Monster>? monsters,
@@ -39,28 +46,33 @@ class InfiniteScrollState {
   }
 }
 
-class InfiniteScrollNotifier extends StateNotifier<InfiniteScrollState> {
-  final GraphQLService service;
+@riverpod
+class InfiniteScroll extends _$InfiniteScroll {
+  late final GraphQLService _service;
+  bool _disposed = false;
 
-  InfiniteScrollNotifier(this.service)
-      : super(InfiniteScrollState(
-          monsters: [],
-          isLoading: false,
-          hasMoreData: true,
-          currentPage: 0,
-        )) {
-    loadInitial();
+  @override
+  InfiniteScrollState build(GraphQLService service) {
+    _service = service;
+    _disposed = false;
+
+    ref.onDispose(() {
+      _disposed = true;
+    });
+
+    Future.microtask(() => loadInitial());
+    return InfiniteScrollState.initial();
   }
 
   Future<void> loadInitial() async {
-    if (!mounted) return;
+    if (_disposed) return;
     state = state.copyWith(monsters: [], currentPage: 0, hasMoreData: true);
     await loadMore();
   }
 
   Future<void> loadMore() async {
+    if (_disposed) return;
     if (state.isLoading || !state.hasMoreData) return;
-    if (!mounted) return;
 
     state = state.copyWith(isLoading: true);
 
@@ -70,16 +82,18 @@ class InfiniteScrollNotifier extends StateNotifier<InfiniteScrollState> {
 
       await Future.delayed(const Duration(milliseconds: 500));
 
-      final result = await service.fetchMonsters(
+      if (_disposed) return;
+
+      final result = await _service.fetchMonsters(
         MonsterOrder(
           orderDirection: MonsterOrderDirection.ASC,
-          orderBy: MonsterOrderBy.CHALLENGE_RATING,
+          orderBy: MonsterOrderBy.NAME,
         ),
         limit: monstersPerPage,
         skip: skip,
       );
 
-      if (!mounted) return;
+      if (_disposed) return;
 
       final newMonsters = result?.data?.monsters ?? [];
       final hasMore = newMonsters.length >= monstersPerPage;
@@ -91,7 +105,7 @@ class InfiniteScrollNotifier extends StateNotifier<InfiniteScrollState> {
         currentPage: nextPage,
       );
     } catch (e) {
-      if (!mounted) return;
+      if (_disposed) return;
       state = state.copyWith(
         isLoading: false,
         error: e.toString(),
@@ -100,60 +114,57 @@ class InfiniteScrollNotifier extends StateNotifier<InfiniteScrollState> {
   }
 
   void reset() {
-    if (!mounted) return;
-    state = InfiniteScrollState(
-      monsters: [],
-      isLoading: false,
-      hasMoreData: true,
-      currentPage: 0,
-    );
+    if (_disposed) return;
+    state = InfiniteScrollState.initial();
     loadInitial();
   }
 }
 
-final infiniteScrollProvider =
-    StateNotifierProvider.family<InfiniteScrollNotifier, InfiniteScrollState, GraphQLService>(
-  (ref, service) => InfiniteScrollNotifier(service),
-);
+@riverpod
+Future<List<Monster>> allMonsters(Ref ref, GraphQLService service) async {
+  return service.fetchAllMonsters(
+    MonsterOrder(
+      orderDirection: MonsterOrderDirection.ASC,
+      orderBy: MonsterOrderBy.NAME,
+    ),
+  );
+}
 
-final allMonstersProvider =
-    FutureProvider.family<List<Monster>, GraphQLService>(
-  (ref, service) async {
-    return service.fetchAllMonsters(
-      MonsterOrder(
-        orderDirection: MonsterOrderDirection.ASC,
-        orderBy: MonsterOrderBy.CHALLENGE_RATING,
-      ),
-    );
-  },
-);
+@riverpod
+class InfiniteScrollSearchQuery extends _$InfiniteScrollSearchQuery {
+  @override
+  String build() => '';
 
-final filteredMonstersProvider =
-    Provider.family<AsyncValue<List<Monster>>, GraphQLService>(
-  (ref, service) {
-    final monstersAsync = ref.watch(allMonstersProvider(service));
-    final searchQuery = ref.watch(searchQueryProvider).toLowerCase();
+  void update(String query) => state = query;
+}
 
-    return monstersAsync.when(
-      data: (monsterList) {
-        if (searchQuery.isEmpty) {
-          return AsyncValue.data(monsterList);
-        }
+@riverpod
+AsyncValue<List<Monster>> filteredMonstersInfinite(
+  Ref ref,
+  GraphQLService service,
+) {
+  final monstersAsync = ref.watch(allMonstersProvider(service));
+  final searchQuery = ref.watch(infiniteScrollSearchQueryProvider).toLowerCase();
 
-        final filtered = monsterList.where((monster) {
-          final name = monster.name?.toLowerCase() ?? '';
-          final type = monster.type?.toLowerCase() ?? '';
-          final size = monster.size?.name.toLowerCase() ?? '';
+  return monstersAsync.when(
+    data: (monsterList) {
+      if (searchQuery.isEmpty) {
+        return AsyncValue.data(monsterList);
+      }
 
-          return name.contains(searchQuery) ||
-              type.contains(searchQuery) ||
-              size.contains(searchQuery);
-        }).toList();
+      final filtered = monsterList.where((monster) {
+        final name = monster.name?.toLowerCase() ?? '';
+        final type = monster.type?.toLowerCase() ?? '';
+        final size = monster.size?.name.toLowerCase() ?? '';
 
-        return AsyncValue.data(filtered);
-      },
-      loading: () => const AsyncValue.loading(),
-      error: (error, stack) => AsyncValue.error(error, stack),
-    );
-  },
-);
+        return name.contains(searchQuery) ||
+            type.contains(searchQuery) ||
+            size.contains(searchQuery);
+      }).toList();
+
+      return AsyncValue.data(filtered);
+    },
+    loading: () => const AsyncValue.loading(),
+    error: (error, stack) => AsyncValue.error(error, stack),
+  );
+}

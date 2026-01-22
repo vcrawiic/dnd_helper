@@ -1,3 +1,4 @@
+// import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_progress_bar.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/state_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,8 @@ class GeneralInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(decoration: BoxDecoration(),
+    return Container(
+      decoration: BoxDecoration(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -14,26 +16,34 @@ class GeneralInfo extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.person_pin_sharp)),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.person_pin_sharp),
+                ),
                 Column(children: [Text('name'), Text('Race - Class')]),
                 Placeholder(fallbackHeight: 40, fallbackWidth: 40),
               ],
             ),
-            Row(
-              children: [
-                Container(decoration: BoxDecoration(),
-                  child: Text('Level 1')),
-                Expanded(child: LinearProgressIndicator(value: 0.5)),
-              ],
-            ),
+            // XpProgressBar(
+            //   currentLevel: null,
+            //   currentXp: null,
+            //   xpForCurrentLevel: null,
+            //   xpForNextLevel: null,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Stack(alignment: Alignment.center,
+                    Stack(
+                      alignment: Alignment.center,
                       children: [
-                        Image.asset('assets/Shield.png', height: 50, width: 50, color:Colors.blue,),
+                        Image.asset(
+                          'assets/Shield.png',
+                          height: 50,
+                          width: 50,
+                          color: Colors.blue,
+                        ),
                         Text('AC'),
                       ],
                     ),
@@ -65,10 +75,11 @@ class GeneralInfo extends StatelessWidget {
               ],
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                StateChip(label: 'Inspiration', value: ''),
-                StateChip(label: 'States', value: ''),
+                StateChip(label: 'Inspiration', value: '1'),
+                StateChip(label: 'States', value: '12'),
                 StateChip(label: 'Exhaustion', value: ''),
                 StateChip(label: 'Initiative', value: ''),
               ],

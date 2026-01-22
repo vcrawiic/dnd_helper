@@ -1,4 +1,4 @@
-import 'package:dnd_helper/pages/char_sheet/widgets/settings_tile.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/settings/general_info/settings_tile.dart';
 import 'package:dnd_helper/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 

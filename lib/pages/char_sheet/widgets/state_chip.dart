@@ -1,3 +1,4 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:flutter/material.dart';
 
 class StateChip extends StatelessWidget {
@@ -11,8 +12,14 @@ class StateChip extends StatelessWidget {
     return Column(
       children: [
         Container(
-          decoration: BoxDecoration(),
-          child: Text(value ?? '')),
+          width: 90,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Pallete.primary),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(child: Text(value ?? '')),
+        ),
         Text(label),
       ],
     );

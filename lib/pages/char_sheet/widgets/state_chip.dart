@@ -10,7 +10,9 @@ class StateChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(child: Text(value ?? '')),
+        Container(
+          decoration: BoxDecoration(),
+          child: Text(value ?? '')),
         Text(label),
       ],
     );

@@ -108,8 +108,8 @@ class RollHistory extends StatelessWidget {
   }
 
   Color? _getChipColor(DiceRollGroup group) {
-    if (group.hasNat20) return Colors.green.withOpacity(0.3);
-    if (group.hasNat1) return Colors.red.withOpacity(0.3);
+    if (group.hasNat20) return Colors.green.withAlpha(76);
+    if (group.hasNat1) return Colors.red.withAlpha(76);
     return null;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:dnd_helper/pages/char_sheet/widgets/settings_tile.dart';
 import 'package:dnd_helper/widgets/custom_text_field.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class GeneralInfoSettings extends StatefulWidget {
@@ -28,7 +27,7 @@ class _GeneralInfoSettingsState extends State<GeneralInfoSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container(decoration: BoxDecoration(),
       child: Column(
         spacing: 16,
         children: [

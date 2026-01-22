@@ -6,7 +6,7 @@ class GeneralInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container(decoration: BoxDecoration(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -21,7 +21,8 @@ class GeneralInfo extends StatelessWidget {
             ),
             Row(
               children: [
-                Container(child: Text('Level 1')),
+                Container(decoration: BoxDecoration(),
+                  child: Text('Level 1')),
                 Expanded(child: LinearProgressIndicator(value: 0.5)),
               ],
             ),

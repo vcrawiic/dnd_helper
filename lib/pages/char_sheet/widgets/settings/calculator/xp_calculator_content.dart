@@ -64,6 +64,28 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
             onDigitPressed: _onDigitPressed,
             onBackspace: _onBackspace,
             inputValue: _inputValue,
+            rightColumn: Column(
+              children: List.generate(
+                4,
+                (_) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: SizedBox(
+                    height: 56,
+                    width: 56,
+                    child: OutlinedButton(
+                      onPressed: null, 
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        side: BorderSide(color: Pallete.greyDark),
+                      ),
+                      child: const SizedBox(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: 16),
           Row(

@@ -1,4 +1,6 @@
-// import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_progress_bar.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_calculator_content.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_progress_bar.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/settings/general_info/char_settings.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/state_chip.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +10,7 @@ class GeneralInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -18,18 +20,42 @@ class GeneralInfo extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.person_pin_sharp),
+                  icon: const Icon(Icons.person_pin_sharp),
                 ),
-                Column(children: [Text('name'), Text('Race - Class')]),
-                Placeholder(fallbackHeight: 40, fallbackWidth: 40),
+                const Column(children: [Text('name'), Text('Race - Class')]),
+                const Placeholder(fallbackHeight: 40, fallbackWidth: 40),
               ],
             ),
-            // XpProgressBar(
-            //   currentLevel: null,
-            //   currentXp: null,
-            //   xpForCurrentLevel: null,
-            //   xpForNextLevel: null,
-            // ),
+            const SizedBox(height: 8),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CharSettings(
+                      title: 'XP Calculator',
+                      body: XpCalculatorContent(
+                        currentLevel: 3,
+                        currentXp: 1086,
+                        xpForCurrentLevel: 900,
+                        xpForNextLevel: 2700,
+                        canLevelUp: false,
+                        onAddXp: (value) => debugPrint('Add XP: $value'),
+                        onRemoveXp: (value) => debugPrint('Remove XP: $value'),
+                        onLevelUp: () => debugPrint('Level Up!'),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              child: const XpProgressBar(
+                currentLevel: 3,
+                currentXp: 1086,
+                xpForCurrentLevel: 900,
+                xpForNextLevel: 2700,
+              ),
+            ),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -44,24 +70,24 @@ class GeneralInfo extends StatelessWidget {
                           width: 50,
                           color: Colors.blue,
                         ),
-                        Text('AC'),
+                        const Text('AC'),
                       ],
                     ),
-                    Column(children: [Text('30'), Text('Speed')]),
+                    const Column(children: [Text('30'), Text('Speed')]),
                   ],
                 ),
                 Row(
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.mode_night_outlined),
+                      icon: const Icon(Icons.mode_night_outlined),
                     ),
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.greenAccent),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(4.0),
                         child: Row(
                           children: [
                             Icon(Icons.trending_down_outlined),
@@ -74,14 +100,25 @@ class GeneralInfo extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
+            const SizedBox(height: 8),
+            const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                StateChip(label: 'Inspiration', value: '1'),
-                StateChip(label: 'States', value: '12'),
-                StateChip(label: 'Exhaustion', value: ''),
-                StateChip(label: 'Initiative', value: ''),
+                Expanded(
+                  child: StateChip(label: 'Inspiration', value: '1'),
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  child: StateChip(label: 'States', value: '12'),
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  child: StateChip(label: 'Exhaustion', value: ''),
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  child: StateChip(label: 'Initiative', value: ''),
+                ),
               ],
             ),
           ],

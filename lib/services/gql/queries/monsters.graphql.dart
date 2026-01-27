@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages, annotate_overrides, prefer_final_fields, non_constant_identifier_names, no_leading_underscores_for_local_identifiers, camel_case_types, camel_case_extensions, library_private_types_in_public_api
-
 import '../schema.graphql.dart';
 import 'package:gql/ast.dart';
 

@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, annotate_overrides, prefer_final_fields, camel_case_types
-
 class Input$AbilityScoreOrder {
   factory Input$AbilityScoreOrder({
     required Enum$AbilityScoreOrderField by,

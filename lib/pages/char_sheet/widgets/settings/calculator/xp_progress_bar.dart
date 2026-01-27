@@ -1,3 +1,4 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:flutter/material.dart';
 
 class XpProgressBar extends StatelessWidget {
@@ -23,95 +24,71 @@ class XpProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          '$currentLevel',
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.purple,
+    return Container(
+      height: 26,
+      decoration: BoxDecoration(
+        border: Border.all(color: Pallete.borderColor, width: 2),
+        borderRadius: BorderRadius.circular(12),
+        color: Pallete.transparent,
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              color: Pallete.borderColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(4),
+                bottomLeft: Radius.circular(4),
+              ),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              '$currentLevel level',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Pallete.secondaryWhiteText,
+              ),
+            ),
           ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final xpPosition = _progress * constraints.maxWidth;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: 24,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          child: LinearProgressIndicator(
-                            value: _progress,
-                            backgroundColor: Colors.grey.shade800,
-                            valueColor: const AlwaysStoppedAnimation(
-                              Colors.purple,
-                            ),
-                            minHeight: 4,
-                          ),
-                        ),
-                        Positioned(
-                          left: (xpPosition - 20).clamp(
-                            0,
-                            constraints.maxWidth - 40,
-                          ),
-                          top: 0,
-                          child: Text(
-                            '$currentXp',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.purple,
-                            ),
-                          ),
-                        ),
-                      ],
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Stack(
+                  children: [
+                    Container(
+                      width: constraints.maxWidth * _progress,
+                      decoration: BoxDecoration(color: Pallete.progressColor),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '$xpForCurrentLevel',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey.shade500,
+                    Center(
+                      child: Text(
+                        '$currentXp/$xpForNextLevel',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Pallete.primaryBlackText,
                         ),
                       ),
-                      Text(
-                        '$xpForNextLevel',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey.shade500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
-        ),
-        const SizedBox(width: 12),
-        Text(
-          '${currentLevel + 1}',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey.shade600,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            alignment: Alignment.center,
+            child: Text(
+              '${currentLevel + 1}',
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Pallete.primaryBlackText,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

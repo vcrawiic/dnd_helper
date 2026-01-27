@@ -58,7 +58,7 @@ final class InfiniteScrollProvider
   }
 }
 
-String _$infiniteScrollHash() => r'b5940b90fcff0d84020f7751af8dd9ae512c56aa';
+String _$infiniteScrollHash() => r'0c59151588ecad77eb2dec7311a31fcecc7a5829';
 
 final class InfiniteScrollFamily extends $Family
     with
@@ -161,7 +161,7 @@ final class AllMonstersProvider
   }
 }
 
-String _$allMonstersHash() => r'c6f04d8b6acebdd27ced61f7d7ae91e670d39f6c';
+String _$allMonstersHash() => r'21bee3e6854b474967e037b38e62d6a251d8310a';
 
 final class AllMonstersFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Monster>>, GraphQLService> {

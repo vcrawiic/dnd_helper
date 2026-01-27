@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final double borderRadius;
+  final VoidCallback? onEditingComplete;
 
   const CustomTextField({
     super.key,
@@ -19,6 +20,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.validator,
     this.borderRadius = 8.0,
+    this.onEditingComplete,
   });
 
   @override
@@ -29,6 +31,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       validator: validator,
+      onEditingComplete: onEditingComplete,
       decoration: InputDecoration(
         filled: true,
         fillColor: Pallete.primaryBG.withAlpha(150),

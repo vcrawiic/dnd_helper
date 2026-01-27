@@ -33,7 +33,37 @@ class XpCalculatorContent extends StatefulWidget {
 class _XpCalculatorContentState extends State<XpCalculatorContent> {
   String _inputValue = '';
 
-  int get _parsedValue => int.tryParse(_inputValue) ?? 0;
+  int get _parsedValue {
+    final expression = _inputValue.replaceAll(' ', '');
+    if (expression.isEmpty) return 0;
+
+    int result = 0;
+    String currentNumber = '';
+    String operation = '+';
+
+    for (int i = 0; i < expression.length; i++) {
+      final char = expression[i];
+      if (char == '+' || char == '-') {
+        if (currentNumber.isNotEmpty) {
+          result = operation == '+'
+              ? result + int.parse(currentNumber)
+              : result - int.parse(currentNumber);
+        }
+        operation = char;
+        currentNumber = '';
+      } else {
+        currentNumber += char;
+      }
+    }
+
+    if (currentNumber.isNotEmpty) {
+      result = operation == '+'
+          ? result + int.parse(currentNumber)
+          : result - int.parse(currentNumber);
+    }
+
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +76,6 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close),
-            ),
-          ),
           XpProgressBar(
             currentLevel: widget.currentLevel,
             currentXp: widget.currentXp,
@@ -73,7 +96,7 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
                     height: 56,
                     width: 56,
                     child: OutlinedButton(
-                      onPressed: null, 
+                      onPressed: null,
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -102,8 +125,11 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
                 child: ActionButton(
                   label: 'INCREASE',
                   color: Pallete.primary,
-                  onPressed: _parsedValue > 0
-                      ? () => widget.onAddXp(_parsedValue)
+                  onPressed: _parsedValue != 0
+                      ? () {
+                          widget.onAddXp(_parsedValue.abs());
+                          setState(() => _inputValue = '');
+                        }
                       : null,
                 ),
               ),
@@ -112,8 +138,11 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
                 child: ActionButton(
                   label: 'DECREASE',
                   color: Pallete.primary,
-                  onPressed: _parsedValue > 0
-                      ? () => widget.onRemoveXp(_parsedValue)
+                  onPressed: _parsedValue != 0
+                      ? () {
+                          widget.onRemoveXp(_parsedValue.abs());
+                          setState(() => _inputValue = '');
+                        }
                       : null,
                 ),
               ),
@@ -134,7 +163,12 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
 
   void _onDigitPressed(String digit) {
     setState(() {
-      if (digit == '+' || digit == '-') return;
+      if ((digit == '+' || digit == '-') &&
+          (_inputValue.isEmpty ||
+              _inputValue.endsWith('+') ||
+              _inputValue.endsWith('-'))) {
+        return;
+      }
       _inputValue += digit;
     });
   }

@@ -167,7 +167,7 @@ final class PaginatedMonstersProvider
   }
 }
 
-String _$paginatedMonstersHash() => r'90d2aadd93f3c4748fd750ce8e459b686c964139';
+String _$paginatedMonstersHash() => r'2a9a9fbd794f2b23b490867f3b046d465fa746d8';
 
 final class PaginatedMonstersFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Monsters?>, GraphQLService> {
@@ -243,7 +243,7 @@ final class AllMonstersPaginationProvider
 }
 
 String _$allMonstersPaginationHash() =>
-    r'545bbe937b8680dccc966da906fd747cf27d0105';
+    r'b7e0038c179df66ae991111a40a8dfcf1535f9fa';
 
 final class AllMonstersPaginationFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Monster>>, GraphQLService> {

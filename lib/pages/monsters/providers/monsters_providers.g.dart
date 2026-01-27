@@ -115,7 +115,7 @@ final class MonstersProvider
   }
 }
 
-String _$monstersHash() => r'd05413d890d1cc26877ec7e0212d45226cf6fc5f';
+String _$monstersHash() => r'8a528bb931b87792068f430f201182f718e80684';
 
 final class MonstersFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Monster>>, GraphQLService> {

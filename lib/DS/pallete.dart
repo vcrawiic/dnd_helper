@@ -25,4 +25,7 @@ class Pallete {
 
   static final Color transparent = Colors.transparent;
 
+  static final borderColor = Color(0xFF7B68B8);
+  static final progressColor = Color(0xFF9B8ACB);
+
 }

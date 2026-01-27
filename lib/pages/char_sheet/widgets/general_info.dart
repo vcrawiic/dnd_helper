@@ -1,14 +1,28 @@
-import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_calculator_content.dart';
+import 'package:dnd_helper/pages/char_sheet/providers/char_stats_provider.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_progress_bar.dart';
-import 'package:dnd_helper/pages/char_sheet/widgets/settings/general_info/char_settings.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/state_chip.dart';
+import 'package:dnd_helper/pages/navigation/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class GeneralInfo extends StatelessWidget {
-  const GeneralInfo({super.key});
+class GeneralInfo extends ConsumerWidget {
+  final String characterId;
+
+  const GeneralInfo({super.key, required this.characterId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final statsAsync = ref.watch(charStatsProvider(characterId));
+
+    return statsAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, _) => Center(child: Text('Error: $error')),
+      data: (stats) => _buildContent(context, stats),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, stats) {
     return Container(
       decoration: const BoxDecoration(),
       child: Padding(
@@ -19,40 +33,35 @@ class GeneralInfo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => context.push(
+                    '${AppRoutes.profile}/${AppRoutes.charSheet}/${AppRoutes.generalSettings}',
+                  ),
                   icon: const Icon(Icons.person_pin_sharp),
                 ),
-                const Column(children: [Text('name'), Text('Race - Class')]),
+                GestureDetector(
+                  onTap: () => context.push(
+                    '${AppRoutes.profile}/${AppRoutes.charSheet}/${AppRoutes.generalSettings}',
+                  ),
+                  child: Column(
+                    children: [
+                      Text(stats.name.isEmpty ? 'No name' : stats.name),
+                      Text('${stats.race} - ${stats.characterClass}'),
+                    ],
+                  ),
+                ),
                 const Placeholder(fallbackHeight: 40, fallbackWidth: 40),
               ],
             ),
             const SizedBox(height: 8),
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => CharSettings(
-                      title: 'XP Calculator',
-                      body: XpCalculatorContent(
-                        currentLevel: 3,
-                        currentXp: 1086,
-                        xpForCurrentLevel: 900,
-                        xpForNextLevel: 2700,
-                        canLevelUp: false,
-                        onAddXp: (value) => debugPrint('Add XP: $value'),
-                        onRemoveXp: (value) => debugPrint('Remove XP: $value'),
-                        onLevelUp: () => debugPrint('Level Up!'),
-                      ),
-                    ),
-                  ),
-                );
-              },
-              child: const XpProgressBar(
-                currentLevel: 3,
-                currentXp: 1086,
-                xpForCurrentLevel: 900,
-                xpForNextLevel: 2700,
+              onTap: () => context.push(
+                '${AppRoutes.profile}/${AppRoutes.charSheet}/${AppRoutes.xpCalculator}',
+              ),
+              child: XpProgressBar(
+                currentLevel: stats.level,
+                currentXp: stats.currentXp,
+                xpForCurrentLevel: stats.xpForCurrentLevel,
+                xpForNextLevel: stats.xpForNextLevel,
               ),
             ),
             const SizedBox(height: 8),
@@ -70,10 +79,15 @@ class GeneralInfo extends StatelessWidget {
                           width: 50,
                           color: Colors.blue,
                         ),
-                        const Text('AC'),
+                        Text('${stats.armorClass}'),
                       ],
                     ),
-                    const Column(children: [Text('30'), Text('Speed')]),
+                    Column(
+                      children: [
+                        Text('${stats.speed}'),
+                        const Text('Speed'),
+                      ],
+                    ),
                   ],
                 ),
                 Row(
@@ -86,12 +100,12 @@ class GeneralInfo extends StatelessWidget {
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.greenAccent),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(4.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
                         child: Row(
                           children: [
-                            Icon(Icons.trending_down_outlined),
-                            Text('20/20'),
+                            const Icon(Icons.trending_down_outlined),
+                            Text('${stats.currentHp}/${stats.maxHp}'),
                           ],
                         ),
                       ),
@@ -101,23 +115,35 @@ class GeneralInfo extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            const Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: StateChip(label: 'Inspiration', value: '1'),
+                  child: StateChip(
+                    label: 'Inspiration',
+                    value: '${stats.inspiration}',
+                  ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Expanded(
-                  child: StateChip(label: 'States', value: '12'),
+                  child: StateChip(
+                    label: 'States',
+                    value: '${stats.states.length}',
+                  ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Expanded(
-                  child: StateChip(label: 'Exhaustion', value: ''),
+                  child: StateChip(
+                    label: 'Exhaustion',
+                    value: stats.exhaustion > 0 ? '${stats.exhaustion}' : '',
+                  ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Expanded(
-                  child: StateChip(label: 'Initiative', value: ''),
+                  child: StateChip(
+                    label: 'Initiative',
+                    value: stats.initiative != 0 ? '${stats.initiative}' : '',
+                  ),
                 ),
               ],
             ),

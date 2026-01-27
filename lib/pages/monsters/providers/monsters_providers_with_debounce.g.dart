@@ -118,7 +118,7 @@ final class MonstersWithDebounceProvider
 }
 
 String _$monstersWithDebounceHash() =>
-    r'05245bed018eda83c46bc9c02c2a4fb5993e5970';
+    r'a26326673678cc17dec6ace43f3ac72ec5a4f49e';
 
 final class MonstersWithDebounceFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Monster>>, GraphQLService> {

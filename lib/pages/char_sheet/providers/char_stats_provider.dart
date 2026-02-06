@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/char_stats_model.dart';
 import '../models/char_stats_mapper.dart';
+import '../models/blocks/progression.dart';
 
 part 'char_stats_provider.g.dart';
 
@@ -41,37 +42,26 @@ class CharStatsNotifier extends _$CharStatsNotifier {
         .set(CharStatsMapper.toFirestore(stats));
   }
 
-  Future<void> addXp(int amount) async {
-    final current = state.value!;
-    final newXp = (current.currentXp + amount).clamp(0, 999999);
-
-    int newLevel = current.level;
-
-    if (amount < 0) {
-      while (newLevel > 1 && newXp < CharStats.xpThresholds[newLevel]!) {
-        newLevel--;
-      }
-    }
-
-    final updated = current.copyWith(currentXp: newXp, level: newLevel);
-    state = AsyncData(updated);
-    await _saveToFirebase(updated);
-  }
-
-  Future<void> levelUp() async {
-    final current = state.value!;
-    if (current.canLevelUp) {
-      final updated = current.copyWith(level: current.level + 1);
-      state = AsyncData(updated);
-      await _saveToFirebase(updated);
-    }
-  }
-
   Future<void> updateGeneralInfo({
     String? name,
     String? race,
     String? characterClass,
     String? archetype,
+  }) async {
+    final current = state.value!;
+    final updated = current.copyWith(
+      generalInfo: current.generalInfo.copyWith(
+        name: name,
+        race: race,
+        characterClass: characterClass,
+        archetype: archetype,
+      ),
+    );
+    state = AsyncData(updated);
+    await _saveToFirebase(updated);
+  }
+
+  Future<void> updateCombat({
     int? armorClass,
     int? shieldAC,
     int? speed,
@@ -79,14 +69,75 @@ class CharStatsNotifier extends _$CharStatsNotifier {
   }) async {
     final current = state.value!;
     final updated = current.copyWith(
-      name: name,
-      race: race,
-      characterClass: characterClass,
-      archetype: archetype,
-      armorClass: armorClass,
-      shieldAC: shieldAC,
-      speed: speed,
-      initiative: initiative,
+      combat: current.combat.copyWith(
+        armorClass: armorClass,
+        shieldAC: shieldAC,
+        speed: speed,
+        initiative: initiative,
+      ),
+    );
+    state = AsyncData(updated);
+    await _saveToFirebase(updated);
+  }
+
+  Future<void> updateHitPoints({int? current, int? max, int? temp}) async {
+    final currentStats = state.value!;
+    final updated = currentStats.copyWith(
+      hitPoints: currentStats.hitPoints.copyWith(
+        current: current,
+        max: max,
+        temp: temp,
+      ),
+    );
+    state = AsyncData(updated);
+    await _saveToFirebase(updated);
+  }
+
+  Future<void> addXp(int amount) async {
+    final current = state.value!;
+    final newXp = (current.currentXp + amount).clamp(0, 999999);
+
+    int newLevel = current.level;
+
+    if (amount < 0) {
+      while (newLevel > 1 && newXp < Progression.xpThresholds[newLevel]!) {
+        newLevel--;
+      }
+    }
+
+    final updated = current.copyWith(
+      progression: current.progression.copyWith(
+        currentXp: newXp,
+        level: newLevel,
+      ),
+    );
+    state = AsyncData(updated);
+    await _saveToFirebase(updated);
+  }
+
+  Future<void> levelUp() async {
+    final current = state.value!;
+    if (current.canLevelUp) {
+      final updated = current.copyWith(
+        progression: current.progression.copyWith(level: current.level + 1),
+      );
+      state = AsyncData(updated);
+      await _saveToFirebase(updated);
+    }
+  }
+
+  Future<void> updateConditions({
+    int? inspiration,
+    int? exhaustion,
+    List<String>? states,
+  }) async {
+    final current = state.value!;
+    final updated = current.copyWith(
+      conditions: current.conditions.copyWith(
+        inspiration: inspiration,
+        exhaustion: exhaustion,
+        states: states,
+      ),
     );
     state = AsyncData(updated);
     await _saveToFirebase(updated);

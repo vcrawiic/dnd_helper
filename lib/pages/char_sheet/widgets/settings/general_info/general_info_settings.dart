@@ -67,6 +67,8 @@ class _GeneralInfoSettingsState extends ConsumerState<GeneralInfoSettings> {
       race: _raceController.text,
       characterClass: _classController.text,
       archetype: _archetypeController.text,
+    );
+    notifier.updateCombat(
       armorClass: int.tryParse(_armorClassController.text) ?? 10,
       shieldAC: int.tryParse(_shieldClassController.text) ?? 0,
       speed: int.tryParse(_speedController.text) ?? 30,
@@ -171,10 +173,7 @@ class _GeneralInfoSettingsState extends ConsumerState<GeneralInfoSettings> {
             itemCount: _settingsItems.length,
             itemBuilder: (context, index) {
               final title = _settingsItems[index];
-              return SettingsTile(
-                title: title,
-                onTap: () => debugPrint(title),
-              );
+              return SettingsTile(title: title, onTap: () => debugPrint(title));
             },
           ),
         ],

@@ -20,11 +20,11 @@ class Input$AbilityScoreOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
           : Input$AbilityScoreOrder.fromJson(
-              (l$then_by as Map<String, dynamic>),
+              (l$thenBy as Map<String, dynamic>),
             );
     }
     return Input$AbilityScoreOrder._(result$data);
@@ -48,8 +48,8 @@ class Input$AbilityScoreOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -75,12 +75,12 @@ class Input$AbilityScoreOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -90,11 +90,11 @@ class Input$AbilityScoreOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -126,6 +126,7 @@ class _CopyWithImpl$Input$AbilityScoreOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -142,12 +143,13 @@ class _CopyWithImpl$Input$AbilityScoreOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$AbilityScoreOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$AbilityScoreOrder.stub(_then(_instance))
         : CopyWith$Input$AbilityScoreOrder(
-            local$then_by,
+            local$thenBy,
             (e) => call(then_by: e),
           );
   }
@@ -157,14 +159,16 @@ class _CopyWithStubImpl$Input$AbilityScoreOrder<TRes>
     implements CopyWith$Input$AbilityScoreOrder<TRes> {
   _CopyWithStubImpl$Input$AbilityScoreOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$AbilityScoreOrderField? by,
     Enum$OrderByDirection? direction,
     Input$AbilityScoreOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$AbilityScoreOrder<TRes> get then_by =>
       CopyWith$Input$AbilityScoreOrder.stub(_res);
 }
@@ -191,10 +195,10 @@ class Input$AlignmentOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$AlignmentOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$AlignmentOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$AlignmentOrder._(result$data);
   }
@@ -216,8 +220,8 @@ class Input$AlignmentOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -243,12 +247,12 @@ class Input$AlignmentOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -258,11 +262,11 @@ class Input$AlignmentOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -294,6 +298,7 @@ class _CopyWithImpl$Input$AlignmentOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -309,11 +314,12 @@ class _CopyWithImpl$Input$AlignmentOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$AlignmentOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$AlignmentOrder.stub(_then(_instance))
-        : CopyWith$Input$AlignmentOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$AlignmentOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -321,14 +327,16 @@ class _CopyWithStubImpl$Input$AlignmentOrder<TRes>
     implements CopyWith$Input$AlignmentOrder<TRes> {
   _CopyWithStubImpl$Input$AlignmentOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$AlignmentOrderField? by,
     Enum$OrderByDirection? direction,
     Input$AlignmentOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$AlignmentOrder<TRes> get then_by =>
       CopyWith$Input$AlignmentOrder.stub(_res);
 }
@@ -355,10 +363,10 @@ class Input$BackgroundOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$BackgroundOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$BackgroundOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$BackgroundOrder._(result$data);
   }
@@ -381,8 +389,8 @@ class Input$BackgroundOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -408,12 +416,12 @@ class Input$BackgroundOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -423,11 +431,11 @@ class Input$BackgroundOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -459,6 +467,7 @@ class _CopyWithImpl$Input$BackgroundOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -474,12 +483,13 @@ class _CopyWithImpl$Input$BackgroundOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$BackgroundOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$BackgroundOrder.stub(_then(_instance))
         : CopyWith$Input$BackgroundOrder(
-            local$then_by,
+            local$thenBy,
             (e) => call(then_by: e),
           );
   }
@@ -489,14 +499,16 @@ class _CopyWithStubImpl$Input$BackgroundOrder<TRes>
     implements CopyWith$Input$BackgroundOrder<TRes> {
   _CopyWithStubImpl$Input$BackgroundOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$BackgroundOrderField? by,
     Enum$OrderByDirection? direction,
     Input$BackgroundOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$BackgroundOrder<TRes> get then_by =>
       CopyWith$Input$BackgroundOrder.stub(_res);
 }
@@ -696,6 +708,7 @@ class _CopyWithImpl$Input$NumberFilterInput<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? eq = _undefined,
     Object? $in = _undefined,
@@ -712,6 +725,7 @@ class _CopyWithImpl$Input$NumberFilterInput<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$NumberRangeFilterInput<TRes> get range {
     final local$range = _instance.range;
     return local$range == null
@@ -727,8 +741,9 @@ class _CopyWithStubImpl$Input$NumberFilterInput<TRes>
     implements CopyWith$Input$NumberFilterInput<TRes> {
   _CopyWithStubImpl$Input$NumberFilterInput(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     int? eq,
     List<int>? $in,
@@ -736,6 +751,7 @@ class _CopyWithStubImpl$Input$NumberFilterInput<TRes>
     Input$NumberRangeFilterInput? range,
   }) => _res;
 
+  @override
   CopyWith$Input$NumberRangeFilterInput<TRes> get range =>
       CopyWith$Input$NumberRangeFilterInput.stub(_res);
 }
@@ -891,6 +907,7 @@ class _CopyWithImpl$Input$NumberRangeFilterInput<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? lt = _undefined,
     Object? lte = _undefined,
@@ -911,8 +928,9 @@ class _CopyWithStubImpl$Input$NumberRangeFilterInput<TRes>
     implements CopyWith$Input$NumberRangeFilterInput<TRes> {
   _CopyWithStubImpl$Input$NumberRangeFilterInput(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({int? lt, int? lte, int? gt, int? gte}) => _res;
 }
 
@@ -938,10 +956,10 @@ class Input$ClassOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$ClassOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$ClassOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$ClassOrder._(result$data);
   }
@@ -962,8 +980,8 @@ class Input$ClassOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -989,12 +1007,12 @@ class Input$ClassOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -1004,11 +1022,11 @@ class Input$ClassOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -1040,6 +1058,7 @@ class _CopyWithImpl$Input$ClassOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -1054,11 +1073,12 @@ class _CopyWithImpl$Input$ClassOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$ClassOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$ClassOrder.stub(_then(_instance))
-        : CopyWith$Input$ClassOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$ClassOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -1066,14 +1086,16 @@ class _CopyWithStubImpl$Input$ClassOrder<TRes>
     implements CopyWith$Input$ClassOrder<TRes> {
   _CopyWithStubImpl$Input$ClassOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$ClassOrderField? by,
     Enum$OrderByDirection? direction,
     Input$ClassOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$ClassOrder<TRes> get then_by =>
       CopyWith$Input$ClassOrder.stub(_res);
 }
@@ -1100,10 +1122,10 @@ class Input$ConditionOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$ConditionOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$ConditionOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$ConditionOrder._(result$data);
   }
@@ -1125,8 +1147,8 @@ class Input$ConditionOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -1152,12 +1174,12 @@ class Input$ConditionOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -1167,11 +1189,11 @@ class Input$ConditionOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -1203,6 +1225,7 @@ class _CopyWithImpl$Input$ConditionOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -1218,11 +1241,12 @@ class _CopyWithImpl$Input$ConditionOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$ConditionOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$ConditionOrder.stub(_then(_instance))
-        : CopyWith$Input$ConditionOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$ConditionOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -1230,14 +1254,16 @@ class _CopyWithStubImpl$Input$ConditionOrder<TRes>
     implements CopyWith$Input$ConditionOrder<TRes> {
   _CopyWithStubImpl$Input$ConditionOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$ConditionOrderField? by,
     Enum$OrderByDirection? direction,
     Input$ConditionOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$ConditionOrder<TRes> get then_by =>
       CopyWith$Input$ConditionOrder.stub(_res);
 }
@@ -1264,10 +1290,10 @@ class Input$DamageTypeOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$DamageTypeOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$DamageTypeOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$DamageTypeOrder._(result$data);
   }
@@ -1290,8 +1316,8 @@ class Input$DamageTypeOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -1317,12 +1343,12 @@ class Input$DamageTypeOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -1332,11 +1358,11 @@ class Input$DamageTypeOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -1368,6 +1394,7 @@ class _CopyWithImpl$Input$DamageTypeOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -1383,12 +1410,13 @@ class _CopyWithImpl$Input$DamageTypeOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$DamageTypeOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$DamageTypeOrder.stub(_then(_instance))
         : CopyWith$Input$DamageTypeOrder(
-            local$then_by,
+            local$thenBy,
             (e) => call(then_by: e),
           );
   }
@@ -1398,14 +1426,16 @@ class _CopyWithStubImpl$Input$DamageTypeOrder<TRes>
     implements CopyWith$Input$DamageTypeOrder<TRes> {
   _CopyWithStubImpl$Input$DamageTypeOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$DamageTypeOrderField? by,
     Enum$OrderByDirection? direction,
     Input$DamageTypeOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$DamageTypeOrder<TRes> get then_by =>
       CopyWith$Input$DamageTypeOrder.stub(_res);
 }
@@ -1432,10 +1462,10 @@ class Input$EquipmentOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$EquipmentOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$EquipmentOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$EquipmentOrder._(result$data);
   }
@@ -1457,8 +1487,8 @@ class Input$EquipmentOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -1484,12 +1514,12 @@ class Input$EquipmentOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -1499,11 +1529,11 @@ class Input$EquipmentOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -1535,6 +1565,7 @@ class _CopyWithImpl$Input$EquipmentOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -1550,11 +1581,12 @@ class _CopyWithImpl$Input$EquipmentOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$EquipmentOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$EquipmentOrder.stub(_then(_instance))
-        : CopyWith$Input$EquipmentOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$EquipmentOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -1562,14 +1594,16 @@ class _CopyWithStubImpl$Input$EquipmentOrder<TRes>
     implements CopyWith$Input$EquipmentOrder<TRes> {
   _CopyWithStubImpl$Input$EquipmentOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$EquipmentOrderField? by,
     Enum$OrderByDirection? direction,
     Input$EquipmentOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$EquipmentOrder<TRes> get then_by =>
       CopyWith$Input$EquipmentOrder.stub(_res);
 }
@@ -1598,11 +1632,11 @@ class Input$EquipmentCategoryOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
           : Input$EquipmentCategoryOrder.fromJson(
-              (l$then_by as Map<String, dynamic>),
+              (l$thenBy as Map<String, dynamic>),
             );
     }
     return Input$EquipmentCategoryOrder._(result$data);
@@ -1626,8 +1660,8 @@ class Input$EquipmentCategoryOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -1654,12 +1688,12 @@ class Input$EquipmentCategoryOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -1669,11 +1703,11 @@ class Input$EquipmentCategoryOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -1705,6 +1739,7 @@ class _CopyWithImpl$Input$EquipmentCategoryOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -1721,12 +1756,13 @@ class _CopyWithImpl$Input$EquipmentCategoryOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$EquipmentCategoryOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$EquipmentCategoryOrder.stub(_then(_instance))
         : CopyWith$Input$EquipmentCategoryOrder(
-            local$then_by,
+            local$thenBy,
             (e) => call(then_by: e),
           );
   }
@@ -1736,14 +1772,16 @@ class _CopyWithStubImpl$Input$EquipmentCategoryOrder<TRes>
     implements CopyWith$Input$EquipmentCategoryOrder<TRes> {
   _CopyWithStubImpl$Input$EquipmentCategoryOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$EquipmentCategoryOrderField? by,
     Enum$OrderByDirection? direction,
     Input$EquipmentCategoryOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$EquipmentCategoryOrder<TRes> get then_by =>
       CopyWith$Input$EquipmentCategoryOrder.stub(_res);
 }
@@ -1770,10 +1808,10 @@ class Input$FeatOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$FeatOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$FeatOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$FeatOrder._(result$data);
   }
@@ -1794,8 +1832,8 @@ class Input$FeatOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -1821,12 +1859,12 @@ class Input$FeatOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -1836,11 +1874,11 @@ class Input$FeatOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -1872,6 +1910,7 @@ class _CopyWithImpl$Input$FeatOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -1886,11 +1925,12 @@ class _CopyWithImpl$Input$FeatOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$FeatOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$FeatOrder.stub(_then(_instance))
-        : CopyWith$Input$FeatOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$FeatOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -1898,14 +1938,16 @@ class _CopyWithStubImpl$Input$FeatOrder<TRes>
     implements CopyWith$Input$FeatOrder<TRes> {
   _CopyWithStubImpl$Input$FeatOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$FeatOrderField? by,
     Enum$OrderByDirection? direction,
     Input$FeatOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$FeatOrder<TRes> get then_by =>
       CopyWith$Input$FeatOrder.stub(_res);
 }
@@ -1932,10 +1974,10 @@ class Input$FeatureOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$FeatureOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$FeatureOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$FeatureOrder._(result$data);
   }
@@ -1956,8 +1998,8 @@ class Input$FeatureOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -1983,12 +2025,12 @@ class Input$FeatureOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -1998,11 +2040,11 @@ class Input$FeatureOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -2034,6 +2076,7 @@ class _CopyWithImpl$Input$FeatureOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -2048,11 +2091,12 @@ class _CopyWithImpl$Input$FeatureOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$FeatureOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$FeatureOrder.stub(_then(_instance))
-        : CopyWith$Input$FeatureOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$FeatureOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -2060,14 +2104,16 @@ class _CopyWithStubImpl$Input$FeatureOrder<TRes>
     implements CopyWith$Input$FeatureOrder<TRes> {
   _CopyWithStubImpl$Input$FeatureOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$FeatureOrderField? by,
     Enum$OrderByDirection? direction,
     Input$FeatureOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$FeatureOrder<TRes> get then_by =>
       CopyWith$Input$FeatureOrder.stub(_res);
 }
@@ -2094,10 +2140,10 @@ class Input$LanguageOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$LanguageOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$LanguageOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$LanguageOrder._(result$data);
   }
@@ -2119,8 +2165,8 @@ class Input$LanguageOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -2146,12 +2192,12 @@ class Input$LanguageOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -2161,11 +2207,11 @@ class Input$LanguageOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -2197,6 +2243,7 @@ class _CopyWithImpl$Input$LanguageOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -2211,11 +2258,12 @@ class _CopyWithImpl$Input$LanguageOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$LanguageOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$LanguageOrder.stub(_then(_instance))
-        : CopyWith$Input$LanguageOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$LanguageOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -2223,14 +2271,16 @@ class _CopyWithStubImpl$Input$LanguageOrder<TRes>
     implements CopyWith$Input$LanguageOrder<TRes> {
   _CopyWithStubImpl$Input$LanguageOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$LanguageOrderField? by,
     Enum$OrderByDirection? direction,
     Input$LanguageOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$LanguageOrder<TRes> get then_by =>
       CopyWith$Input$LanguageOrder.stub(_res);
 }
@@ -2257,10 +2307,10 @@ class Input$LevelOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$LevelOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$LevelOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$LevelOrder._(result$data);
   }
@@ -2281,8 +2331,8 @@ class Input$LevelOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -2308,12 +2358,12 @@ class Input$LevelOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -2323,11 +2373,11 @@ class Input$LevelOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -2359,6 +2409,7 @@ class _CopyWithImpl$Input$LevelOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -2373,11 +2424,12 @@ class _CopyWithImpl$Input$LevelOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$LevelOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$LevelOrder.stub(_then(_instance))
-        : CopyWith$Input$LevelOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$LevelOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -2385,14 +2437,16 @@ class _CopyWithStubImpl$Input$LevelOrder<TRes>
     implements CopyWith$Input$LevelOrder<TRes> {
   _CopyWithStubImpl$Input$LevelOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$LevelOrderField? by,
     Enum$OrderByDirection? direction,
     Input$LevelOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$LevelOrder<TRes> get then_by =>
       CopyWith$Input$LevelOrder.stub(_res);
 }
@@ -2419,10 +2473,10 @@ class Input$MagicItemOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$MagicItemOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$MagicItemOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$MagicItemOrder._(result$data);
   }
@@ -2444,8 +2498,8 @@ class Input$MagicItemOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -2471,12 +2525,12 @@ class Input$MagicItemOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -2486,11 +2540,11 @@ class Input$MagicItemOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -2522,6 +2576,7 @@ class _CopyWithImpl$Input$MagicItemOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -2537,11 +2592,12 @@ class _CopyWithImpl$Input$MagicItemOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$MagicItemOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$MagicItemOrder.stub(_then(_instance))
-        : CopyWith$Input$MagicItemOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$MagicItemOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -2549,14 +2605,16 @@ class _CopyWithStubImpl$Input$MagicItemOrder<TRes>
     implements CopyWith$Input$MagicItemOrder<TRes> {
   _CopyWithStubImpl$Input$MagicItemOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$MagicItemOrderField? by,
     Enum$OrderByDirection? direction,
     Input$MagicItemOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$MagicItemOrder<TRes> get then_by =>
       CopyWith$Input$MagicItemOrder.stub(_res);
 }
@@ -2583,11 +2641,11 @@ class Input$MagicSchoolOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
           : Input$MagicSchoolOrder.fromJson(
-              (l$then_by as Map<String, dynamic>),
+              (l$thenBy as Map<String, dynamic>),
             );
     }
     return Input$MagicSchoolOrder._(result$data);
@@ -2611,8 +2669,8 @@ class Input$MagicSchoolOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -2638,12 +2696,12 @@ class Input$MagicSchoolOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -2653,11 +2711,11 @@ class Input$MagicSchoolOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -2689,6 +2747,7 @@ class _CopyWithImpl$Input$MagicSchoolOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -2705,12 +2764,13 @@ class _CopyWithImpl$Input$MagicSchoolOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$MagicSchoolOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$MagicSchoolOrder.stub(_then(_instance))
         : CopyWith$Input$MagicSchoolOrder(
-            local$then_by,
+            local$thenBy,
             (e) => call(then_by: e),
           );
   }
@@ -2720,14 +2780,16 @@ class _CopyWithStubImpl$Input$MagicSchoolOrder<TRes>
     implements CopyWith$Input$MagicSchoolOrder<TRes> {
   _CopyWithStubImpl$Input$MagicSchoolOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$MagicSchoolOrderField? by,
     Enum$OrderByDirection? direction,
     Input$MagicSchoolOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$MagicSchoolOrder<TRes> get then_by =>
       CopyWith$Input$MagicSchoolOrder.stub(_res);
 }
@@ -2754,10 +2816,10 @@ class Input$MonsterOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$MonsterOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$MonsterOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$MonsterOrder._(result$data);
   }
@@ -2778,8 +2840,8 @@ class Input$MonsterOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -2805,12 +2867,12 @@ class Input$MonsterOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -2820,11 +2882,11 @@ class Input$MonsterOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -2856,6 +2918,7 @@ class _CopyWithImpl$Input$MonsterOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -2870,11 +2933,12 @@ class _CopyWithImpl$Input$MonsterOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$MonsterOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$MonsterOrder.stub(_then(_instance))
-        : CopyWith$Input$MonsterOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$MonsterOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -2882,14 +2946,16 @@ class _CopyWithStubImpl$Input$MonsterOrder<TRes>
     implements CopyWith$Input$MonsterOrder<TRes> {
   _CopyWithStubImpl$Input$MonsterOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$MonsterOrderField? by,
     Enum$OrderByDirection? direction,
     Input$MonsterOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$MonsterOrder<TRes> get then_by =>
       CopyWith$Input$MonsterOrder.stub(_res);
 }
@@ -2916,11 +2982,11 @@ class Input$ProficiencyOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
           : Input$ProficiencyOrder.fromJson(
-              (l$then_by as Map<String, dynamic>),
+              (l$thenBy as Map<String, dynamic>),
             );
     }
     return Input$ProficiencyOrder._(result$data);
@@ -2944,8 +3010,8 @@ class Input$ProficiencyOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -2971,12 +3037,12 @@ class Input$ProficiencyOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -2986,11 +3052,11 @@ class Input$ProficiencyOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -3022,6 +3088,7 @@ class _CopyWithImpl$Input$ProficiencyOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -3038,12 +3105,13 @@ class _CopyWithImpl$Input$ProficiencyOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$ProficiencyOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$ProficiencyOrder.stub(_then(_instance))
         : CopyWith$Input$ProficiencyOrder(
-            local$then_by,
+            local$thenBy,
             (e) => call(then_by: e),
           );
   }
@@ -3053,14 +3121,16 @@ class _CopyWithStubImpl$Input$ProficiencyOrder<TRes>
     implements CopyWith$Input$ProficiencyOrder<TRes> {
   _CopyWithStubImpl$Input$ProficiencyOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$ProficiencyOrderField? by,
     Enum$OrderByDirection? direction,
     Input$ProficiencyOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$ProficiencyOrder<TRes> get then_by =>
       CopyWith$Input$ProficiencyOrder.stub(_res);
 }
@@ -3087,10 +3157,10 @@ class Input$RaceOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$RaceOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$RaceOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$RaceOrder._(result$data);
   }
@@ -3111,8 +3181,8 @@ class Input$RaceOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -3138,12 +3208,12 @@ class Input$RaceOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -3153,11 +3223,11 @@ class Input$RaceOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -3189,6 +3259,7 @@ class _CopyWithImpl$Input$RaceOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -3203,11 +3274,12 @@ class _CopyWithImpl$Input$RaceOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$RaceOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$RaceOrder.stub(_then(_instance))
-        : CopyWith$Input$RaceOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$RaceOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -3215,14 +3287,16 @@ class _CopyWithStubImpl$Input$RaceOrder<TRes>
     implements CopyWith$Input$RaceOrder<TRes> {
   _CopyWithStubImpl$Input$RaceOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$RaceOrderField? by,
     Enum$OrderByDirection? direction,
     Input$RaceOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$RaceOrder<TRes> get then_by =>
       CopyWith$Input$RaceOrder.stub(_res);
 }
@@ -3249,10 +3323,10 @@ class Input$RuleOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$RuleOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$RuleOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$RuleOrder._(result$data);
   }
@@ -3273,8 +3347,8 @@ class Input$RuleOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -3300,12 +3374,12 @@ class Input$RuleOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -3315,11 +3389,11 @@ class Input$RuleOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -3351,6 +3425,7 @@ class _CopyWithImpl$Input$RuleOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -3365,11 +3440,12 @@ class _CopyWithImpl$Input$RuleOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$RuleOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$RuleOrder.stub(_then(_instance))
-        : CopyWith$Input$RuleOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$RuleOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -3377,14 +3453,16 @@ class _CopyWithStubImpl$Input$RuleOrder<TRes>
     implements CopyWith$Input$RuleOrder<TRes> {
   _CopyWithStubImpl$Input$RuleOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$RuleOrderField? by,
     Enum$OrderByDirection? direction,
     Input$RuleOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$RuleOrder<TRes> get then_by =>
       CopyWith$Input$RuleOrder.stub(_res);
 }
@@ -3411,11 +3489,11 @@ class Input$RuleSectionOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
           : Input$RuleSectionOrder.fromJson(
-              (l$then_by as Map<String, dynamic>),
+              (l$thenBy as Map<String, dynamic>),
             );
     }
     return Input$RuleSectionOrder._(result$data);
@@ -3439,8 +3517,8 @@ class Input$RuleSectionOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -3466,12 +3544,12 @@ class Input$RuleSectionOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -3481,11 +3559,11 @@ class Input$RuleSectionOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -3517,6 +3595,7 @@ class _CopyWithImpl$Input$RuleSectionOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -3533,12 +3612,13 @@ class _CopyWithImpl$Input$RuleSectionOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$RuleSectionOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$RuleSectionOrder.stub(_then(_instance))
         : CopyWith$Input$RuleSectionOrder(
-            local$then_by,
+            local$thenBy,
             (e) => call(then_by: e),
           );
   }
@@ -3548,14 +3628,16 @@ class _CopyWithStubImpl$Input$RuleSectionOrder<TRes>
     implements CopyWith$Input$RuleSectionOrder<TRes> {
   _CopyWithStubImpl$Input$RuleSectionOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$RuleSectionOrderField? by,
     Enum$OrderByDirection? direction,
     Input$RuleSectionOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$RuleSectionOrder<TRes> get then_by =>
       CopyWith$Input$RuleSectionOrder.stub(_res);
 }
@@ -3582,10 +3664,10 @@ class Input$SkillOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$SkillOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$SkillOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$SkillOrder._(result$data);
   }
@@ -3606,8 +3688,8 @@ class Input$SkillOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -3633,12 +3715,12 @@ class Input$SkillOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -3648,11 +3730,11 @@ class Input$SkillOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -3684,6 +3766,7 @@ class _CopyWithImpl$Input$SkillOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -3698,11 +3781,12 @@ class _CopyWithImpl$Input$SkillOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$SkillOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$SkillOrder.stub(_then(_instance))
-        : CopyWith$Input$SkillOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$SkillOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -3710,14 +3794,16 @@ class _CopyWithStubImpl$Input$SkillOrder<TRes>
     implements CopyWith$Input$SkillOrder<TRes> {
   _CopyWithStubImpl$Input$SkillOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$SkillOrderField? by,
     Enum$OrderByDirection? direction,
     Input$SkillOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$SkillOrder<TRes> get then_by =>
       CopyWith$Input$SkillOrder.stub(_res);
 }
@@ -3850,6 +3936,7 @@ class _CopyWithImpl$Input$AreaOfEffectFilterInput<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({Object? type = _undefined, Object? size = _undefined}) => _then(
     Input$AreaOfEffectFilterInput._({
       ..._instance._$data,
@@ -3858,6 +3945,7 @@ class _CopyWithImpl$Input$AreaOfEffectFilterInput<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$NumberFilterInput<TRes> get size {
     final local$size = _instance.size;
     return local$size == null
@@ -3870,10 +3958,12 @@ class _CopyWithStubImpl$Input$AreaOfEffectFilterInput<TRes>
     implements CopyWith$Input$AreaOfEffectFilterInput<TRes> {
   _CopyWithStubImpl$Input$AreaOfEffectFilterInput(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({List<String>? type, Input$NumberFilterInput? size}) => _res;
 
+  @override
   CopyWith$Input$NumberFilterInput<TRes> get size =>
       CopyWith$Input$NumberFilterInput.stub(_res);
 }
@@ -3900,10 +3990,10 @@ class Input$SpellOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$SpellOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$SpellOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$SpellOrder._(result$data);
   }
@@ -3924,8 +4014,8 @@ class Input$SpellOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -3951,12 +4041,12 @@ class Input$SpellOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -3966,11 +4056,11 @@ class Input$SpellOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -4002,6 +4092,7 @@ class _CopyWithImpl$Input$SpellOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -4016,11 +4107,12 @@ class _CopyWithImpl$Input$SpellOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$SpellOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$SpellOrder.stub(_then(_instance))
-        : CopyWith$Input$SpellOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$SpellOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -4028,14 +4120,16 @@ class _CopyWithStubImpl$Input$SpellOrder<TRes>
     implements CopyWith$Input$SpellOrder<TRes> {
   _CopyWithStubImpl$Input$SpellOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$SpellOrderField? by,
     Enum$OrderByDirection? direction,
     Input$SpellOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$SpellOrder<TRes> get then_by =>
       CopyWith$Input$SpellOrder.stub(_res);
 }
@@ -4062,10 +4156,10 @@ class Input$SubclassOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$SubclassOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$SubclassOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$SubclassOrder._(result$data);
   }
@@ -4087,8 +4181,8 @@ class Input$SubclassOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -4114,12 +4208,12 @@ class Input$SubclassOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -4129,11 +4223,11 @@ class Input$SubclassOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -4165,6 +4259,7 @@ class _CopyWithImpl$Input$SubclassOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -4179,11 +4274,12 @@ class _CopyWithImpl$Input$SubclassOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$SubclassOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$SubclassOrder.stub(_then(_instance))
-        : CopyWith$Input$SubclassOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$SubclassOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -4191,14 +4287,16 @@ class _CopyWithStubImpl$Input$SubclassOrder<TRes>
     implements CopyWith$Input$SubclassOrder<TRes> {
   _CopyWithStubImpl$Input$SubclassOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$SubclassOrderField? by,
     Enum$OrderByDirection? direction,
     Input$SubclassOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$SubclassOrder<TRes> get then_by =>
       CopyWith$Input$SubclassOrder.stub(_res);
 }
@@ -4225,10 +4323,10 @@ class Input$SubraceOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$SubraceOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$SubraceOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$SubraceOrder._(result$data);
   }
@@ -4249,8 +4347,8 @@ class Input$SubraceOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -4276,12 +4374,12 @@ class Input$SubraceOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -4291,11 +4389,11 @@ class Input$SubraceOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -4327,6 +4425,7 @@ class _CopyWithImpl$Input$SubraceOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -4341,11 +4440,12 @@ class _CopyWithImpl$Input$SubraceOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$SubraceOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$SubraceOrder.stub(_then(_instance))
-        : CopyWith$Input$SubraceOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$SubraceOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -4353,14 +4453,16 @@ class _CopyWithStubImpl$Input$SubraceOrder<TRes>
     implements CopyWith$Input$SubraceOrder<TRes> {
   _CopyWithStubImpl$Input$SubraceOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$SubraceOrderField? by,
     Enum$OrderByDirection? direction,
     Input$SubraceOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$SubraceOrder<TRes> get then_by =>
       CopyWith$Input$SubraceOrder.stub(_res);
 }
@@ -4387,10 +4489,10 @@ class Input$TraitOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
-          : Input$TraitOrder.fromJson((l$then_by as Map<String, dynamic>));
+          : Input$TraitOrder.fromJson((l$thenBy as Map<String, dynamic>));
     }
     return Input$TraitOrder._(result$data);
   }
@@ -4411,8 +4513,8 @@ class Input$TraitOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -4438,12 +4540,12 @@ class Input$TraitOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -4453,11 +4555,11 @@ class Input$TraitOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -4489,6 +4591,7 @@ class _CopyWithImpl$Input$TraitOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -4503,11 +4606,12 @@ class _CopyWithImpl$Input$TraitOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$TraitOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$TraitOrder.stub(_then(_instance))
-        : CopyWith$Input$TraitOrder(local$then_by, (e) => call(then_by: e));
+        : CopyWith$Input$TraitOrder(local$thenBy, (e) => call(then_by: e));
   }
 }
 
@@ -4515,14 +4619,16 @@ class _CopyWithStubImpl$Input$TraitOrder<TRes>
     implements CopyWith$Input$TraitOrder<TRes> {
   _CopyWithStubImpl$Input$TraitOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$TraitOrderField? by,
     Enum$OrderByDirection? direction,
     Input$TraitOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$TraitOrder<TRes> get then_by =>
       CopyWith$Input$TraitOrder.stub(_res);
 }
@@ -4551,11 +4657,11 @@ class Input$WeaponPropertyOrder {
       (l$direction as String),
     );
     if (data.containsKey('then_by')) {
-      final l$then_by = data['then_by'];
-      result$data['then_by'] = l$then_by == null
+      final l$thenBy = data['then_by'];
+      result$data['then_by'] = l$thenBy == null
           ? null
           : Input$WeaponPropertyOrder.fromJson(
-              (l$then_by as Map<String, dynamic>),
+              (l$thenBy as Map<String, dynamic>),
             );
     }
     return Input$WeaponPropertyOrder._(result$data);
@@ -4579,8 +4685,8 @@ class Input$WeaponPropertyOrder {
     final l$direction = direction;
     result$data['direction'] = toJson$Enum$OrderByDirection(l$direction);
     if (_$data.containsKey('then_by')) {
-      final l$then_by = then_by;
-      result$data['then_by'] = l$then_by?.toJson();
+      final l$thenBy = then_by;
+      result$data['then_by'] = l$thenBy?.toJson();
     }
     return result$data;
   }
@@ -4607,12 +4713,12 @@ class Input$WeaponPropertyOrder {
     if (l$direction != lOther$direction) {
       return false;
     }
-    final l$then_by = then_by;
-    final lOther$then_by = other.then_by;
+    final l$thenBy = then_by;
+    final lother$thenBy = other.then_by;
     if (_$data.containsKey('then_by') != other._$data.containsKey('then_by')) {
       return false;
     }
-    if (l$then_by != lOther$then_by) {
+    if (l$thenBy != lother$thenBy) {
       return false;
     }
     return true;
@@ -4622,11 +4728,11 @@ class Input$WeaponPropertyOrder {
   int get hashCode {
     final l$by = by;
     final l$direction = direction;
-    final l$then_by = then_by;
+    final l$thenBy = then_by;
     return Object.hashAll([
       l$by,
       l$direction,
-      _$data.containsKey('then_by') ? l$then_by : const {},
+      _$data.containsKey('then_by') ? l$thenBy : const {},
     ]);
   }
 }
@@ -4658,6 +4764,7 @@ class _CopyWithImpl$Input$WeaponPropertyOrder<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? by = _undefined,
     Object? direction = _undefined,
@@ -4674,12 +4781,13 @@ class _CopyWithImpl$Input$WeaponPropertyOrder<TRes>
     }),
   );
 
+  @override
   CopyWith$Input$WeaponPropertyOrder<TRes> get then_by {
-    final local$then_by = _instance.then_by;
-    return local$then_by == null
+    final local$thenBy = _instance.then_by;
+    return local$thenBy == null
         ? CopyWith$Input$WeaponPropertyOrder.stub(_then(_instance))
         : CopyWith$Input$WeaponPropertyOrder(
-            local$then_by,
+            local$thenBy,
             (e) => call(then_by: e),
           );
   }
@@ -4689,14 +4797,16 @@ class _CopyWithStubImpl$Input$WeaponPropertyOrder<TRes>
     implements CopyWith$Input$WeaponPropertyOrder<TRes> {
   _CopyWithStubImpl$Input$WeaponPropertyOrder(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Enum$WeaponPropertyOrderField? by,
     Enum$OrderByDirection? direction,
     Input$WeaponPropertyOrder? then_by,
   }) => _res;
 
+  @override
   CopyWith$Input$WeaponPropertyOrder<TRes> get then_by =>
       CopyWith$Input$WeaponPropertyOrder.stub(_res);
 }

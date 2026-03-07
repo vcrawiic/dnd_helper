@@ -1,3 +1,4 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:flutter/material.dart';
 
 class CharSettings extends StatelessWidget {
@@ -8,7 +9,7 @@ class CharSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(title), surfaceTintColor: Pallete.transparent),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: body,

@@ -102,7 +102,7 @@ class CharStatsMapper {
     if (json == null) return const Combat();
     return Combat(
       armorClass: json['armorClass'] as int? ?? 10,
-      shieldAC: json['shieldAC'] as int? ?? 0,
+      hasShield: json['hasShield'] as bool? ?? false,
       speed: json['speed'] as int? ?? 30,
       initiative: json['initiative'] as int? ?? 0,
     );
@@ -111,7 +111,7 @@ class CharStatsMapper {
   static Map<String, dynamic> _combatToJson(Combat combat) {
     return {
       'armorClass': combat.armorClass,
-      'shieldAC': combat.shieldAC,
+      'hasShield': combat.hasShield,
       'speed': combat.speed,
       'initiative': combat.initiative,
     };
@@ -123,11 +123,21 @@ class CharStatsMapper {
       current: json['current'] as int? ?? 10,
       max: json['max'] as int? ?? 10,
       temp: json['temp'] as int? ?? 0,
+      maxBonus: json['maxBonus'] as int? ?? 0,
+      hitDice:
+          (json['hitDice'] as List<dynamic>?)?.map((e) => e as int).toList() ??
+          [],
     );
   }
 
   static Map<String, dynamic> _hitPointsToJson(HitPoints hp) {
-    return {'current': hp.current, 'max': hp.max, 'temp': hp.temp};
+    return {
+      'current': hp.current,
+      'max': hp.max,
+      'temp': hp.temp,
+      'maxBonus': hp.maxBonus,
+      'hitDice': hp.hitDice,
+    };
   }
 
   static Progression _progressionFromJson(Map<String, dynamic>? json) {
@@ -181,7 +191,7 @@ class CharStatsMapper {
       ),
       combat: Combat(
         armorClass: json['armorClass'] as int? ?? 10,
-        shieldAC: json['shieldAC'] as int? ?? 0,
+        hasShield: json['hasShield'] as bool? ?? false,
         speed: json['speed'] as int? ?? 30,
         initiative: json['initiative'] as int? ?? 0,
       ),

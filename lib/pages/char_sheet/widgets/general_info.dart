@@ -1,3 +1,4 @@
+import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/char_sheet/providers/char_stats_provider.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_progress_bar.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/state_chip.dart';
@@ -18,13 +19,18 @@ class GeneralInfo extends ConsumerWidget {
     return statsAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, _) => Center(child: Text('Error: $error')),
-      data: (stats) => _buildContent(context, stats),
+      data: (stats) => _buildContent(context, stats, ref),
     );
   }
 
-  Widget _buildContent(BuildContext context, stats) {
+  Widget _buildContent(BuildContext context, stats, WidgetRef ref) {
+    Color hpBorderColor() {
+      if (stats.currentHp <= 0) return Pallete.primary;
+      if (stats.currentHp <= stats.maxHp ~/ 2) return Pallete.hpBloodied;
+      return Pallete.hpHealthy;
+    }
+
     return Container(
-      decoration: const BoxDecoration(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -70,23 +76,29 @@ class GeneralInfo extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/Shield.png',
-                          height: 50,
-                          width: 50,
-                          color: Colors.blue,
-                        ),
-                        Text('${stats.armorClass}'),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        ref
+                            .read(charStatsProvider(characterId).notifier)
+                            .updateCombat(hasShield: !stats.combat.hasShield);
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/Shield.png',
+                            height: 50,
+                            width: 50,
+                            color: stats.combat.hasShield
+                                ? Pallete.primary
+                                : Pallete.greyDark,
+                          ),
+                          Text('${stats.combat.totalAC}'),
+                        ],
+                      ),
                     ),
                     Column(
-                      children: [
-                        Text('${stats.speed}'),
-                        const Text('Speed'),
-                      ],
+                      children: [Text('${stats.speed}'), const Text('Speed')],
                     ),
                   ],
                 ),
@@ -96,17 +108,22 @@ class GeneralInfo extends ConsumerWidget {
                       onPressed: () {},
                       icon: const Icon(Icons.mode_night_outlined),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.greenAccent),
+                    GestureDetector(
+                      onTap: () => context.push(
+                        '${AppRoutes.profile}/${AppRoutes.charSheet}/${AppRoutes.hpCalculator}',
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.trending_down_outlined),
-                            Text('${stats.currentHp}/${stats.maxHp}'),
-                          ],
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: hpBorderColor()),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.trending_down_outlined),
+                              Text('${stats.currentHp}/${stats.maxHp}'),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -132,7 +149,16 @@ class GeneralInfo extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Expanded(
+                PopupMenuButton<int>(
+                  onSelected: (value) {
+                    ref
+                        .read(charStatsProvider(characterId).notifier)
+                        .updateConditions(exhaustion: value);
+                  },
+                  itemBuilder: (_) => List.generate(
+                    7,
+                    (i) => PopupMenuItem(value: i, child: Text('$i')),
+                  ),
                   child: StateChip(
                     label: 'Exhaustion',
                     value: stats.exhaustion > 0 ? '${stats.exhaustion}' : '',

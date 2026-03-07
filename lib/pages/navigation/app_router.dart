@@ -4,6 +4,7 @@ import 'package:dnd_helper/models/monsters/monster.dart';
 import 'package:dnd_helper/pages/auth/auth_page.dart';
 import 'package:dnd_helper/pages/char_sheet/char_page.dart';
 import 'package:dnd_helper/pages/char_sheet/providers/char_stats_provider.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/hp_calculator_content.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_calculator_content.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/general_info/char_settings.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/general_info/general_info_settings.dart';
@@ -160,28 +161,53 @@ final appRouter = GoRouter(
                   },
                   routes: [
                     GoRoute(
+                      path: AppRoutes.hpCalculator,
+                      pageBuilder: (context, state) {
+                        final characterId =
+                            GlobalDependencies.authService.currentUser?.uid ??
+                            '';
+
+                        return CustomTransitionPage(
+                          child: CharSettings(
+                            title: 'HP calculator',
+                            body: HPCalculatorContent(characterId: characterId),
+                          ),
+                          transitionDuration: const Duration(milliseconds: 300),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                );
+                              },
+                        );
+                      },
+                    ),
+                    GoRoute(
                       path: AppRoutes.xpCalculator,
                       pageBuilder: (context, state) {
-                        final characterId = GlobalDependencies
-                                .authService.currentUser?.uid ??
+                        final characterId =
+                            GlobalDependencies.authService.currentUser?.uid ??
                             '';
                         return CustomTransitionPage(
                           child: CharSettings(
                             title: 'XP Calculator',
                             body: Consumer(
                               builder: (context, ref, _) {
-                                final statsAsync =
-                                    ref.watch(charStatsProvider(characterId));
+                                final statsAsync = ref.watch(
+                                  charStatsProvider(characterId),
+                                );
 
                                 return statsAsync.when(
                                   loading: () => const Center(
-                                      child: CircularProgressIndicator()),
+                                    child: CircularProgressIndicator(),
+                                  ),
                                   error: (e, _) =>
                                       Center(child: Text('Error: $e')),
                                   data: (stats) {
                                     final notifier = ref.read(
-                                        charStatsProvider(characterId)
-                                            .notifier);
+                                      charStatsProvider(characterId).notifier,
+                                    );
 
                                     return XpCalculatorContent(
                                       currentLevel: stats.level,
@@ -203,19 +229,19 @@ final appRouter = GoRouter(
                           transitionDuration: const Duration(milliseconds: 300),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
-                          },
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                );
+                              },
                         );
                       },
                     ),
                     GoRoute(
                       path: AppRoutes.generalSettings,
                       pageBuilder: (context, state) {
-                        final characterId = GlobalDependencies
-                                .authService.currentUser?.uid ??
+                        final characterId =
+                            GlobalDependencies.authService.currentUser?.uid ??
                             '';
                         return CustomTransitionPage(
                           child: CharSettings(
@@ -225,11 +251,11 @@ final appRouter = GoRouter(
                           transitionDuration: const Duration(milliseconds: 300),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
-                          },
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                );
+                              },
                         );
                       },
                     ),

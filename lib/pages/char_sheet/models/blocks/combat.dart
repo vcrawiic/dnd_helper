@@ -1,27 +1,27 @@
 class Combat {
     final int armorClass;
-    final int shieldAC;
+    final bool hasShield;
     final int speed;
     final int initiative;
 
     const Combat({
       this.armorClass = 10,
-      this.shieldAC = 0,
+      this.hasShield = false,
       this.speed = 30,
       this.initiative = 0,
     });
 
-    int get totalAC => armorClass + shieldAC;
+    int get totalAC => armorClass + (hasShield ? 2 : 0);
 
     Combat copyWith({
       int? armorClass,
-      int? shieldAC,
+      bool? hasShield,
       int? speed,
       int? initiative,
     }) {
       return Combat(
         armorClass: armorClass ?? this.armorClass,
-        shieldAC: shieldAC ?? this.shieldAC,
+        hasShield: hasShield ?? this.hasShield,
         speed: speed ?? this.speed,
         initiative: initiative ?? this.initiative,
       );

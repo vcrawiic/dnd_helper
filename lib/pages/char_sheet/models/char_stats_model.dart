@@ -35,7 +35,7 @@ class CharStats {
   int get charisma => attributes.charisma;
 
   int get armorClass => combat.armorClass;
-  int get shieldAC => combat.shieldAC;
+  int get shieldAC => combat.hasShield ? 2 : 0;
   int get speed => combat.speed;
   int get initiative => combat.initiative;
 

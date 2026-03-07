@@ -23,6 +23,9 @@ class Pallete {
   static final Color greyDarkAlpha100 = const Color(0xFF878787).withAlpha(100);
   static final Color greyDarkAlpha200 = const Color(0xFF878787).withAlpha(200);
 
+  static const Color hpHealthy = Color(0xFF4CAF50); 
+  static const Color hpBloodied = Color(0xFFD4A017);
+
   static final Color transparent = Colors.transparent;
 
   static final borderColor = Color(0xFF7B68B8);

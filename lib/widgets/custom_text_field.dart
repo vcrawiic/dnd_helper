@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final double borderRadius;
   final VoidCallback? onEditingComplete;
+  final ValueChanged<String>? onChanged;
 
   const CustomTextField({
     super.key,
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.borderRadius = 8.0,
     this.onEditingComplete,
+    this.onChanged,
   });
 
   @override
@@ -32,6 +34,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       onEditingComplete: onEditingComplete,
+      onChanged: onChanged,
       decoration: InputDecoration(
         filled: true,
         fillColor: Pallete.primaryBG.withAlpha(150),

@@ -1,5 +1,6 @@
 import 'package:dnd_helper/DS/pallete.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/action_button.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/calculator_input_mixin.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/calculator_keypad.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_progress_bar.dart';
 import 'package:flutter/material.dart';
@@ -30,41 +31,8 @@ class XpCalculatorContent extends StatefulWidget {
   State<XpCalculatorContent> createState() => _XpCalculatorContentState();
 }
 
-class _XpCalculatorContentState extends State<XpCalculatorContent> {
-  String _inputValue = '';
-
-  int get _parsedValue {
-    final expression = _inputValue.replaceAll(' ', '');
-    if (expression.isEmpty) return 0;
-
-    int result = 0;
-    String currentNumber = '';
-    String operation = '+';
-
-    for (int i = 0; i < expression.length; i++) {
-      final char = expression[i];
-      if (char == '+' || char == '-') {
-        if (currentNumber.isNotEmpty) {
-          result = operation == '+'
-              ? result + int.parse(currentNumber)
-              : result - int.parse(currentNumber);
-        }
-        operation = char;
-        currentNumber = '';
-      } else {
-        currentNumber += char;
-      }
-    }
-
-    if (currentNumber.isNotEmpty) {
-      result = operation == '+'
-          ? result + int.parse(currentNumber)
-          : result - int.parse(currentNumber);
-    }
-
-    return result;
-  }
-
+class _XpCalculatorContentState extends State<XpCalculatorContent>
+    with CalculatorInputMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -84,9 +52,9 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
           ),
           const SizedBox(height: 24),
           CalculatorKeypad(
-            onDigitPressed: _onDigitPressed,
-            onBackspace: _onBackspace,
-            inputValue: _inputValue,
+            onDigitPressed: onDigitPressed,
+            onBackspace: onBackspace,
+            inputValue: inputValue,
             rightColumn: Column(
               children: List.generate(
                 4,
@@ -125,10 +93,10 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
                 child: ActionButton(
                   label: 'INCREASE',
                   color: Pallete.primary,
-                  onPressed: _parsedValue != 0
+                  onPressed: parsedValue != 0
                       ? () {
-                          widget.onAddXp(_parsedValue.abs());
-                          setState(() => _inputValue = '');
+                          widget.onAddXp(parsedValue.abs());
+                          setState(() => inputValue = '');
                         }
                       : null,
                 ),
@@ -138,10 +106,10 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
                 child: ActionButton(
                   label: 'DECREASE',
                   color: Pallete.primary,
-                  onPressed: _parsedValue != 0
+                  onPressed: parsedValue != 0
                       ? () {
-                          widget.onRemoveXp(_parsedValue.abs());
-                          setState(() => _inputValue = '');
+                          widget.onRemoveXp(parsedValue.abs());
+                          setState(() => inputValue = '');
                         }
                       : null,
                 ),
@@ -159,25 +127,5 @@ class _XpCalculatorContentState extends State<XpCalculatorContent> {
         ],
       ),
     );
-  }
-
-  void _onDigitPressed(String digit) {
-    setState(() {
-      if ((digit == '+' || digit == '-') &&
-          (_inputValue.isEmpty ||
-              _inputValue.endsWith('+') ||
-              _inputValue.endsWith('-'))) {
-        return;
-      }
-      _inputValue += digit;
-    });
-  }
-
-  void _onBackspace() {
-    setState(() {
-      if (_inputValue.isNotEmpty) {
-        _inputValue = _inputValue.substring(0, _inputValue.length - 1);
-      }
-    });
   }
 }

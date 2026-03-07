@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dnd_helper/pages/char_sheet/providers/char_stats_provider.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/general_info/settings_tile.dart';
 import 'package:dnd_helper/widgets/custom_text_field.dart';
@@ -26,23 +28,28 @@ class _GeneralInfoSettingsState extends ConsumerState<GeneralInfoSettings> {
   final TextEditingController _classController = TextEditingController();
   final TextEditingController _archetypeController = TextEditingController();
   final TextEditingController _armorClassController = TextEditingController();
-  final TextEditingController _shieldClassController = TextEditingController();
   final TextEditingController _speedController = TextEditingController();
   final TextEditingController _initiativeController = TextEditingController();
 
+  Timer? _debounce;
   bool _initialized = false;
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _nameController.dispose();
     _raceController.dispose();
     _classController.dispose();
     _archetypeController.dispose();
     _armorClassController.dispose();
-    _shieldClassController.dispose();
     _speedController.dispose();
     _initiativeController.dispose();
     super.dispose();
+  }
+
+  void _onFieldChanged(String _) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), _saveChanges);
   }
 
   void _initControllers(stats) {
@@ -54,7 +61,6 @@ class _GeneralInfoSettingsState extends ConsumerState<GeneralInfoSettings> {
     _classController.text = stats.characterClass;
     _archetypeController.text = stats.archetype;
     _armorClassController.text = stats.armorClass.toString();
-    _shieldClassController.text = stats.shieldAC.toString();
     _speedController.text = stats.speed.toString();
     _initiativeController.text = stats.initiative.toString();
   }
@@ -70,7 +76,6 @@ class _GeneralInfoSettingsState extends ConsumerState<GeneralInfoSettings> {
     );
     notifier.updateCombat(
       armorClass: int.tryParse(_armorClassController.text) ?? 10,
-      shieldAC: int.tryParse(_shieldClassController.text) ?? 0,
       speed: int.tryParse(_speedController.text) ?? 30,
       initiative: int.tryParse(_initiativeController.text) ?? 0,
     );
@@ -103,14 +108,14 @@ class _GeneralInfoSettingsState extends ConsumerState<GeneralInfoSettings> {
                 child: CustomTextField(
                   controller: _nameController,
                   labelText: 'Name',
-                  onEditingComplete: _saveChanges,
+                  onChanged: _onFieldChanged,
                 ),
               ),
               Expanded(
                 child: CustomTextField(
                   controller: _raceController,
                   labelText: 'Race',
-                  onEditingComplete: _saveChanges,
+                  onChanged: _onFieldChanged,
                 ),
               ),
             ],
@@ -122,14 +127,14 @@ class _GeneralInfoSettingsState extends ConsumerState<GeneralInfoSettings> {
                 child: CustomTextField(
                   controller: _classController,
                   labelText: 'Class',
-                  onEditingComplete: _saveChanges,
+                  onChanged: _onFieldChanged,
                 ),
               ),
               Expanded(
                 child: CustomTextField(
                   controller: _archetypeController,
                   labelText: 'Archetype',
-                  onEditingComplete: _saveChanges,
+                  onChanged: _onFieldChanged,
                 ),
               ),
             ],
@@ -141,28 +146,22 @@ class _GeneralInfoSettingsState extends ConsumerState<GeneralInfoSettings> {
                 child: CustomTextField(
                   controller: _armorClassController,
                   labelText: 'AC',
-                  onEditingComplete: _saveChanges,
+                  onChanged: _onFieldChanged,
                 ),
               ),
-              Expanded(
-                child: CustomTextField(
-                  controller: _shieldClassController,
-                  labelText: 'Shield AC',
-                  onEditingComplete: _saveChanges,
-                ),
-              ),
+
               Expanded(
                 child: CustomTextField(
                   controller: _speedController,
                   labelText: 'Speed',
-                  onEditingComplete: _saveChanges,
+                  onChanged: _onFieldChanged,
                 ),
               ),
               Expanded(
                 child: CustomTextField(
                   controller: _initiativeController,
                   labelText: 'Initiative',
-                  onEditingComplete: _saveChanges,
+                  onChanged: _onFieldChanged,
                 ),
               ),
             ],

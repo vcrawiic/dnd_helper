@@ -63,7 +63,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
 
   Future<void> updateCombat({
     int? armorClass,
-    int? shieldAC,
+    bool? hasShield,
     int? speed,
     int? initiative,
   }) async {
@@ -71,7 +71,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
     final updated = current.copyWith(
       combat: current.combat.copyWith(
         armorClass: armorClass,
-        shieldAC: shieldAC,
+        hasShield: hasShield,
         speed: speed,
         initiative: initiative,
       ),
@@ -80,17 +80,60 @@ class CharStatsNotifier extends _$CharStatsNotifier {
     await _saveToFirebase(updated);
   }
 
-  Future<void> updateHitPoints({int? current, int? max, int? temp}) async {
+  Future<void> updateHitPoints({
+    int? current,
+    int? max,
+    int? temp,
+    int? maxBonus,
+    List<int>? hitDice,
+  }) async {
     final currentStats = state.value!;
     final updated = currentStats.copyWith(
       hitPoints: currentStats.hitPoints.copyWith(
         current: current,
         max: max,
         temp: temp,
+        maxBonus: maxBonus,
+        hitDice: hitDice,
       ),
     );
     state = AsyncData(updated);
     await _saveToFirebase(updated);
+  }
+
+  Future<void> heal(int amount) async {
+    final current = state.value!;
+    final hp = current.hitPoints;
+    final newCurrent = (hp.current + amount).clamp(0, hp.effectiveMax);
+    await updateHitPoints(current: newCurrent);
+  }
+
+  Future<void> damage(int amount) async {
+    final current = state.value!;
+    final hp = current.hitPoints;
+
+    int newTemp = hp.temp;
+    int remainingDamage = amount;
+
+    if (newTemp > 0) {
+      if (remainingDamage >= newTemp) {
+        remainingDamage -= newTemp;
+        newTemp = 0;
+      } else {
+        newTemp -= remainingDamage;
+        remainingDamage = 0;
+      }
+    }
+
+    final newCurrent = hp.current - remainingDamage;
+    await updateHitPoints(current: newCurrent, temp: newTemp);
+  }
+
+  Future<void> addTempHp(int amount) async {
+    final current = state.value!;
+    final hp = current.hitPoints;
+    final newTemp = amount > hp.temp ? amount : hp.temp;
+    await updateHitPoints(temp: newTemp);
   }
 
   Future<void> addXp(int amount) async {

@@ -31,7 +31,7 @@ final appRouter = GoRouter(
   navigatorKey: rootNavigationKey,
   initialLocation: AppRoutes.classes,
   redirect: (context, state) {
-    final isLoggedIn = GlobalDependencies.authService.currentUser != null;
+    final isLoggedIn = GlobalDependencies.authService.isAuthenticated;
     final isOnAuth = state.matchedLocation == AppRoutes.auth;
 
     if (!isLoggedIn && !isOnAuth) {
@@ -133,7 +133,10 @@ final appRouter = GoRouter(
               builder: (context, state) => MultiBlocProvider(
                 providers: [
                   BlocProvider(
-                    create: (_) => ProfileCubit(GlobalDependencies.authService),
+                    create: (_) => ProfileCubit(
+                      GlobalDependencies.authService,
+                      GlobalDependencies.profileService,
+                    ),
                   ),
                   BlocProvider(
                     create: (_) =>
@@ -164,7 +167,8 @@ final appRouter = GoRouter(
                       path: AppRoutes.hpCalculator,
                       pageBuilder: (context, state) {
                         final characterId =
-                            GlobalDependencies.authService.currentUser?.uid ??
+                            GlobalDependencies.profileService.currentUser?.id
+                                .toString() ??
                             '';
 
                         return CustomTransitionPage(
@@ -187,7 +191,8 @@ final appRouter = GoRouter(
                       path: AppRoutes.xpCalculator,
                       pageBuilder: (context, state) {
                         final characterId =
-                            GlobalDependencies.authService.currentUser?.uid ??
+                            GlobalDependencies.profileService.currentUser?.id
+                                .toString() ??
                             '';
                         return CustomTransitionPage(
                           child: CharSettings(
@@ -241,7 +246,8 @@ final appRouter = GoRouter(
                       path: AppRoutes.generalSettings,
                       pageBuilder: (context, state) {
                         final characterId =
-                            GlobalDependencies.authService.currentUser?.uid ??
+                            GlobalDependencies.profileService.currentUser?.id
+                                .toString() ??
                             '';
                         return CustomTransitionPage(
                           child: CharSettings(

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dnd_helper/services/profile/models/user.dart';
 
 abstract class ProfileState extends Equatable {
   const ProfileState();

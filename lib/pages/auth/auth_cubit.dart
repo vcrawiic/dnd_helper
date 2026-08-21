@@ -12,15 +12,13 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void _init() {
-    _authSubscription = _authService.authStateChanges.listen((user) {
+    _authSubscription = _authService.authStateChanges.listen((isAuthenticated) {
       if (!isClosed) {
-        if (user != null) {
-          emit(Authenticated(user));
-        } else {
-          emit(Unauthenticated());
-        }
+        emit(isAuthenticated ? const Authenticated() : Unauthenticated());
       }
     });
+    // Проверяем сохранённые токены при старте — стрим отдаст начальное состояние.
+    _authService.checkAuthStatus();
   }
 
   Future<void> signIn(String email, String password) async {
@@ -41,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (!isClosed) {
         emit(AuthLoading());
       }
-      await _authService.signUpWithEmail(email: email, password: password);
+      await _authService.signupWithEmail(email: email, password: password);
     } catch (e) {
       if (!isClosed) {
         emit(AuthError(e.toString()));

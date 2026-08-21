@@ -1,66 +1,75 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+
+import 'package:dio/dio.dart';
+import 'package:dnd_helper/services/api/api_client.dart';
+import 'package:dnd_helper/services/api/token_storage.dart';
+import 'package:dnd_helper/services/auth/models/email_auth_request.dart';
+import 'package:dnd_helper/services/auth/models/token_pair.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final ApiClient _apiClient;
+  final TokenStorage _tokenStorage;
+  final _authController = StreamController<bool>.broadcast();
 
-  User? get currentUser => _auth.currentUser;
+  Stream<bool> get authStateChanges => _authController.stream;
 
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  /// Синхронный снимок состояния входа — для guard в GoRouter (redirect синхронный).
+  bool _isAuthenticated = false;
+  bool get isAuthenticated => _isAuthenticated;
 
-  Future<UserCredential?> signUpWithEmail({
+  AuthService(this._apiClient, this._tokenStorage) {
+    // Если refresh не удался — interceptor уже почистил токены и дёрнет этот колбэк.
+    _apiClient.onForceLogout = _forceLogout;
+  }
+
+  Future<void> checkAuthStatus() async {
+    _setAuth(await _tokenStorage.hasTokens());
+  }
+
+  Future<void> signInWithEmail({
     required String email,
     required String password,
-  }) async {
+  }) => _authenticate(Endpoint.login, email, password);
+
+  Future<void> signupWithEmail({
+    required String email,
+    required String password,
+  }) => _authenticate(Endpoint.register, email, password);
+
+  /// login и register на новом бэке идентичны: принимают email/password,
+  /// возвращают пару токенов. Отличается только endpoint.
+  Future<void> _authenticate(
+    Endpoint endpoint,
+    String email,
+    String password,
+  ) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+      final request = EmailAuthRequest(email: email, password: password);
+      final response = await _apiClient.req(endpoint, Method.post, request.toJson());
+      final tokens = TokenPair.fromJson(response.data);
+      await _tokenStorage.saveTokens(
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
       );
-    } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
+      _setAuth(true);
+    } on DioException catch (e) {
+      throw e.response?.data['error'] ?? 'Authentication failed';
     }
   }
 
-  Future<UserCredential?> signInWithEmail({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      return await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
-    }
-  }
-
+  /// Ручной выход пользователя.
   Future<void> signOut() async {
-    await _auth.signOut();
+    await _tokenStorage.clearTokens();
+    _setAuth(false);
   }
 
-  Future<void> resetPassword(String email) async {
-    try {
-      await _auth.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
-    }
+  /// Принудительный выход из interceptor (токены уже почищены там).
+  void _forceLogout() => _setAuth(false);
+
+  void _setAuth(bool value) {
+    _isAuthenticated = value;
+    _authController.add(value);
   }
 
-  String _handleAuthException(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'weak-password':
-        return 'Password is too weak';
-      case 'email-already-in-use':
-        return 'Email already in use';
-      case 'user-not-found':
-        return 'User not found';
-      case 'wrong-password':
-        return 'Wrong password';
-      case 'invalid-email':
-        return 'Invalid email';
-      default:
-        return 'Error: ${e.message}';
-    }
-  }
+  void dispose() => _authController.close();
 }

@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dnd_helper/DI/global_dependencies.dart';
+import 'package:dnd_helper/services/api/api_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/char_stats_model.dart';
@@ -14,32 +15,31 @@ class CharStatsNotifier extends _$CharStatsNotifier {
     if (characterId.isEmpty) {
       return const CharStats();
     }
-    return _loadFromFirebase(characterId);
+    return _loadFromApi(characterId);
   }
 
-  Future<CharStats> _loadFromFirebase(String characterId) async {
+  Future<CharStats> _loadFromApi(String characterId) async {
     try {
-      final doc = await FirebaseFirestore.instance
-          .collection('characters')
-          .doc(characterId)
-          .get();
-
-      if (!doc.exists) {
-        return const CharStats();
-      }
-
-      return CharStatsMapper.fromFirestore(doc);
+      final response = await GlobalDependencies.apiClient.req(
+        Endpoint.characters,
+        Method.get,
+        null,
+        pathSuffix: '/$characterId',
+      );
+      return CharStatsMapper.fromBackendJson(response.data);
     } catch (e) {
       debugPrint('Error loading character: $e');
       return const CharStats();
     }
   }
 
-  Future<void> _saveToFirebase(CharStats stats) async {
-    await FirebaseFirestore.instance
-        .collection('characters')
-        .doc(characterId)
-        .set(CharStatsMapper.toFirestore(stats));
+  Future<void> _saveToApi(CharStats stats) async {
+    await GlobalDependencies.apiClient.req(
+      Endpoint.characters,
+      Method.put,
+      CharStatsMapper.toBackendJson(stats),
+      pathSuffix: '/$characterId',
+    );
   }
 
   Future<void> updateGeneralInfo({
@@ -58,7 +58,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
       ),
     );
     state = AsyncData(updated);
-    await _saveToFirebase(updated);
+    await _saveToApi(updated);
   }
 
   Future<void> updateCombat({
@@ -77,7 +77,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
       ),
     );
     state = AsyncData(updated);
-    await _saveToFirebase(updated);
+    await _saveToApi(updated);
   }
 
   Future<void> updateHitPoints({
@@ -98,7 +98,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
       ),
     );
     state = AsyncData(updated);
-    await _saveToFirebase(updated);
+    await _saveToApi(updated);
   }
 
   Future<void> heal(int amount) async {
@@ -155,7 +155,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
       ),
     );
     state = AsyncData(updated);
-    await _saveToFirebase(updated);
+    await _saveToApi(updated);
   }
 
   Future<void> levelUp() async {
@@ -165,7 +165,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
         progression: current.progression.copyWith(level: current.level + 1),
       );
       state = AsyncData(updated);
-      await _saveToFirebase(updated);
+      await _saveToApi(updated);
     }
   }
 
@@ -183,6 +183,6 @@ class CharStatsNotifier extends _$CharStatsNotifier {
       ),
     );
     state = AsyncData(updated);
-    await _saveToFirebase(updated);
+    await _saveToApi(updated);
   }
 }

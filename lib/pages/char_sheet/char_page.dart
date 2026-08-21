@@ -8,7 +8,8 @@ class CharPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Изменить userId на characterId, тк будет несколько персонажей
-    final characterId = GlobalDependencies.authService.currentUser?.uid ?? '';
+    final characterId =
+        GlobalDependencies.profileService.currentUser?.id.toString() ?? '';
 
     return Scaffold(
       appBar: AppBar(title: const Text('Character Sheet')),

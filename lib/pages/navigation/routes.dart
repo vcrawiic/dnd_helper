@@ -1,5 +1,3 @@
-import 'package:dnd_helper/pages/char_sheet/widgets/settings/general_info/states/states_list.dart';
-
 abstract class AppRoutes {
   static const auth = '/auth';
 

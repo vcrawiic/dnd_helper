@@ -69,7 +69,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'ID: ${state.user.uid}',
+                          'ID: ${state.user.id}',
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
                                 color: Pallete.primaryWhiteTextAlpha200,

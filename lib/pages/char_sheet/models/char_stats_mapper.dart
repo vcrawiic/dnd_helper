@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dnd_helper/pages/char_sheet/models/char_stats_model.dart';
 import 'blocks/general_info.dart';
 import 'blocks/attributes.dart';
@@ -44,16 +43,106 @@ class CharStatsMapper {
     };
   }
 
-  static CharStats fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
-    final data = doc.data();
-    if (data == null) {
-      return const CharStats();
-    }
-    return fromJson(data);
+  /// CharStats → JSON для PUT /api/characters/:id.
+  static Map<String, dynamic> toBackendJson(CharStats s) {
+    return {
+      'name': s.generalInfo.name,
+      'race': s.generalInfo.race,
+      'classes': [
+        {
+          'name': s.generalInfo.characterClass,
+          'subclass': s.generalInfo.archetype,
+          'level': s.progression.level,
+        },
+      ],
+      'total_level': s.progression.level,
+      'ability_scores': {
+        'str': s.attributes.strength,
+        'dex': s.attributes.dexterity,
+        'con': s.attributes.constitution,
+        'int': s.attributes.intelligence,
+        'wis': s.attributes.wisdom,
+        'cha': s.attributes.charisma,
+      },
+      'hp_max': s.hitPoints.max,
+      'hp_current': s.hitPoints.current,
+      'hp_temp': s.hitPoints.temp,
+      'hp_max_bonus': s.hitPoints.maxBonus,
+      'hit_dice': {'values': s.hitPoints.hitDice},
+      'armor_class': s.combat.armorClass,
+      'has_shield': s.combat.hasShield,
+      'speed': s.combat.speed,
+      'xp': s.progression.currentXp,
+      'inspiration': s.conditions.inspiration,
+      'exhaustion': s.conditions.exhaustion,
+      'states': s.conditions.states,
+    };
   }
 
-  static Map<String, dynamic> toFirestore(CharStats stats) {
-    return {...toJson(stats), 'updatedAt': FieldValue.serverTimestamp()};
+  /// JSON из GET /api/characters/:id → CharStats.
+  static CharStats fromBackendJson(Map<String, dynamic> json) {
+    final classes = (json['classes'] as List<dynamic>?) ?? const [];
+    final firstClass = classes.isNotEmpty
+        ? classes.first as Map<String, dynamic>
+        : null;
+
+    final abilities = (json['ability_scores'] as Map<String, dynamic>?) ?? {};
+    int ability(String key) {
+      final v = abilities[key];
+      if (v is int) return v;
+      // fallback: вложенный формат {final: {str: ...}} после генерации на бэке.
+      final fin = abilities['final'];
+      if (fin is Map && fin[key] is int) return fin[key] as int;
+      return 10;
+    }
+
+    final hitDiceRaw = json['hit_dice'];
+    final hitDice = (hitDiceRaw is Map && hitDiceRaw['values'] is List)
+        ? (hitDiceRaw['values'] as List).map((e) => e as int).toList()
+        : <int>[];
+
+    return CharStats(
+      generalInfo: GeneralInfo(
+        name: json['name'] as String? ?? '',
+        race: json['race'] as String? ?? '',
+        characterClass: firstClass?['name'] as String? ?? '',
+        archetype: firstClass?['subclass'] as String? ?? '',
+      ),
+      attributes: Attributes(
+        strength: ability('str'),
+        dexterity: ability('dex'),
+        constitution: ability('con'),
+        intelligence: ability('int'),
+        wisdom: ability('wis'),
+        charisma: ability('cha'),
+      ),
+      combat: Combat(
+        armorClass: json['armor_class'] as int? ?? 10,
+        hasShield: json['has_shield'] as bool? ?? false,
+        speed: json['speed'] as int? ?? 30,
+        initiative: json['initiative'] as int? ?? 0,
+      ),
+      hitPoints: HitPoints(
+        current: json['hp_current'] as int? ?? 10,
+        max: json['hp_max'] as int? ?? 10,
+        temp: json['hp_temp'] as int? ?? 0,
+        maxBonus: json['hp_max_bonus'] as int? ?? 0,
+        hitDice: hitDice,
+      ),
+      progression: Progression(
+        level: json['total_level'] as int? ?? 1,
+        currentXp: json['xp'] as int? ?? 0,
+      ),
+      conditions: Conditions(
+        inspiration: json['inspiration'] as int? ?? 0,
+        exhaustion: json['exhaustion'] as int? ?? 0,
+        states:
+            (json['states'] as List<dynamic>?)
+                ?.map((e) => e as String)
+                .toList() ??
+            [],
+      ),
+    );
   }
 
   static GeneralInfo _generalInfoFromJson(Map<String, dynamic>? json) {

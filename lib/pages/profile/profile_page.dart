@@ -32,8 +32,9 @@ class ProfilePage extends StatelessWidget {
           ),
           actions: [
             IconButton.outlined(
-              onPressed: () => context.go('${AppRoutes.profile}/${AppRoutes.charSheet}'),
-              icon: const Icon(Icons.add),
+              onPressed: () =>
+                  context.go('${AppRoutes.profile}/${AppRoutes.characters}'),
+              icon: const Icon(Icons.people_outline),
             ),
           ],
         ),

@@ -48,140 +48,142 @@ class _HPCalculatorContentState extends ConsumerState<HPCalculatorContent>
       maxBonusHpController.text = '${hp.maxBonus}';
     }
 
-    return SingleChildScrollView(child: Column(
-      children: [
-        HpDisplay(current: hp.current, max: hp.effectiveMax, temp: hp.temp),
-        SizedBox(height: 24),
-        CalculatorKeypad(
-          onDigitPressed: onDigitPressed,
-          onBackspace: onBackspace,
-          inputValue: inputValue,
-          rightColumn: Column(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          HpDisplay(current: hp.current, max: hp.effectiveMax, temp: hp.temp),
+          SizedBox(height: 24),
+          CalculatorKeypad(
+            onDigitPressed: onDigitPressed,
+            onBackspace: onBackspace,
+            inputValue: inputValue,
+            rightColumn: Column(
+              children: [
+                PotionButton(
+                  diceCount: 2,
+                  modifier: 2,
+                  label: 'Healing',
+                  onHeal: notifier.heal,
+                ),
+                SizedBox(height: 8),
+                PotionButton(
+                  diceCount: 4,
+                  modifier: 4,
+                  label: 'Greater',
+                  onHeal: notifier.heal,
+                ),
+                SizedBox(height: 8),
+                PotionButton(
+                  diceCount: 8,
+                  modifier: 8,
+                  label: 'Superior',
+                  onHeal: notifier.heal,
+                ),
+                SizedBox(height: 8),
+                PotionButton(
+                  diceCount: 10,
+                  modifier: 20,
+                  label: 'Supreme',
+                  onHeal: notifier.heal,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 24),
+          Row(
             children: [
-              PotionButton(
-                diceCount: 2,
-                modifier: 2,
-                label: 'Healing',
-                onHeal: notifier.heal,
+              Expanded(
+                child: ActionButton(
+                  label: 'TEMPLATE',
+                  color: Pallete.primary,
+                  onPressed: parsedValue > 0
+                      ? () {
+                          notifier.addTempHp(parsedValue);
+                          clearInput();
+                        }
+                      : null,
+                ),
               ),
-              SizedBox(height: 8),
-              PotionButton(
-                diceCount: 4,
-                modifier: 4,
-                label: 'Greater',
-                onHeal: notifier.heal,
+              SizedBox(width: 8),
+              Expanded(
+                child: ActionButton(
+                  label: 'HEALING',
+                  color: Pallete.primary,
+                  onPressed: parsedValue > 0
+                      ? () {
+                          notifier.heal(parsedValue);
+                          clearInput();
+                        }
+                      : null,
+                ),
               ),
-              SizedBox(height: 8),
-              PotionButton(
-                diceCount: 8,
-                modifier: 8,
-                label: 'Superior',
-                onHeal: notifier.heal,
+              SizedBox(width: 8),
+              Expanded(
+                child: ActionButton(
+                  label: 'DAMAGE',
+                  color: Pallete.primary,
+                  onPressed: parsedValue > 0
+                      ? () {
+                          notifier.damage(parsedValue);
+                          clearInput();
+                        }
+                      : null,
+                ),
               ),
-              SizedBox(height: 8),
-              PotionButton(
-                diceCount: 10,
-                modifier: 20,
-                label: 'Supreme',
-                onHeal: notifier.heal,
+              SizedBox(width: 8),
+              IconButton(
+                onPressed: () => setState(() {
+                  showSettings = !showSettings;
+                }),
+                icon: Icon(Icons.settings),
               ),
             ],
           ),
-        ),
-        SizedBox(height: 24),
-        Row(
-          children: [
-            Expanded(
-              child: ActionButton(
-                label: 'TEMPLATE',
-                color: Pallete.primary,
-                onPressed: parsedValue > 0
-                    ? () {
-                        notifier.addTempHp(parsedValue);
-                        clearInput();
+          if (showSettings) ...[
+            SizedBox(height: 24),
+            Text('HP Settings'),
+            Row(
+              spacing: 16,
+              children: [
+                Expanded(
+                  child: CustomTextField(
+                    controller: maxHpController,
+                    labelText: 'Max HP',
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      final parsed = int.tryParse(value);
+                      if (parsed != null) {
+                        notifier.updateHitPoints(max: parsed);
                       }
-                    : null,
-              ),
-            ),
-            SizedBox(width: 8),
-            Expanded(
-              child: ActionButton(
-                label: 'HEALING',
-                color: Pallete.primary,
-                onPressed: parsedValue > 0
-                    ? () {
-                        notifier.heal(parsedValue);
-                        clearInput();
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: CustomTextField(
+                    controller: maxBonusHpController,
+                    labelText: 'Max Bonus HP',
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      final parsed = int.tryParse(value);
+                      if (parsed != null) {
+                        notifier.updateHitPoints(maxBonus: parsed);
                       }
-                    : null,
-              ),
-            ),
-            SizedBox(width: 8),
-            Expanded(
-              child: ActionButton(
-                label: 'DAMAGE',
-                color: Pallete.primary,
-                onPressed: parsedValue > 0
-                    ? () {
-                        notifier.damage(parsedValue);
-                        clearInput();
-                      }
-                    : null,
-              ),
-            ),
-            SizedBox(width: 8),
-            IconButton(
-              onPressed: () => setState(() {
-                showSettings = !showSettings;
-              }),
-              icon: Icon(Icons.settings),
+                    },
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-        if (showSettings) ...[
-          SizedBox(height: 24),
-          Text('HP Settings'),
-          Row(
-            spacing: 16,
-            children: [
-              Expanded(
-                child: CustomTextField(
-                  controller: maxHpController,
-                  labelText: 'Max HP',
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    final parsed = int.tryParse(value);
-                    if (parsed != null) {
-                      notifier.updateHitPoints(max: parsed);
-                    }
-                  },
-                ),
-              ),
-              Expanded(
-                child: CustomTextField(
-                  controller: maxBonusHpController,
-                  labelText: 'Max Bonus HP',
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    final parsed = int.tryParse(value);
-                    if (parsed != null) {
-                      notifier.updateHitPoints(maxBonus: parsed);
-                    }
-                  },
-                ),
-              ),
-            ],
+          SizedBox(height: 16),
+          HitDiceSelector(
+            hitDice: hp.hitDice,
+            onChanged: (dice) => notifier.updateHitPoints(hitDice: dice),
+            currentLevel: stats.level,
           ),
+          SizedBox(height: 120),
         ],
-        SizedBox(height: 16),
-        HitDiceSelector(
-          hitDice: hp.hitDice,
-          onChanged: (dice) => notifier.updateHitPoints(hitDice: dice),
-          currentLevel: stats.level,
-        ),
-        SizedBox(height: 120,)
-      ],
-    ));
+      ),
+    );
   }
 
   @override

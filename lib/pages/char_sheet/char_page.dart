@@ -1,23 +1,16 @@
-import 'package:dnd_helper/DI/global_dependencies.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/general_info.dart';
 import 'package:flutter/material.dart';
 
 class CharPage extends StatelessWidget {
-  const CharPage({super.key});
+  final String characterId;
+
+  const CharPage({super.key, required this.characterId});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Изменить userId на characterId, тк будет несколько персонажей
-    final characterId =
-        GlobalDependencies.profileService.currentUser?.id.toString() ?? '';
-
     return Scaffold(
       appBar: AppBar(title: const Text('Character Sheet')),
-      body: Column(
-        children: [
-          GeneralInfo(characterId: characterId),
-        ],
-      ),
+      body: Column(children: [GeneralInfo(characterId: characterId)]),
     );
   }
 }

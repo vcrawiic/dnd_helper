@@ -10,6 +10,7 @@ abstract class AppRoutes {
   static const monsterInfo = 'info';
 
   // Character sheet routes
+  static const characters = 'characters';
   static const charSheet = 'char_sheet';
   static const xpCalculator = 'xp_calculator';
   static const hpCalculator = 'hp_calculator';

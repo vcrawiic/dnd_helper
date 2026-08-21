@@ -32,10 +32,7 @@ class Progression {
 
   int get proficiencyBonus => ((level - 1) ~/ 4) + 2;
 
-  Progression copyWith({
-    int? level,
-    int? currentXp,
-  }) {
+  Progression copyWith({int? level, int? currentXp}) {
     return Progression(
       level: level ?? this.level,
       currentXp: currentXp ?? this.currentXp,

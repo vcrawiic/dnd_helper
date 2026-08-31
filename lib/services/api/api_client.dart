@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:dnd_helper/services/api/interceptors/auth_interceptors.dart';
@@ -45,6 +46,15 @@ class ApiClient {
         tokenStorage: _tokenStorage,
         onForceLogout: () => onForceLogout?.call(),
         onRefresh: _refreshToken,
+      ),
+      LogInterceptor(
+        request: true,
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: false,
+        responseBody: true,
+        error: true,
+        logPrint: (o) => log(o.toString(), name: 'ApiClient'),
       ),
     ]);
   }

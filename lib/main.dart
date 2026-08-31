@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is Authenticated) {
-            appRouter.go('/classes');
+            appRouter.go('/reference');
           } else if (state is Unauthenticated) {
             appRouter.go('/auth');
           }

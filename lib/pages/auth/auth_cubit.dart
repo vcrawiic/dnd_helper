@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:dnd_helper/pages/auth/auth_state.dart';
-import 'package:dnd_helper/services/auth/auth_service.dart';
+import 'package:dnd_helper/services/auth/authentifible.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthService _authService;
+  final Authentifible _authService;
   StreamSubscription? _authSubscription;
 
   AuthCubit(this._authService) : super(AuthInitial()) {

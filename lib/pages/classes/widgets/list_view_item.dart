@@ -27,7 +27,7 @@ class ListViewItem extends StatelessWidget {
       onTap: () {
         final item = classItem;
         if (item != null) {
-          context.push('/classes/info', extra: item);
+          context.push('/reference/classes/info', extra: item);
         }
       },
     );

@@ -26,7 +26,12 @@ class GridViewClassesWidget extends StatelessWidget {
           final classes = state.classes;
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 16,
+                bottom: 120,
+              ),
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -35,10 +40,13 @@ class GridViewClassesWidget extends StatelessWidget {
                   final classItem = classes.data?.classes?[index];
                   return ListViewItem(classItem: classItem);
                 },
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 6,
-                  mainAxisSpacing: 9,
+                // Число колонок считается от ширины: компактные карточки
+                // фиксированной высоты вместо огромных квадратов на десктопе.
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 220,
+                  mainAxisExtent: 88,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
                 ),
               ),
             ),

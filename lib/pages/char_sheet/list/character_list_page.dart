@@ -3,6 +3,7 @@ import 'package:dnd_helper/pages/char_sheet/list/character_list_cubit.dart';
 import 'package:dnd_helper/pages/char_sheet/list/character_list_state.dart';
 import 'package:dnd_helper/pages/navigation/routes.dart';
 import 'package:dnd_helper/widgets/liquid_container.dart';
+import 'package:dnd_helper/widgets/max_width_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -66,41 +67,43 @@ class CharacterListPage extends StatelessWidget {
                 );
               }
 
-              return ListView.separated(
-                padding: const EdgeInsets.all(16),
-                itemCount: state.characters.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  final char = state.characters[index];
-                  return LiquidContainer(
-                    radius: 16,
-                    child: ListTile(
-                      onTap: () => context.go(
-                        '${AppRoutes.profile}/${AppRoutes.characters}/${AppRoutes.charSheet}/${char.id}',
-                      ),
-                      title: Text(
-                        char.name.isEmpty ? 'Unnamed' : char.name,
-                        style: const TextStyle(
-                          color: Pallete.primaryWhiteText,
-                          fontSize: 20,
+              return MaxWidthContent(
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: state.characters.length,
+                  separatorBuilder: (_, _) => const SizedBox(height: 12),
+                  itemBuilder: (context, index) {
+                    final char = state.characters[index];
+                    return LiquidContainer(
+                      radius: 16,
+                      child: ListTile(
+                        onTap: () => context.go(
+                          '${AppRoutes.characters}/${AppRoutes.charSheet}/${char.id}',
+                        ),
+                        title: Text(
+                          char.name.isEmpty ? 'Unnamed' : char.name,
+                          style: const TextStyle(
+                            color: Pallete.primaryWhiteText,
+                            fontSize: 20,
+                          ),
+                        ),
+                        subtitle: Text(
+                          '${char.race} ${char.characterClass} · lvl ${char.level} · HP ${char.hpCurrent}/${char.hpMax}',
+                          style: const TextStyle(
+                            color: Pallete.primaryWhiteText,
+                          ),
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(
+                            Icons.delete_outline,
+                            color: Pallete.primaryWhiteText,
+                          ),
+                          onPressed: () => _confirmDelete(context, char.id),
                         ),
                       ),
-                      subtitle: Text(
-                        '${char.race} ${char.characterClass} · lvl ${char.level} · HP ${char.hpCurrent}/${char.hpMax}',
-                        style: const TextStyle(
-                          color: Pallete.primaryWhiteText,
-                        ),
-                      ),
-                      trailing: IconButton(
-                        icon: const Icon(
-                          Icons.delete_outline,
-                          color: Pallete.primaryWhiteText,
-                        ),
-                        onPressed: () => _confirmDelete(context, char.id),
-                      ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               );
             }
 
@@ -115,9 +118,7 @@ class CharacterListPage extends StatelessWidget {
     final cubit = context.read<CharacterListCubit>();
     final id = await cubit.create();
     if (id != null && context.mounted) {
-      context.go(
-        '${AppRoutes.profile}/${AppRoutes.characters}/${AppRoutes.charSheet}/$id',
-      );
+      context.go('${AppRoutes.characters}/${AppRoutes.charSheet}/$id');
     }
   }
 

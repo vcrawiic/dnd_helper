@@ -1,10 +1,10 @@
 import 'package:dnd_helper/pages/profile/profile_state.dart';
-import 'package:dnd_helper/services/auth/auth_service.dart';
+import 'package:dnd_helper/services/auth/authentifible.dart';
 import 'package:dnd_helper/services/profile/profile_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  final AuthService _authService;
+  final AuthentifibleActions _authService;
   final ProfileService _profileService;
 
   ProfileCubit(this._authService, this._profileService)

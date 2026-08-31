@@ -1,16 +1,20 @@
 abstract class AppRoutes {
   static const auth = '/auth';
 
-  static const classes = '/classes';
-  static const monsters = '/monsters';
+  // Табы
+  static const reference = '/reference';
+  static const tabletop = '/tabletop';
   static const dices = '/dices';
+  static const characters = '/characters';
   static const profile = '/profile';
 
+  // Дочерние маршруты справочника
+  static const classes = 'classes';
+  static const monsters = 'monsters';
   static const classInfo = 'info';
   static const monsterInfo = 'info';
 
   // Character sheet routes
-  static const characters = 'characters';
   static const charSheet = 'char_sheet';
   static const xpCalculator = 'xp_calculator';
   static const hpCalculator = 'hp_calculator';

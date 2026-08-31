@@ -40,13 +40,13 @@ class GeneralInfo extends ConsumerWidget {
               children: [
                 IconButton(
                   onPressed: () => context.push(
-                    '${AppRoutes.profile}/${AppRoutes.charSheet}/${AppRoutes.generalSettings}',
+                    '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId/${AppRoutes.generalSettings}',
                   ),
                   icon: const Icon(Icons.person_pin_sharp),
                 ),
                 GestureDetector(
                   onTap: () => context.push(
-                    '${AppRoutes.profile}/${AppRoutes.charSheet}/${AppRoutes.generalSettings}',
+                    '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId/${AppRoutes.generalSettings}',
                   ),
                   child: Column(
                     children: [
@@ -61,7 +61,7 @@ class GeneralInfo extends ConsumerWidget {
             const SizedBox(height: 8),
             GestureDetector(
               onTap: () => context.push(
-                '${AppRoutes.profile}/${AppRoutes.charSheet}/${AppRoutes.xpCalculator}',
+                '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId/${AppRoutes.xpCalculator}',
               ),
               child: XpProgressBar(
                 currentLevel: stats.level,
@@ -110,7 +110,7 @@ class GeneralInfo extends ConsumerWidget {
                     ),
                     GestureDetector(
                       onTap: () => context.push(
-                        '${AppRoutes.profile}/${AppRoutes.charSheet}/${AppRoutes.hpCalculator}',
+                        '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId/${AppRoutes.hpCalculator}',
                       ),
                       child: Container(
                         decoration: BoxDecoration(

@@ -11,6 +11,15 @@ import 'package:dnd_helper/services/gql/graphql_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Адаптивная сетка: число колонок считается от ширины экрана
+/// (1 колонка на телефоне, 2–3 на десктопе). Высота ячейки фиксирована.
+const _monstersGridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(
+  maxCrossAxisExtent: 420,
+  mainAxisExtent: 88,
+  crossAxisSpacing: 12,
+  mainAxisSpacing: 12,
+);
+
 class MonstersListWidget extends ConsumerStatefulWidget {
   const MonstersListWidget(this._service, {super.key});
   final GraphQLService _service;
@@ -74,18 +83,20 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
                 if (!mounted) return;
                 _searchController.clear();
                 ref.read(infiniteScrollSearchQueryProvider.notifier).update('');
-                ref.read(infiniteScrollProvider(widget._service).notifier).reset();
+                ref
+                    .read(infiniteScrollProvider(widget._service).notifier)
+                    .reset();
               },
               onChanged: (value) {
                 if (!mounted) return;
-                ref.read(infiniteScrollSearchQueryProvider.notifier).update(value);
+                ref
+                    .read(infiniteScrollSearchQueryProvider.notifier)
+                    .update(value);
               },
             ),
           ),
         ),
-        isSearching
-            ? _buildSearchResults()
-            : _buildInfiniteScrollList(),
+        isSearching ? _buildSearchResults() : _buildInfiniteScrollList(),
       ],
     );
   }
@@ -106,14 +117,14 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
 
         return SliverMainAxisGroup(
           slivers: [
-            SliverToBoxAdapter(
-              child: ResultCounter(count: monsters.length),
-            ),
+            SliverToBoxAdapter(child: ResultCounter(count: monsters.length)),
             SliverPadding(
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 120),
-              sliver: SliverList(
+              sliver: SliverGrid(
+                gridDelegate: _monstersGridDelegate,
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => ListViewItem(monsterItem: monsters[index]),
+                  (context, index) =>
+                      ListViewItem(monsterItem: monsters[index]),
                   childCount: monsters.length,
                 ),
               ),
@@ -121,12 +132,9 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
           ],
         );
       },
-      loading: () => const SliverFillRemaining(
-        child: LoadingIndicator(),
-      ),
-      error: (error, stack) => SliverFillRemaining(
-        child: ErrorStateWidget(error: error.toString()),
-      ),
+      loading: () => const SliverFillRemaining(child: LoadingIndicator()),
+      error: (error, stack) =>
+          SliverFillRemaining(child: ErrorStateWidget(error: error.toString())),
     );
   }
 
@@ -134,9 +142,7 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
     final state = ref.watch(infiniteScrollProvider(widget._service));
 
     if (state.monsters.isEmpty && state.isLoading) {
-      return const SliverFillRemaining(
-        child: LoadingIndicator(),
-      );
+      return const SliverFillRemaining(child: LoadingIndicator());
     }
     if (state.monsters.isEmpty && !state.isLoading) {
       return const SliverFillRemaining(
@@ -144,23 +150,31 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
       );
     }
     if (state.error != null && state.monsters.isEmpty) {
-      return SliverFillRemaining(
-        child: ErrorStateWidget(error: state.error!),
-      );
+      return SliverFillRemaining(child: ErrorStateWidget(error: state.error!));
     }
-    return SliverPadding(
-      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 120, top: 20),
-      sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            if (index >= state.monsters.length) {
-              return LoadMoreIndicator(isLoading: state.isLoading);
-            }
-            return ListViewItem(monsterItem: state.monsters[index]);
-          },
-          childCount: state.monsters.length + (state.hasMoreData ? 1 : 0),
+    return SliverMainAxisGroup(
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
+          sliver: SliverGrid(
+            gridDelegate: _monstersGridDelegate,
+            delegate: SliverChildBuilderDelegate(
+              (context, index) =>
+                  ListViewItem(monsterItem: state.monsters[index]),
+              childCount: state.monsters.length,
+            ),
+          ),
         ),
-      ),
+        // Индикатор подгрузки — отдельным блоком на всю ширину под сеткой.
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 120, top: 12),
+            child: state.hasMoreData
+                ? LoadMoreIndicator(isLoading: state.isLoading)
+                : const SizedBox.shrink(),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -181,7 +195,10 @@ class _SearchFieldDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final titleOpacity = (1 - shrinkOffset / _titleHeight).clamp(0.0, 1.0);
 
     return SizedBox.expand(

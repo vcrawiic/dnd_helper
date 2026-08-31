@@ -12,3 +12,10 @@ PRODUCT_BUNDLE_IDENTIFIER = com.example.dndHelper
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.
+
+// Development team for code signing (нужно для keychain-access-groups entitlement).
+DEVELOPMENT_TEAM = BS5B4FU274
+
+// Проект задаёт ad-hoc подпись ("-") на уровне project; переопределяем на
+// реальный dev-сертификат, иначе keychain-access-groups не подписывается.
+CODE_SIGN_IDENTITY = Apple Development

@@ -19,26 +19,38 @@ class MainShell extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: LiquidContainer(
-            radius: 20,
-            child: CustomNavBar(
-              currentIndex: navigationShell.currentIndex,
-              onTap: (index) {
-                navigationShell.goBranch(
-                  index,
-                  initialLocation: index == navigationShell.currentIndex,
-                );
-              },
-              items: const [
-                CustomNavBarItem(icon: DungIcons.helm, label: 'Classes'),
-                CustomNavBarItem(icon: DungIcons.fangs, label: 'Monsters'),
-                CustomNavBarItem(icon: DungIcons.fire, label: 'Dices'),
-                CustomNavBarItem(icon: DungIcons.character, label: 'Profile'),
-              ],
-              selectedColor: Pallete.primary,
-              unselectedColor: Pallete.primaryBG,
-              backgroundColor: Pallete.greyDarkAlpha100,
-              selectedBackgroundColor: Pallete.greyDarkAlpha100,
+          // На широких экранах (десктоп/веб) навбар не растягивается на всю
+          // ширину, а центрируется с ограничением по максимальной ширине.
+          // heightFactor: 1 — чтобы обёртка сжималась по высоте до размера бара
+          // (иначе Align тянется на всю высоту слота и бар уезжает в центр).
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            heightFactor: 1,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 560),
+              child: LiquidContainer(
+                radius: 20,
+                child: CustomNavBar(
+                  currentIndex: navigationShell.currentIndex,
+                  onTap: (index) {
+                    navigationShell.goBranch(
+                      index,
+                      initialLocation: index == navigationShell.currentIndex,
+                    );
+                  },
+                  items: const [
+                    CustomNavBarItem(icon: DungIcons.helm, label: 'Справочник'),
+                    CustomNavBarItem(icon: DungIcons.fangs, label: 'Тейблтоп'),
+                    CustomNavBarItem(icon: DungIcons.twenty, label: 'Кубы'),
+                    CustomNavBarItem(icon: DungIcons.character, label: 'Листы'),
+                    CustomNavBarItem(icon: DungIcons.fire, label: 'Профиль'),
+                  ],
+                  selectedColor: Pallete.primary,
+                  unselectedColor: Pallete.primaryBG,
+                  backgroundColor: Pallete.greyDarkAlpha100,
+                  selectedBackgroundColor: Pallete.greyDarkAlpha100,
+                ),
+              ),
             ),
           ),
         ),

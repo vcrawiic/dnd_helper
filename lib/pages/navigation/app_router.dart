@@ -22,6 +22,8 @@ import 'package:dnd_helper/pages/navigation/routes.dart';
 import 'package:dnd_helper/pages/profile/image_picker/image_cubit.dart';
 import 'package:dnd_helper/pages/profile/profile_cubit.dart';
 import 'package:dnd_helper/pages/profile/profile_page.dart';
+import 'package:dnd_helper/pages/reference/reference_page.dart';
+import 'package:dnd_helper/pages/tabletop/tabletop_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,9 +31,20 @@ import 'package:go_router/go_router.dart';
 
 final rootNavigationKey = GlobalKey<NavigatorState>();
 
+/// Обёртка страницы с fade-переходом (единый стиль для всех вложенных маршрутов).
+CustomTransitionPage<void> _fadePage(Widget child) {
+  return CustomTransitionPage(
+    child: child,
+    transitionDuration: const Duration(milliseconds: 300),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(opacity: animation, child: child);
+    },
+  );
+}
+
 final appRouter = GoRouter(
   navigatorKey: rootNavigationKey,
-  initialLocation: AppRoutes.classes,
+  initialLocation: AppRoutes.reference,
   redirect: (context, state) {
     final isLoggedIn = GlobalDependencies.authService.isAuthenticated;
     final isOnAuth = state.matchedLocation == AppRoutes.auth;
@@ -44,79 +57,62 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: AppRoutes.auth,
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          child: const AuthPage(),
-          transitionDuration: const Duration(milliseconds: 300),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-        );
-      },
+      pageBuilder: (context, state) => _fadePage(const AuthPage()),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return MainShell(navigationShell: navigationShell);
       },
       branches: [
+        // 1. Справочник — классы и монстры на одном экране
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRoutes.classes,
-              builder: (context, state) => BlocProvider(
-                create: (_) => ClassesCubit(GlobalDependencies.graphQLService),
-                child: const ClassesPage(),
-              ),
+              path: AppRoutes.reference,
+              builder: (context, state) => const ReferencePage(),
               routes: [
                 GoRoute(
-                  path: AppRoutes.classInfo,
-                  pageBuilder: (context, state) {
-                    final classItem = state.extra as Class;
-                    return CustomTransitionPage(
-                      child: ClassInfoPage(classItem: classItem),
-                      transitionDuration: const Duration(milliseconds: 300),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
-                          },
-                    );
-                  },
+                  path: AppRoutes.classes,
+                  builder: (context, state) => BlocProvider(
+                    create: (_) =>
+                        ClassesCubit(GlobalDependencies.graphQLService),
+                    child: const ClassesPage(),
+                  ),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.classInfo,
+                      pageBuilder: (context, state) =>
+                          _fadePage(ClassInfoPage(classItem: state.extra as Class)),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: AppRoutes.monsters,
+                  builder: (context, state) =>
+                      MonstersPage(GlobalDependencies.graphQLService),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.monsterInfo,
+                      pageBuilder: (context, state) => _fadePage(
+                        MonsterInfoPage(monsterItem: state.extra as Monster),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ],
         ),
+        // 2. Тейблтоп (VTT)
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRoutes.monsters,
-              builder: (context, state) =>
-                  MonstersPage(GlobalDependencies.graphQLService),
-              routes: [
-                GoRoute(
-                  path: AppRoutes.monsterInfo,
-                  pageBuilder: (context, state) {
-                    final monsterItem = state.extra as Monster;
-                    return CustomTransitionPage(
-                      child: MonsterInfoPage(monsterItem: monsterItem),
-                      transitionDuration: const Duration(milliseconds: 300),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
-                          },
-                    );
-                  },
-                ),
-              ],
+              path: AppRoutes.tabletop,
+              builder: (context, state) => const TabletopPage(),
             ),
           ],
         ),
+        // 3. Кубы
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -128,6 +124,100 @@ final appRouter = GoRouter(
             ),
           ],
         ),
+        // 4. Листы персонажей
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.characters,
+              builder: (context, state) => BlocProvider(
+                create: (_) =>
+                    CharacterListCubit(GlobalDependencies.characterService),
+                child: const CharacterListPage(),
+              ),
+              routes: [
+                GoRoute(
+                  path: '${AppRoutes.charSheet}/:characterId',
+                  pageBuilder: (context, state) => _fadePage(
+                    CharPage(
+                      characterId: state.pathParameters['characterId'] ?? '',
+                    ),
+                  ),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.hpCalculator,
+                      pageBuilder: (context, state) => _fadePage(
+                        CharSettings(
+                          title: 'HP calculator',
+                          body: HPCalculatorContent(
+                            characterId:
+                                state.pathParameters['characterId'] ?? '',
+                          ),
+                        ),
+                      ),
+                    ),
+                    GoRoute(
+                      path: AppRoutes.xpCalculator,
+                      pageBuilder: (context, state) {
+                        final characterId =
+                            state.pathParameters['characterId'] ?? '';
+                        return _fadePage(
+                          CharSettings(
+                            title: 'XP Calculator',
+                            body: Consumer(
+                              builder: (context, ref, _) {
+                                final statsAsync = ref.watch(
+                                  charStatsProvider(characterId),
+                                );
+
+                                return statsAsync.when(
+                                  loading: () => const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  error: (e, _) =>
+                                      Center(child: Text('Error: $e')),
+                                  data: (stats) {
+                                    final notifier = ref.read(
+                                      charStatsProvider(characterId).notifier,
+                                    );
+
+                                    return XpCalculatorContent(
+                                      currentLevel: stats.level,
+                                      currentXp: stats.currentXp,
+                                      xpForCurrentLevel: stats.xpForCurrentLevel,
+                                      xpForNextLevel: stats.xpForNextLevel,
+                                      canLevelUp: stats.canLevelUp,
+                                      onAddXp: notifier.addXp,
+                                      onRemoveXp: (value) =>
+                                          notifier.addXp(-value),
+                                      onLevelUp: notifier.levelUp,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: AppRoutes.generalSettings,
+                      pageBuilder: (context, state) => _fadePage(
+                        CharSettings(
+                          title: 'General Info',
+                          body: GeneralInfoSettings(
+                            characterId:
+                                state.pathParameters['characterId'] ?? '',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        // 5. Профиль
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -148,161 +238,6 @@ final appRouter = GoRouter(
                 ],
                 child: const ProfilePage(),
               ),
-              routes: [
-                GoRoute(
-                  path: AppRoutes.characters,
-                  builder: (context, state) => BlocProvider(
-                    create: (_) =>
-                        CharacterListCubit(GlobalDependencies.characterService),
-                    child: const CharacterListPage(),
-                  ),
-                  routes: [
-                    GoRoute(
-                      path: '${AppRoutes.charSheet}/:characterId',
-                      pageBuilder: (context, state) {
-                        final characterId =
-                            state.pathParameters['characterId'] ?? '';
-                        return CustomTransitionPage(
-                          child: CharPage(characterId: characterId),
-                          transitionDuration: const Duration(milliseconds: 300),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                                return FadeTransition(
-                                  opacity: animation,
-                                  child: child,
-                                );
-                              },
-                        );
-                      },
-                      routes: [
-                        GoRoute(
-                          path: AppRoutes.hpCalculator,
-                          pageBuilder: (context, state) {
-                            final characterId =
-                                state.pathParameters['characterId'] ?? '';
-
-                            return CustomTransitionPage(
-                              child: CharSettings(
-                                title: 'HP calculator',
-                                body: HPCalculatorContent(
-                                  characterId: characterId,
-                                ),
-                              ),
-                              transitionDuration: const Duration(
-                                milliseconds: 300,
-                              ),
-                              transitionsBuilder:
-                                  (
-                                    context,
-                                    animation,
-                                    secondaryAnimation,
-                                    child,
-                                  ) {
-                                    return FadeTransition(
-                                      opacity: animation,
-                                      child: child,
-                                    );
-                                  },
-                            );
-                          },
-                        ),
-                        GoRoute(
-                          path: AppRoutes.xpCalculator,
-                          pageBuilder: (context, state) {
-                            final characterId =
-                                state.pathParameters['characterId'] ?? '';
-                            return CustomTransitionPage(
-                              child: CharSettings(
-                                title: 'XP Calculator',
-                                body: Consumer(
-                                  builder: (context, ref, _) {
-                                    final statsAsync = ref.watch(
-                                      charStatsProvider(characterId),
-                                    );
-
-                                    return statsAsync.when(
-                                      loading: () => const Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                      error: (e, _) =>
-                                          Center(child: Text('Error: $e')),
-                                      data: (stats) {
-                                        final notifier = ref.read(
-                                          charStatsProvider(
-                                            characterId,
-                                          ).notifier,
-                                        );
-
-                                        return XpCalculatorContent(
-                                          currentLevel: stats.level,
-                                          currentXp: stats.currentXp,
-                                          xpForCurrentLevel:
-                                              stats.xpForCurrentLevel,
-                                          xpForNextLevel: stats.xpForNextLevel,
-                                          canLevelUp: stats.canLevelUp,
-                                          onAddXp: notifier.addXp,
-                                          onRemoveXp: (value) =>
-                                              notifier.addXp(-value),
-                                          onLevelUp: notifier.levelUp,
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                              transitionDuration: const Duration(
-                                milliseconds: 300,
-                              ),
-                              transitionsBuilder:
-                                  (
-                                    context,
-                                    animation,
-                                    secondaryAnimation,
-                                    child,
-                                  ) {
-                                    return FadeTransition(
-                                      opacity: animation,
-                                      child: child,
-                                    );
-                                  },
-                            );
-                          },
-                        ),
-                        GoRoute(
-                          path: AppRoutes.generalSettings,
-                          pageBuilder: (context, state) {
-                            final characterId =
-                                state.pathParameters['characterId'] ?? '';
-                            return CustomTransitionPage(
-                              child: CharSettings(
-                                title: 'General Info',
-                                body: GeneralInfoSettings(
-                                  characterId: characterId,
-                                ),
-                              ),
-                              transitionDuration: const Duration(
-                                milliseconds: 300,
-                              ),
-                              transitionsBuilder:
-                                  (
-                                    context,
-                                    animation,
-                                    secondaryAnimation,
-                                    child,
-                                  ) {
-                                    return FadeTransition(
-                                      opacity: animation,
-                                      child: child,
-                                    );
-                                  },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
             ),
           ],
         ),

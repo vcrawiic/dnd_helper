@@ -3,6 +3,10 @@ import 'dart:math';
 import 'package:dnd_helper/services/dices/models/dice_model.dart';
 
 class DiceRollerService {
+  // Один общий генератор: пересев на каждый бросок мог давать одинаковые кубы
+  // в серии (напр. два d20 преимущества в одну микросекунду).
+  final Random _random = Random();
+
   DiceRoll rollDice({
     required int sides,
     int count = 1,
@@ -40,11 +44,7 @@ class DiceRollerService {
     );
   }
 
-  int _roll(int sides) {
-    final seed = DateTime.now().microsecondsSinceEpoch;
-    final random = Random(seed);
-    return random.nextInt(sides) + 1;
-  }
+  int _roll(int sides) => _random.nextInt(sides) + 1;
 
   List<int> _rollMultiple(int sides, int count) {
     return List.generate(count, (_) => _roll(sides));

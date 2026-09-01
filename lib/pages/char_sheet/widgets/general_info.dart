@@ -1,175 +1,88 @@
 import 'package:dnd_helper/DS/pallete.dart';
+import 'package:dnd_helper/pages/char_sheet/models/char_stats_model.dart';
+import 'package:dnd_helper/pages/char_sheet/models/skill_catalog.dart';
 import 'package:dnd_helper/pages/char_sheet/providers/char_stats_provider.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/header/hp_tile.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/header/portrait_menu.dart';
+import 'package:dnd_helper/pages/char_sheet/widgets/header/stat_tile.dart';
 import 'package:dnd_helper/pages/char_sheet/widgets/settings/calculator/xp_progress_bar.dart';
-import 'package:dnd_helper/pages/char_sheet/widgets/state_chip.dart';
 import 'package:dnd_helper/pages/navigation/routes.dart';
+import 'package:dnd_helper/widgets/liquid_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+/// Шапка листа: портрет с меню, имя/раса/класс, полоса уровня (→ калькулятор
+/// экспы), AC/скорость/мастерство/HP (→ калькулятор HP), инициатива и состояния.
 class GeneralInfo extends ConsumerWidget {
   final String characterId;
 
   const GeneralInfo({super.key, required this.characterId});
 
+  String get _base =>
+      '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final statsAsync = ref.watch(charStatsProvider(characterId));
-
     return statsAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, _) => Center(child: Text('Error: $error')),
-      data: (stats) => _buildContent(context, stats, ref),
+      data: (stats) => _content(context, ref, stats),
     );
   }
 
-  Widget _buildContent(BuildContext context, stats, WidgetRef ref) {
-    Color hpBorderColor() {
-      if (stats.currentHp <= 0) return Pallete.primary;
-      if (stats.currentHp <= stats.maxHp ~/ 2) return Pallete.hpBloodied;
-      return Pallete.hpHealthy;
-    }
+  Widget _content(BuildContext context, WidgetRef ref, CharStats stats) {
+    final notifier = ref.read(charStatsProvider(characterId).notifier);
 
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+    return LiquidContainer(
+      radius: 20,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Pallete.greyDarkAlpha100,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: const EdgeInsets.all(14),
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () => context.push(
-                    '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId/${AppRoutes.generalSettings}',
-                  ),
-                  icon: const Icon(Icons.person_pin_sharp),
-                ),
-                GestureDetector(
-                  onTap: () => context.push(
-                    '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId/${AppRoutes.generalSettings}',
-                  ),
-                  child: Column(
-                    children: [
-                      Text(stats.name.isEmpty ? 'No name' : stats.name),
-                      Text('${stats.race} - ${stats.characterClass}'),
-                    ],
-                  ),
-                ),
-                const Placeholder(fallbackHeight: 40, fallbackWidth: 40),
-              ],
-            ),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () => context.push(
-                '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId/${AppRoutes.xpCalculator}',
-              ),
-              child: XpProgressBar(
-                currentLevel: stats.level,
-                currentXp: stats.currentXp,
-                xpForCurrentLevel: stats.xpForCurrentLevel,
-                xpForNextLevel: stats.xpForNextLevel,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        ref
-                            .read(charStatsProvider(characterId).notifier)
-                            .updateCombat(hasShield: !stats.combat.hasShield);
-                      },
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/Shield.png',
-                            height: 50,
-                            width: 50,
-                            color: stats.combat.hasShield
-                                ? Pallete.primary
-                                : Pallete.greyDark,
-                          ),
-                          Text('${stats.combat.totalAC}'),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: [Text('${stats.speed}'), const Text('Speed')],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.mode_night_outlined),
-                    ),
-                    GestureDetector(
-                      onTap: () => context.push(
-                        '${AppRoutes.characters}/${AppRoutes.charSheet}/$characterId/${AppRoutes.hpCalculator}',
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: hpBorderColor()),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.trending_down_outlined),
-                              Text('${stats.currentHp}/${stats.maxHp}'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: StateChip(
-                    label: 'Inspiration',
-                    value: '${stats.inspiration}',
-                  ),
+                PortraitMenu(base: _base),
+                const SizedBox(width: 12),
+                Expanded(child: _identity(context, stats)),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                StatTile(
+                  label: 'КЛАСС БРОНИ',
+                  value: '${stats.combat.totalAC}',
+                  onTap: () =>
+                      notifier.updateCombat(hasShield: !stats.combat.hasShield),
+                  highlighted: stats.combat.hasShield,
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: StateChip(
-                    label: 'States',
-                    value: '${stats.states.length}',
-                  ),
+                StatTile(label: 'СКОРОСТЬ', value: '${stats.speed}'),
+                StatTile(
+                  label: 'МАСТЕРСТВО',
+                  value: fmtMod(stats.proficiencyBonus),
                 ),
-                const SizedBox(width: 8),
-                PopupMenuButton<int>(
-                  onSelected: (value) {
-                    ref
-                        .read(charStatsProvider(characterId).notifier)
-                        .updateConditions(exhaustion: value);
-                  },
-                  itemBuilder: (_) => List.generate(
-                    7,
-                    (i) => PopupMenuItem(value: i, child: Text('$i')),
+                StatTile(label: 'ИНИЦИАТИВА', value: fmtMod(stats.initiative)),
+                StatTile(
+                  label: 'ВДОХНОВЕНИЕ',
+                  value: '${stats.inspiration}',
+                  onTap: () => notifier.updateConditions(
+                    inspiration: stats.inspiration > 0 ? 0 : 1,
                   ),
-                  child: StateChip(
-                    label: 'Exhaustion',
-                    value: stats.exhaustion > 0 ? '${stats.exhaustion}' : '',
-                  ),
+                  highlighted: stats.inspiration > 0,
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: StateChip(
-                    label: 'Initiative',
-                    value: stats.initiative != 0 ? '${stats.initiative}' : '',
-                  ),
+                StatTile(label: 'СОСТОЯНИЯ', value: '${stats.states.length}'),
+                HpTile(
+                  stats: stats,
+                  onTap: () => context.push('$_base/${AppRoutes.hpCalculator}'),
                 ),
               ],
             ),
@@ -177,5 +90,45 @@ class GeneralInfo extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Widget _identity(BuildContext context, CharStats stats) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          stats.name.isEmpty ? 'Без имени' : stats.name,
+          style: const TextStyle(
+            color: Pallete.secondaryWhiteText,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          _raceClassLine(stats),
+          style: TextStyle(
+            color: Pallete.primaryWhiteTextAlpha200,
+            fontSize: 14,
+          ),
+        ),
+        const SizedBox(height: 8),
+        GestureDetector(
+          onTap: () => context.push('$_base/${AppRoutes.xpCalculator}'),
+          child: XpProgressBar(
+            currentLevel: stats.level,
+            currentXp: stats.currentXp,
+            xpForCurrentLevel: stats.xpForCurrentLevel,
+            xpForNextLevel: stats.xpForNextLevel,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _raceClassLine(CharStats s) {
+    final race = s.race.isEmpty ? '—' : s.race;
+    final cls = s.characterClass.isEmpty ? '—' : s.characterClass;
+    final arch = s.archetype.isEmpty ? '' : ' (${s.archetype})';
+    return '$race$arch — $cls';
   }
 }

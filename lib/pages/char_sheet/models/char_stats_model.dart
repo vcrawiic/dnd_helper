@@ -4,6 +4,8 @@ import 'blocks/combat.dart';
 import 'blocks/hit_points.dart';
 import 'blocks/progression.dart';
 import 'blocks/conditions.dart';
+import 'blocks/proficiencies.dart';
+import 'skill_catalog.dart';
 
 class CharStats {
   final GeneralInfo generalInfo;
@@ -12,6 +14,7 @@ class CharStats {
   final HitPoints hitPoints;
   final Progression progression;
   final Conditions conditions;
+  final Proficiencies proficiencies;
 
   const CharStats({
     this.generalInfo = const GeneralInfo(),
@@ -20,7 +23,36 @@ class CharStats {
     this.hitPoints = const HitPoints(),
     this.progression = const Progression(),
     this.conditions = const Conditions(),
+    this.proficiencies = const Proficiencies(),
   });
+
+  /// Значение характеристики по ключу ('str'/'dex'/...).
+  int abilityScore(String key) => switch (key) {
+    'str' => attributes.strength,
+    'dex' => attributes.dexterity,
+    'con' => attributes.constitution,
+    'int' => attributes.intelligence,
+    'wis' => attributes.wisdom,
+    'cha' => attributes.charisma,
+    _ => 10,
+  };
+
+  /// Модификатор характеристики (учитывает floor для нечётных значений).
+  int abilityMod(String key) => abilityModifier(abilityScore(key));
+
+  /// Спасбросок = модификатор + бонус мастерства при владении.
+  int savingThrow(String key) =>
+      abilityMod(key) + (proficiencies.hasSave(key) ? proficiencyBonus : 0);
+
+  /// Модификатор навыка = модификатор характеристики + бонус мастерства
+  /// (двойной при компетентности).
+  int skillMod(String skillKey) {
+    final def = kSkills.firstWhere((s) => s.key == skillKey);
+    var mod = abilityMod(def.ability);
+    if (proficiencies.hasSkill(skillKey)) mod += proficiencyBonus;
+    if (proficiencies.hasExpertise(skillKey)) mod += proficiencyBonus;
+    return mod;
+  }
 
   String get name => generalInfo.name;
   String get race => generalInfo.race;
@@ -61,6 +93,7 @@ class CharStats {
     HitPoints? hitPoints,
     Progression? progression,
     Conditions? conditions,
+    Proficiencies? proficiencies,
   }) {
     return CharStats(
       generalInfo: generalInfo ?? this.generalInfo,
@@ -69,6 +102,7 @@ class CharStats {
       hitPoints: hitPoints ?? this.hitPoints,
       progression: progression ?? this.progression,
       conditions: conditions ?? this.conditions,
+      proficiencies: proficiencies ?? this.proficiencies,
     );
   }
 }

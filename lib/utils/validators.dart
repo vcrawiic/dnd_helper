@@ -14,6 +14,7 @@ class Validators {
 
     return null;
   }
+
   static String? password(String? value) {
     if (value == null || value.isEmpty) {
       return 'Enter password';

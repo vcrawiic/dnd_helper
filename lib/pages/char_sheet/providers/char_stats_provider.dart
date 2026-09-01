@@ -1,21 +1,48 @@
+import 'dart:convert';
+
 import 'package:dnd_helper/DI/global_dependencies.dart';
 import 'package:dnd_helper/services/api/api_client.dart';
+import 'package:dnd_helper/utils/debouncer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/char_stats_model.dart';
 import '../models/char_stats_mapper.dart';
 import '../models/blocks/progression.dart';
+import '../models/blocks/proficiencies.dart';
 
 part 'char_stats_provider.g.dart';
 
 @riverpod
 class CharStatsNotifier extends _$CharStatsNotifier {
+  /// Серия быстрых правок (степперы, набор текста, тоглы) схлопывается в один
+  /// PUT после паузы — чтобы не долбить бэк на каждое промежуточное изменение.
+  final _saveDebouncer = Debouncer(const Duration(milliseconds: 700));
+
+  /// JSON последнего отправленного состояния — для пропуска no-op сохранений.
+  String? _lastSentJson;
+
   @override
   Future<CharStats> build(String characterId) async {
+    // При уходе с листа дослать отложенное сохранение и снять таймер.
+    ref.onDispose(() {
+      _saveDebouncer.flush();
+      _saveDebouncer.dispose();
+    });
+
     if (characterId.isEmpty) {
       return const CharStats();
     }
     return _loadFromApi(characterId);
+  }
+
+  /// Оптимистично обновить локальный стейт и запланировать отложенный PUT
+  /// с последним состоянием (серия правок → один запрос).
+  void _apply(CharStats updated) {
+    state = AsyncData(updated);
+    _saveDebouncer.run(() {
+      final current = state.value;
+      if (current != null) _saveToApi(current);
+    });
   }
 
   Future<CharStats> _loadFromApi(String characterId) async {
@@ -26,7 +53,9 @@ class CharStatsNotifier extends _$CharStatsNotifier {
         null,
         pathSuffix: '/$characterId',
       );
-      return CharStatsMapper.fromBackendJson(response.data);
+      final stats = CharStatsMapper.fromBackendJson(response.data);
+      _lastSentJson = jsonEncode(CharStatsMapper.toBackendJson(stats));
+      return stats;
     } catch (e) {
       debugPrint('Error loading character: $e');
       return const CharStats();
@@ -34,12 +63,21 @@ class CharStatsNotifier extends _$CharStatsNotifier {
   }
 
   Future<void> _saveToApi(CharStats stats) async {
-    await GlobalDependencies.apiClient.req(
-      Endpoint.characters,
-      Method.put,
-      CharStatsMapper.toBackendJson(stats),
-      pathSuffix: '/$characterId',
-    );
+    final payload = CharStatsMapper.toBackendJson(stats);
+    final encoded = jsonEncode(payload);
+    if (encoded == _lastSentJson) return; // нечего сохранять
+    _lastSentJson = encoded;
+    try {
+      await GlobalDependencies.apiClient.req(
+        Endpoint.characters,
+        Method.put,
+        payload,
+        pathSuffix: '/$characterId',
+      );
+    } catch (e) {
+      _lastSentJson = null; // дать шанс повторить при следующем изменении
+      debugPrint('Error saving character: $e');
+    }
   }
 
   Future<void> updateGeneralInfo({
@@ -57,8 +95,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
         archetype: archetype,
       ),
     );
-    state = AsyncData(updated);
-    await _saveToApi(updated);
+    _apply(updated);
   }
 
   Future<void> updateCombat({
@@ -76,8 +113,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
         initiative: initiative,
       ),
     );
-    state = AsyncData(updated);
-    await _saveToApi(updated);
+    _apply(updated);
   }
 
   Future<void> updateHitPoints({
@@ -97,8 +133,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
         hitDice: hitDice,
       ),
     );
-    state = AsyncData(updated);
-    await _saveToApi(updated);
+    _apply(updated);
   }
 
   Future<void> heal(int amount) async {
@@ -154,8 +189,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
         level: newLevel,
       ),
     );
-    state = AsyncData(updated);
-    await _saveToApi(updated);
+    _apply(updated);
   }
 
   Future<void> levelUp() async {
@@ -164,8 +198,7 @@ class CharStatsNotifier extends _$CharStatsNotifier {
       final updated = current.copyWith(
         progression: current.progression.copyWith(level: current.level + 1),
       );
-      state = AsyncData(updated);
-      await _saveToApi(updated);
+      _apply(updated);
     }
   }
 
@@ -182,7 +215,48 @@ class CharStatsNotifier extends _$CharStatsNotifier {
         states: states,
       ),
     );
-    state = AsyncData(updated);
-    await _saveToApi(updated);
+    _apply(updated);
+  }
+
+  /// Тап по точке навыка циклит состояние: пусто → владение → компетентность →
+  /// пусто. Компетентность подразумевает владение.
+  void cycleSkillProficiency(String skillKey) {
+    final current = state.value!;
+    final prof = current.proficiencies;
+    final skills = Set<String>.from(prof.skills);
+    final expertise = Set<String>.from(prof.expertise);
+
+    if (expertise.contains(skillKey)) {
+      // компетентность → пусто
+      expertise.remove(skillKey);
+      skills.remove(skillKey);
+    } else if (skills.contains(skillKey)) {
+      // владение → компетентность
+      expertise.add(skillKey);
+    } else {
+      // пусто → владение
+      skills.add(skillKey);
+    }
+
+    _apply(
+      current.copyWith(
+        proficiencies: prof.copyWith(skills: skills, expertise: expertise),
+      ),
+    );
+  }
+
+  /// Переключить владение спасброском характеристики ('str'/'dex'/...).
+  void toggleSaveProficiency(String ability) {
+    final current = state.value!;
+    _apply(
+      current.copyWith(
+        proficiencies: current.proficiencies.copyWith(
+          savingThrows: Proficiencies.toggled(
+            current.proficiencies.savingThrows,
+            ability,
+          ),
+        ),
+      ),
+    );
   }
 }

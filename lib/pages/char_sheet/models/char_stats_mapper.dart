@@ -5,9 +5,34 @@ import 'blocks/combat.dart';
 import 'blocks/hit_points.dart';
 import 'blocks/progression.dart';
 import 'blocks/conditions.dart';
+import 'blocks/proficiencies.dart';
 
 class CharStatsMapper {
   CharStatsMapper._();
+
+  /// Набор ключей владений из ответа бэка. Терпимо к разным форматам:
+  /// список ключей `["athletics"]`, либо map `{athletics: true}` /
+  /// `{athletics: {proficient: true, expertise: false}}` (JSONB).
+  /// ПРЕДПОЛОЖЕНИЕ по контракту — проверить по логам, правится здесь.
+  static Set<String> _profSet(dynamic raw, {bool expertise = false}) {
+    if (raw is List) {
+      return expertise ? <String>{} : raw.map((e) => e.toString()).toSet();
+    }
+    if (raw is Map) {
+      return raw.entries
+          .where((e) {
+            final v = e.value;
+            if (v is bool) return !expertise && v;
+            if (v is Map) {
+              return v[expertise ? 'expertise' : 'proficient'] == true;
+            }
+            return false;
+          })
+          .map((e) => e.key.toString())
+          .toSet();
+    }
+    return <String>{};
+  }
 
   static CharStats fromJson(Map<String, dynamic> json) {
     if (json.containsKey('name') && !json.containsKey('generalInfo')) {
@@ -76,6 +101,10 @@ class CharStatsMapper {
       'inspiration': s.conditions.inspiration,
       'exhaustion': s.conditions.exhaustion,
       'states': s.conditions.states,
+      // Владения — списки ключей (ПРЕДПОЛОЖЕНИЕ по контракту, см. _profSet).
+      'skills': s.proficiencies.skills.toList(),
+      'expertise': s.proficiencies.expertise.toList(),
+      'saving_throws': s.proficiencies.savingThrows.toList(),
     };
   }
 
@@ -141,6 +170,12 @@ class CharStatsMapper {
                 ?.map((e) => e as String)
                 .toList() ??
             [],
+      ),
+      proficiencies: Proficiencies(
+        skills: _profSet(json['skills']),
+        expertise: _profSet(json['expertise'])
+          ..addAll(_profSet(json['skills'], expertise: true)),
+        savingThrows: _profSet(json['saving_throws']),
       ),
     );
   }

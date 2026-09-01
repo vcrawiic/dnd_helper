@@ -69,10 +69,8 @@ class DiceRollGroup {
   final List<DiceRoll> rolls;
   final DateTime timestamp;
 
-  DiceRollGroup({
-    required this.rolls,
-    DateTime? timestamp,
-  }) : timestamp = timestamp ?? DateTime.now();
+  DiceRollGroup({required this.rolls, DateTime? timestamp})
+    : timestamp = timestamp ?? DateTime.now();
 
   bool get isSingleRoll => rolls.length == 1;
 

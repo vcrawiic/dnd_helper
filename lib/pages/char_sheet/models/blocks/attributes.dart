@@ -5,7 +5,7 @@ class Attributes {
   final int intelligence;
   final int wisdom;
   final int charisma;
-  
+
   const Attributes({
     this.strength = 10,
     this.dexterity = 10,

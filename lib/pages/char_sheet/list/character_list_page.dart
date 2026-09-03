@@ -77,9 +77,16 @@ class CharacterListPage extends StatelessWidget {
                     return LiquidContainer(
                       radius: 16,
                       child: ListTile(
-                        onTap: () => context.go(
-                          '${AppRoutes.characters}/${AppRoutes.charSheet}/${char.id}',
-                        ),
+                        onTap: () async {
+                          final cubit = context.read<CharacterListCubit>();
+                          await context.push(
+                            '${AppRoutes.characters}/${AppRoutes.charSheet}/${char.id}',
+                          );
+                          // Список остаётся смонтированным под листом персонажа,
+                          // поэтому после возврата перечитываем данные вручную —
+                          // иначе правки видны только после hot restart.
+                          await cubit.load();
+                        },
                         title: Text(
                           char.name.isEmpty ? 'Unnamed' : char.name,
                           style: const TextStyle(
@@ -118,7 +125,9 @@ class CharacterListPage extends StatelessWidget {
     final cubit = context.read<CharacterListCubit>();
     final id = await cubit.create();
     if (id != null && context.mounted) {
-      context.go('${AppRoutes.characters}/${AppRoutes.charSheet}/$id');
+      await context.push('${AppRoutes.characters}/${AppRoutes.charSheet}/$id');
+      // Обновляем список после возврата с листа только что созданного персонажа.
+      await cubit.load();
     }
   }
 

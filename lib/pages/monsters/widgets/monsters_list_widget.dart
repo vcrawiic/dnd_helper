@@ -56,6 +56,17 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
     }
   }
 
+  /// На широком экране первая страница может не переполнить вьюпорт — тогда
+  /// скролла нет и [_onScroll] не срабатывает. Догружаем следующие страницы,
+  /// пока контент не станет прокручиваемым.
+  void _maybeFillViewport() {
+    if (!mounted || !_scrollController.hasClients) return;
+    if (ref.read(infiniteScrollSearchQueryProvider).isNotEmpty) return;
+    if (_scrollController.position.maxScrollExtent <= 0) {
+      ref.read(infiniteScrollProvider(widget._service).notifier).loadMore();
+    }
+  }
+
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
@@ -140,6 +151,12 @@ class _MonstersListWidgetState extends ConsumerState<MonstersListWidget> {
 
   Widget _buildInfiniteScrollList() {
     final state = ref.watch(infiniteScrollProvider(widget._service));
+
+    // После отрисовки проверяем, переполнил ли контент вьюпорт; если нет —
+    // подгружаем ещё (актуально для широких экранов).
+    if (state.hasMoreData && !state.isLoading) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _maybeFillViewport());
+    }
 
     if (state.monsters.isEmpty && state.isLoading) {
       return const SliverFillRemaining(child: LoadingIndicator());
